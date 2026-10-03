@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1C2730">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>工程報價單</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+  /* 工業簡約：鋼鐵灰 + 工程橘 */
+  --steel-900:#16212A; --steel:#1C2730; --steel-700:#2B3A47; --steel-600:#3E5263;
+  --slate:#5E7383; --slate-light:#A7B6C2; --slate-pale:#E4E9EE;
+  --orange:#FF7A00; --orange-dark:#D96500; --orange-pale:#FFF1E3;
+  --yellow:#FFC21A; --yellow-pale:#FFF7DB;
+  --green:#1F9D63; --green-pale:#E2F5EC;
+  --red:#D64545; --red-pale:#FBE7E7;
+  --blue:#2F6FB0; --blue-pale:#E3EEF9;
+  --bg:#EEF1F4; --card:#FFFFFF; --ink:#16212A; --ink-2:#44525E; --muted:#7D8B97; --line:#D3DBE2;
+  --radius:14px; --shadow:0 2px 8px rgba(22,33,42,.08);
+  --tap:54px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+html,body{overflow-x:hidden}
+body{background:var(--bg);color:var(--ink);font-family:"Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;font-size:17px;line-height:1.5;min-height:100vh;overscroll-behavior-y:none}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+svg.i{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+#view{padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+
+/* ---------- Top bar ---------- */
+.topbar{position:sticky;top:0;z-index:20;background:var(--steel);color:#fff;padding-top:env(safe-area-inset-top)}
+.topbar .wrap{display:flex;align-items:center;gap:10px;min-height:62px}
+.topbar h1{font-size:19px;margin:0;font-weight:700;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .sub{display:block;font-size:12px;font-weight:500;color:var(--slate-light);letter-spacing:.06em}
+.tb-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:46px;height:46px;border-radius:12px;color:#fff;padding:0 10px;font-weight:700;font-size:16px}
+.tb-btn:active{background:rgba(255,255,255,.12)}
+.tb-btn.ghost{border:1.5px solid rgba(255,255,255,.3)}
+.brand-logo{width:40px;height:40px;border-radius:10px;background:var(--orange);color:var(--steel-900);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;flex:none;overflow:hidden}
+.brand-logo img{width:100%;height:100%;object-fit:contain;background:#fff}
+.saved-tag{font-size:13px;color:var(--slate-light);font-weight:500}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--tap);padding:0 20px;border-radius:12px;font-weight:700;font-size:17px;transition:transform .06s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--orange);color:#fff;box-shadow:0 3px 0 var(--orange-dark)}
+.btn-dark{background:var(--steel-700);color:#fff}
+.btn-line{background:#06C755;color:#fff;box-shadow:0 3px 0 #04a045}
+.btn-outline{background:#fff;border:2px solid var(--line);color:var(--ink)}
+.btn-danger{background:var(--red-pale);color:var(--red)}
+.btn-block{width:100%}
+.btn-sm{min-height:42px;padding:0 14px;font-size:15px;border-radius:10px}
+.hero-btn{display:flex;width:100%;align-items:center;justify-content:center;gap:10px;min-height:76px;margin:18px 0 6px;border-radius:16px;background:var(--orange);color:#fff;font-size:23px;font-weight:900;letter-spacing:.04em;box-shadow:0 5px 0 var(--orange-dark),0 10px 24px rgba(255,122,0,.3)}
+.hero-btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--orange-dark)}
+.hero-btn svg.i{width:30px;height:30px;stroke-width:3}
+
+/* ---------- KPI ---------- */
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
+.kpi{background:var(--steel-700);color:#fff;border-radius:var(--radius);padding:14px 14px 12px;text-align:left;border-left:5px solid var(--slate)}
+.kpi.k1{border-left-color:var(--slate-light)} .kpi.k2{border-left-color:var(--blue)} .kpi.k3{border-left-color:var(--orange)} .kpi.k4{border-left-color:var(--green)}
+.kpi .lab{font-size:14px;color:var(--slate-light);font-weight:500}
+.kpi .num{font-size:24px;font-weight:900;line-height:1.25;margin-top:2px;word-break:break-all}
+.kpi .cnt{font-size:13px;color:var(--slate-light)}
+.kpi.on{outline:3px solid var(--orange);outline-offset:-1px}
+@media(min-width:640px){.kpis{grid-template-columns:repeat(4,1fr)}}
+
+/* ---------- Search / chips ---------- */
+.search{position:relative;margin:6px 0 10px}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.search input{width:100%;height:var(--tap);border-radius:12px;border:2px solid var(--line);background:#fff;padding:0 14px 0 46px;font-size:17px}
+.search input:focus{outline:none;border-color:var(--orange)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:42px;padding:0 16px;border-radius:999px;background:#fff;border:2px solid var(--line);font-weight:700;font-size:15px;color:var(--ink-2);white-space:nowrap}
+.chip.on{background:var(--steel);border-color:var(--steel);color:#fff}
+.chip.orange.on{background:var(--orange);border-color:var(--orange)}
+
+/* ---------- Quote card ---------- */
+.qcard{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden;border:1px solid var(--line)}
+.qcard .main{padding:14px 16px 10px;display:block;width:100%;text-align:left}
+.qc-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.qno{font-size:13px;color:var(--muted);font-weight:500;letter-spacing:.02em}
+.qc-name{font-size:21px;font-weight:700;line-height:1.3}
+.qc-name small{font-size:14px;color:var(--muted);font-weight:500;margin-left:6px}
+.qc-addr{display:flex;align-items:flex-start;gap:4px;color:var(--ink-2);font-size:15px;margin-top:4px}
+.qc-addr svg.i{width:17px;height:17px;margin-top:3px;color:var(--muted)}
+.qc-bottom{display:flex;justify-content:space-between;align-items:flex-end;margin-top:8px}
+.qc-date{font-size:14px;color:var(--muted)}
+.qc-total{font-size:25px;font-weight:900;color:var(--steel)}
+.qc-actions{display:flex;border-top:1px solid var(--line)}
+.qc-actions button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;min-height:50px;font-weight:700;font-size:15px;color:var(--ink-2)}
+.qc-actions button+button{border-left:1px solid var(--line)}
+.qc-actions button:active{background:var(--slate-pale)}
+.qc-actions .pri{color:var(--orange-dark)}
+.badge{display:inline-flex;align-items:center;height:28px;padding:0 10px;border-radius:7px;font-size:14px;font-weight:700;white-space:nowrap}
+.s-draft{background:var(--slate-pale);color:var(--ink-2)}
+.s-sent{background:var(--blue-pale);color:var(--blue)}
+.s-signed{background:var(--orange-pale);color:var(--orange-dark)}
+.s-deposit{background:var(--yellow-pale);color:#9A6B00}
+.s-mid{background:#FFE5D0;color:#B54E00}
+.s-done{background:var(--green-pale);color:var(--green)}
+.s-lost{background:var(--red-pale);color:var(--red)}
+.empty{text-align:center;color:var(--muted);padding:40px 16px}
+.empty b{display:block;font-size:19px;color:var(--ink-2);margin-bottom:6px}
+.banner{display:flex;align-items:center;gap:10px;background:var(--yellow-pale);border:2px solid var(--yellow);border-radius:12px;padding:10px 14px;margin-top:12px;font-size:15px;font-weight:500}
+.banner button{margin-left:auto;font-weight:700;color:var(--orange-dark);white-space:nowrap;min-height:40px}
+.sec-title{display:flex;align-items:center;justify-content:space-between;font-size:15px;font-weight:700;color:var(--ink-2);margin:18px 0 8px;letter-spacing:.04em}
+
+/* ---------- Bottom nav ---------- */
+.bnav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--steel);display:flex;padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -2px 12px rgba(0,0,0,.15)}
+.bnav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:64px;color:var(--slate-light);font-size:13px;font-weight:700}
+.bnav button.on{color:var(--orange)}
+.bnav svg.i{width:25px;height:25px}
+
+/* ---------- Editor ---------- */
+.steps{position:sticky;top:calc(62px + env(safe-area-inset-top));z-index:15;background:var(--steel-700);}
+.steps .wrap{display:flex;gap:6px;padding-top:8px;padding-bottom:8px}
+.step{flex:1;min-height:50px;border-radius:10px;color:var(--slate-light);font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:6px;line-height:1.15;text-align:center}
+.step .n{width:24px;height:24px;border-radius:50%;border:2px solid currentColor;display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex:none}
+.step.on{background:var(--orange);color:#fff}
+.step.on .n{background:#fff;color:var(--orange);border-color:#fff}
+.pane{display:none;padding-top:14px}
+.pane.on{display:block}
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:14px;border:1px solid var(--line)}
+.card h3{margin:0 0 12px;font-size:18px;display:flex;align-items:center;gap:8px}
+.card h3 .bar{width:5px;height:20px;background:var(--orange);border-radius:3px}
+.fld{margin-bottom:14px}
+.fld:last-child{margin-bottom:0}
+.fld>label,.lbl{display:block;font-size:15px;font-weight:700;color:var(--ink-2);margin-bottom:6px}
+.fld .req{color:var(--orange-dark)}
+.inp{width:100%;min-height:var(--tap);border-radius:12px;border:2px solid var(--line);background:#fff;padding:10px 14px;font-size:18px;font-weight:500}
+.inp:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,122,0,.15)}
+.inp[readonly]{background:var(--slate-pale);color:var(--ink-2)}
+textarea.inp{min-height:150px;line-height:1.6;font-size:16px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hint{font-size:13px;color:var(--muted);margin-top:4px}
+.warn{background:var(--red-pale);color:var(--red);border-radius:10px;padding:10px 12px;font-size:15px;font-weight:700;margin-top:10px}
+.nextbar{display:flex;gap:10px;margin:6px 0 20px}
+.nextbar .btn{flex:1}
+
+.item{background:#fff;border-radius:var(--radius);border:2px solid var(--line);padding:12px;margin-bottom:12px;box-shadow:var(--shadow)}
+.item.flash{animation:flash 1s}
+@keyframes flash{0%{border-color:var(--orange);background:var(--orange-pale)}100%{border-color:var(--line);background:#fff}}
+.it-head{display:flex;gap:8px;align-items:flex-start}
+.it-no{flex:none;width:30px;height:30px;border-radius:8px;background:var(--steel);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:15px;margin-top:12px}
+.it-head .inp{font-weight:700}
+.icon-btn{flex:none;width:48px;height:var(--tap);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.icon-btn:active{background:var(--slate-pale)}
+.icon-btn.del{color:var(--red)}
+.it-grid{display:grid;grid-template-columns:1.35fr .75fr 1fr;gap:8px;margin-top:10px}
+.it-grid>div{min-width:0}
+.it-grid .lbl{font-size:13px;margin-bottom:3px}
+.stepper{display:flex;align-items:stretch;border:2px solid var(--line);border-radius:12px;overflow:hidden;height:var(--tap);background:#fff}
+.stepper button{width:40px;font-size:24px;font-weight:700;color:var(--steel-600);background:var(--slate-pale);flex:none}
+.stepper button:active{background:var(--slate-light)}
+.stepper input{flex:1;min-width:0;border:0;text-align:center;font-size:20px;font-weight:900;padding:0;background:#fff}
+.stepper input:focus{outline:none;background:var(--orange-pale)}
+.it-grid .inp{padding:8px 10px;font-size:17px}
+.it-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;flex-wrap:wrap}
+.it-sub{font-size:14px;color:var(--muted);font-weight:500;text-align:right;margin-left:auto}
+.it-sub b{display:block;font-size:22px;color:var(--ink);font-weight:900;line-height:1.2}
+.mini-link{font-size:14px;font-weight:700;color:var(--blue);min-height:40px;padding:0 4px}
+
+/* switch */
+.mat{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:4px 14px 4px 6px;border-radius:999px;border:2px solid var(--line);font-weight:700;font-size:16px;user-select:none;cursor:pointer;background:#fff}
+.mat input{display:none}
+.mat .tg{width:46px;height:28px;border-radius:999px;background:var(--slate-light);position:relative;transition:.15s;flex:none}
+.mat .tg::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.15s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.mat input:checked+.tg{background:var(--orange)}
+.mat input:checked+.tg::after{left:21px}
+.mat .on-t{display:none;color:var(--orange-dark)} .mat .off-t{color:var(--ink-2)}
+.mat input:checked~.on-t{display:inline} .mat input:checked~.off-t{display:none}
+.mat:has(input:checked){border-color:var(--orange);background:var(--orange-pale)}
+
+.add-row{display:grid;grid-template-columns:1fr;gap:10px;margin:4px 0 16px}
+.add-big{min-height:66px;font-size:19px;border:2.5px dashed var(--orange);background:var(--orange-pale);color:var(--orange-dark);border-radius:14px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:8px}
+.add-big svg.i{stroke-width:3}
+
+.pay-row{display:grid;grid-template-columns:76px 1fr auto;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.pay-row:last-of-type{border-bottom:0}
+.pay-row .pn{font-weight:700}
+.pct{display:flex;align-items:center;border:2px solid var(--line);border-radius:12px;height:var(--tap);overflow:hidden;background:#fff;max-width:130px}
+.pct input{width:100%;min-width:0;border:0;text-align:center;font-size:20px;font-weight:900;background:transparent}
+.pct input:focus{outline:none}
+.pct span{padding:0 12px;color:var(--muted);font-weight:700;background:var(--slate-pale);align-self:stretch;display:flex;align-items:center}
+.pay-amt{font-size:20px;font-weight:900;text-align:right;min-width:96px}
+.pay-sum{display:flex;justify-content:space-between;font-weight:700;margin-top:8px;font-size:15px;color:var(--ink-2)}
+
+/* bottom total bar */
+.totalbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--steel);color:#fff;padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -4px 16px rgba(0,0,0,.2)}
+.totalbar .wrap{display:flex;align-items:center;gap:12px;min-height:84px}
+.tb-total{flex:1;min-width:0}
+.tb-total small{display:block;color:var(--slate-light);font-size:14px;font-weight:500}
+.tb-total b{display:block;font-size:30px;font-weight:900;color:var(--orange);line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.totalbar .btn{min-height:60px;font-size:18px;padding:0 18px}
+
+/* ---------- Preview ---------- */
+.pv-status{display:flex;align-items:center;gap:10px;margin:14px 0 12px;flex-wrap:wrap}
+.pv-status .lbl{margin:0}
+.paper-wrap{overflow:hidden;margin:0 auto 16px;border-radius:4px;box-shadow:0 6px 24px rgba(22,33,42,.18)}
+.paper-scale{transform-origin:top left;width:794px}
+.actbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--steel);padding:10px 0 calc(10px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px rgba(0,0,0,.2)}
+.actbar .wrap{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:8px}
+.actbar .btn{min-height:62px;flex-direction:column;gap:2px;font-size:15px;padding:0 6px}
+.actbar .btn svg.i{width:24px;height:24px}
+
+/* ---------- A4 Paper (fixed px for export) ---------- */
+.paper{width:794px;min-height:1123px;background:#fff;color:#1A232B;padding:40px 44px 36px;font-size:13.5px;line-height:1.55;position:relative;font-family:"Noto Sans TC",sans-serif}
+.paper *{box-sizing:border-box}
+.pp-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.pp-co{display:flex;gap:14px;align-items:center;min-width:0}
+.pp-logo{width:72px;height:72px;border-radius:12px;background:#1C2730;color:#FF7A00;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;flex:none;overflow:hidden}
+.pp-logo img{width:100%;height:100%;object-fit:contain;background:#fff}
+.pp-coname{font-size:24px;font-weight:900;letter-spacing:.04em;color:#1C2730;line-height:1.3}
+.pp-coinfo{font-size:12.5px;color:#44525E;line-height:1.6}
+.pp-title{text-align:right;flex:none}
+.pp-title .t1{font-size:30px;font-weight:900;color:#1C2730;letter-spacing:.12em;line-height:1.2}
+.pp-title .t2{font-size:12px;font-weight:700;letter-spacing:.42em;color:#FF7A00;margin-top:2px}
+.pp-bar{height:5px;background:linear-gradient(90deg,#FF7A00 0 30%,#1C2730 30% 100%);margin:16px 0 18px;border-radius:2px}
+.pp-meta{display:grid;grid-template-columns:1.45fr 1fr;gap:0;border:1.5px solid #1C2730;border-radius:6px;overflow:hidden}
+.pp-meta .col{padding:10px 14px}
+.pp-meta .col+.col{border-left:1.5px solid #1C2730;background:#F4F6F8}
+.pp-kv{display:flex;gap:8px;padding:3px 0}
+.pp-kv .k{flex:none;width:68px;color:#5E7383;font-weight:700}
+.pp-kv .v{font-weight:700;color:#1A232B;word-break:break-all}
+.pp-kv .v.big{font-size:17px}
+.pp-sec{margin-top:20px}
+.pp-sec-t{font-size:14px;font-weight:900;color:#1C2730;display:flex;align-items:center;gap:8px;margin-bottom:8px;letter-spacing:.06em}
+.pp-sec-t::before{content:"";width:5px;height:16px;background:#FF7A00;border-radius:2px}
+.pp-tbl{width:100%;border-collapse:collapse;font-size:13px}
+.pp-tbl th{background:#1C2730;color:#fff;font-weight:700;padding:8px 8px;text-align:center;white-space:nowrap}
+.pp-tbl td{padding:8px 8px;border-bottom:1px solid #D3DBE2;vertical-align:middle}
+.pp-tbl tbody tr:nth-child(even) td{background:#F6F8FA}
+.pp-tbl .c{text-align:center} .pp-tbl .r{text-align:right;white-space:nowrap}
+.pp-tbl .nm{font-weight:700}
+.tag-m{display:inline-block;padding:1px 7px;border-radius:4px;font-size:11.5px;font-weight:700;border:1.5px solid #FF7A00;color:#D96500;white-space:nowrap}
+.tag-l{display:inline-block;padding:1px 7px;border-radius:4px;font-size:11.5px;font-weight:700;border:1.5px solid #A7B6C2;color:#5E7383;white-space:nowrap}
+.pp-sum{display:flex;justify-content:space-between;gap:20px;margin-top:12px;align-items:flex-start}
+.pp-legend{font-size:12px;color:#5E7383;padding-top:4px}
+.pp-totals{width:330px;flex:none}
+.pp-totals .ln{display:flex;justify-content:space-between;padding:4px 2px;font-weight:700;color:#44525E}
+.pp-totals .grand{display:flex;justify-content:space-between;align-items:center;background:#1C2730;color:#fff;border-radius:6px;padding:10px 14px;margin-top:6px}
+.pp-totals .grand b{font-size:24px;color:#FF9A3D;font-weight:900}
+.pp-totals .cn{text-align:right;font-size:12px;color:#44525E;margin-top:5px;font-weight:700}
+.pp-two{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+.pp-box{border:1.5px solid #D3DBE2;border-radius:6px;padding:10px 12px}
+.pp-pay td,.pp-pay th{padding:6px 8px}
+.pp-terms{margin:0;padding-left:20px;font-size:12.5px;color:#2B3A47}
+.pp-terms li{margin-bottom:2px}
+.pp-bank{display:flex;flex-wrap:wrap;gap:4px 22px;background:#FFF5EA;border:1.5px dashed #FF7A00;border-radius:6px;padding:10px 14px;font-size:13px}
+.pp-bank b{color:#1C2730}
+.pp-sign{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
+.pp-sign .box{border:1.5px solid #1C2730;border-radius:6px;padding:10px 14px;min-height:120px;position:relative}
+.pp-sign .st{font-weight:900;color:#1C2730;font-size:13.5px}
+.pp-sign .line{position:absolute;left:14px;right:14px;bottom:34px;border-bottom:1.5px solid #A7B6C2}
+.pp-sign .dt{position:absolute;left:14px;bottom:10px;font-size:12px;color:#5E7383}
+.pp-sign .who{position:absolute;right:14px;bottom:42px;font-size:15px;font-weight:700;color:#1C2730}
+.pp-foot{margin-top:18px;text-align:center;font-size:11.5px;color:#7D8B97;letter-spacing:.06em}
+
+/* ---------- Bottom sheet ---------- */
+.bs-bg{position:fixed;inset:0;background:rgba(10,16,22,.55);z-index:100;display:none;align-items:flex-end;justify-content:center}
+.bs-bg.on{display:flex}
+.bs{background:var(--bg);width:100%;max-width:760px;max-height:88vh;border-radius:20px 20px 0 0;display:flex;flex-direction:column;animation:up .2s ease-out;padding-bottom:env(safe-area-inset-bottom)}
+@keyframes up{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+.bs-head{display:flex;align-items:center;gap:8px;padding:12px 12px 10px 18px;background:var(--steel);color:#fff;border-radius:20px 20px 0 0}
+.bs-head b{flex:1;font-size:19px}
+.bs-body{overflow-y:auto;padding:14px 16px 20px;-webkit-overflow-scrolling:touch}
+.pick{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;min-height:64px}
+.pick:active{border-color:var(--orange);background:var(--orange-pale)}
+.pick .nm{flex:1;font-weight:700;font-size:17px;line-height:1.35}
+.pick .nm small{display:block;font-weight:500;font-size:13px;color:var(--muted)}
+.pick .pr{font-weight:900;font-size:18px;white-space:nowrap;text-align:right}
+.pick .pr small{display:block;font-size:13px;color:var(--muted);font-weight:500}
+.pick .plus{width:36px;height:36px;border-radius:10px;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.cat-h{font-size:14px;font-weight:900;color:var(--slate);margin:14px 0 6px;letter-spacing:.1em}
+.menu-btn{display:flex;align-items:center;gap:12px;width:100%;min-height:58px;padding:0 16px;background:#fff;border-radius:12px;margin-bottom:8px;font-weight:700;font-size:17px;border:2px solid var(--line);text-align:left}
+.menu-btn:active{background:var(--slate-pale)}
+.menu-btn.cur{border-color:var(--orange);background:var(--orange-pale)}
+.menu-btn.danger{color:var(--red)}
+
+/* ---------- Library / Settings ---------- */
+.lib-item{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;width:100%;text-align:left;min-height:64px;box-shadow:var(--shadow)}
+.lib-item .nm{flex:1;font-weight:700;line-height:1.35}
+.lib-item .nm small{display:block;font-weight:500;font-size:13px;color:var(--muted)}
+.lib-item .pr{font-weight:900;font-size:18px;white-space:nowrap}
+.lib-item .pr small{font-size:13px;font-weight:500;color:var(--muted)}
+.logo-row{display:flex;align-items:center;gap:14px}
+.logo-prev{width:84px;height:84px;border-radius:14px;background:var(--steel);color:var(--orange);display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:900;overflow:hidden;flex:none;border:2px solid var(--line)}
+.logo-prev img{width:100%;height:100%;object-fit:contain;background:#fff}
+.btn-col{display:flex;flex-direction:column;gap:8px;flex:1}
+.stat-line{font-size:14px;color:var(--muted);margin-top:8px}
+
+.toast{position:fixed;left:50%;bottom:calc(120px + env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:var(--steel-900);color:#fff;padding:12px 20px;border-radius:12px;font-weight:700;font-size:16px;z-index:200;opacity:0;pointer-events:none;transition:.2s;max-width:90vw;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.loading{position:fixed;inset:0;background:rgba(10,16,22,.6);z-index:300;display:none;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px;flex-direction:column;gap:14px}
+.loading.on{display:flex}
+.spin{width:44px;height:44px;border:5px solid rgba(255,255,255,.25);border-top-color:var(--orange);border-radius:50%;animation:sp 0.8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+#printHost{display:none}
+@media print{
+  @page{size:A4;margin:0}
+  body{background:#fff}
+  #app,.bnav,.toast,.bs-bg,.loading{display:none!important}
+  #printHost{display:block}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="view"></div>
+  <nav class="bnav" id="bnav">
+    <button data-act="go" data-to="#/home" data-nav="home"></button>
+    <button data-act="go" data-to="#/library" data-nav="library"></button>
+    <button data-act="go" data-to="#/settings" data-nav="settings"></button>
+  </nav>
+</div>
+<div class="bs-bg" id="bsBg"><div class="bs" role="dialog"><div class="bs-head"><b id="bsTitle"></b><button class="tb-btn" data-act="bsClose" aria-label="關閉"></button></div><div class="bs-body" id="bsBody"></div></div></div>
+<div class="toast" id="toast"></div>
+<div class="loading" id="loading"><div class="spin"></div><div id="loadingText">處理中…</div></div>
+<div id="printHost"></div>
+<input type="file" id="fileImport" accept="application/json,.json" hidden>
+<input type="file" id="fileLogo" accept="image/*" hidden>
+
+<script>
+'use strict';
+/* =========================================================
+   基本工具
+   ========================================================= */
+const LS_KEY = 'sjq_data_v1';
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = v => { const n = parseFloat(v); return isFinite(n) ? n : 0; };
+const money = n => '$' + Math.round(n || 0).toLocaleString('en-US');
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const pad = (n, l = 2) => String(n).padStart(l, '0');
+const today = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+const addDays = (ds, n) => { const d = new Date(ds + 'T00:00:00'); d.setDate(d.getDate() + n); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+const fmtDate = ds => ds ? ds.replace(/-/g, '/') : '';
+const fmtQty = n => (Math.round(n * 100) / 100).toLocaleString('en-US');
+
+const I = {
+  plus:'<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+  edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+  eye:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/>',
+  more:'<circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/><circle cx="5" cy="12" r="1.2"/>',
+  pin:'<path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/>',
+  back:'<polyline points="15 18 9 12 15 6"/>',
+  next:'<polyline points="9 18 15 12 9 6"/>',
+  trash:'<polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>',
+  image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
+  file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/>',
+  chat:'<path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-4-.9L3 21l1.9-4.6A8.4 8.4 0 0 1 3 11.5 8.5 8.5 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5Z"/>',
+  list:'<line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>',
+  tool:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/>',
+  copy:'<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  search:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+  download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+  upload:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
+  x:'<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+  star:'<polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/>',
+  flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
+  check:'<polyline points="20 6 9 17 4 12"/>',
+};
+const icon = n => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${I[n] || ''}</svg>`;
+
+const STATUS = {
+  draft:  { t:'草稿', c:'s-draft' },
+  sent:   { t:'已送出・待簽約', c:'s-sent' },
+  signed: { t:'已簽約・待收訂金', c:'s-signed' },
+  deposit:{ t:'已付訂金', c:'s-deposit' },
+  mid:    { t:'待收尾款', c:'s-mid' },
+  done:   { t:'已結案', c:'s-done' },
+  lost:   { t:'未成交', c:'s-lost' },
+};
+const badge = s => `<span class="badge ${STATUS[s]?.c || 's-draft'}">${STATUS[s]?.t || '草稿'}</span>`;
+
+/* =========================================================
+   預設資料
+   ========================================================= */
+const DEFAULT_TERMS = [
+  '本報價單有效期限為 30 天，逾期請重新報價。',
+  '報價範圍以本單所列項目為準，額外追加項目另行報價，經雙方確認後施作。',
+  '標示「含料」之項目已包含材料費；「純工資」項目之材料由業主自備或另行計價。',
+  '施工中如遇隱藏性管線損壞、結構問題等不可預期狀況，將與業主協商後另行處理。',
+  '款項請依付款條件準時支付，尾款於完工驗收後 3 日內付清。',
+  '保固範圍不含人為損壞、天災及非本行施作之部分。',
+].join('\n');
+
+function defaultLibrary() {
+  const L = [
+    ['水電','電路重拉與配線',350,'米',true],
+    ['水電','新增插座／開關',1800,'處',true],
+    ['水電','冷氣專用迴路（220V）',3500,'迴',true],
+    ['水電','總開關箱（配電箱）更換',12000,'式',true],
+    ['水電','冷熱水管更新（不鏽鋼壓接）',900,'米',true],
+    ['水電','熱水器安裝',3000,'台',false],
+    ['水電','馬桶安裝',2500,'座',false],
+    ['水電','面盆／龍頭更換',1500,'組',false],
+    ['水電','燈具安裝',500,'盞',false],
+    ['水電','漏水檢測',2500,'次',false],
+    ['冷氣','分離式冷氣安裝（標準）',3500,'台',false],
+    ['冷氣','冷媒銅管加長',800,'米',true],
+    ['冷氣','室外機架（含安裝）',1500,'組',true],
+    ['冷氣','牆面打洞＋排水管',1000,'處',true],
+    ['冷氣','舊機拆除回收',1500,'台',false],
+    ['冷氣','冷氣保養清洗',2000,'台',false],
+    ['油漆','牆面漆面處理（刷塗）',1200,'坪',true],
+    ['油漆','天花板油漆',1000,'坪',true],
+    ['油漆','批土整平',600,'坪',true],
+    ['油漆','壁癌處理',2500,'坪',true],
+    ['油漆','防水塗佈',2800,'坪',true],
+    ['雜項','現場保護及完工清潔',3000,'式',true],
+    ['雜項','廢料清運',3500,'車',false],
+    ['雜項','假日／夜間加班',2000,'工',false],
+  ];
+  return L.map(([cat, name, price, unit, material]) => ({ id: uid(), cat, name, price, unit, material }));
+}
+
+function defaultData() {
+  return {
+    settings: {
+      company:'勝傑水電工程行', owner:'阿傑師傅', phone:'0912-345-678', lineId:'',
+      address:'新北市板橋區', taxId:'', logo:'',
+      bank:'', bankCode:'', account:'', accountName:'',
+      payDep:30, payMid:40, payFin:30,
+      warranty:'全室線路保固 1 年', days:3, validDays:30, terms: DEFAULT_TERMS, tax:false,
+    },
+    library: defaultLibrary(),
+    quotes: [],
+    meta: { lastBackup: null, created: today() },
+  };
+}
+
+function load() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      const d = JSON.parse(raw);
+      const def = defaultData();
+      return { settings: { ...def.settings, ...(d.settings || {}) }, library: d.library || def.library, quotes: d.quotes || [], meta: { ...def.meta, ...(d.meta || {}) } };
+    }
+  } catch (e) { console.warn(e); }
+  return defaultData();
+}
+let DB = load();
+let saveTimer = null;
+function save(now) {
+  clearTimeout(saveTimer);
+  const doit = () => {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(DB)); flashSaved(); }
+    catch (e) { toast('⚠ 儲存失敗：瀏覽器空間不足，請先匯出備份'); }
+  };
+  if (now) doit(); else saveTimer = setTimeout(doit, 300);
+}
+function flashSaved() { const t = $('#savedTag'); if (t) { t.textContent = '✓ 已自動儲存'; } }
+
+/* =========================================================
+   計算
+   ========================================================= */
+function calc(q) {
+  const sub = q.items.reduce((s, it) => s + num(it.qty) * num(it.price), 0);
+  const disc = Math.max(0, num(q.discount));
+  const base = Math.max(0, sub - disc);
+  const tax = q.tax ? Math.round(base * 0.05) : 0;
+  const total = Math.round(base + tax);
+  const p = q.pay || {};
+  const pd = num(p.dep), pm = num(p.mid), pf = num(p.fin);
+  const pctSum = pd + pm + pf;
+  const dep = Math.round(total * pd / 100);
+  const mid = Math.round(total * pm / 100);
+  const fin = Math.abs(pctSum - 100) < 0.001 ? total - dep - mid : Math.round(total * pf / 100);
+  return { sub, disc, tax, total, dep, mid, fin, pctSum };
+}
+function receivable(q) {
+  const c = calc(q);
+  if (q.status === 'signed') return c.total;
+  if (q.status === 'deposit') return c.total - c.dep;
+  if (q.status === 'mid') return c.fin;
+  return 0;
+}
+function cnMoney(n) {
+  n = Math.round(n);
+  if (n <= 0) return '新台幣 零元整';
+  const D = '零壹貳參肆伍陸柒捌玖', U = ['仟','佰','拾',''], G = ['','萬','億','兆'];
+  const grp = g => {
+    const d = [Math.floor(g / 1000), Math.floor(g / 100) % 10, Math.floor(g / 10) % 10, g % 10];
+    let s = '', zero = false, started = false;
+    d.forEach((x, i) => { if (x === 0) { if (started) zero = true; } else { if (zero) s += '零'; zero = false; s += D[x] + U[i]; started = true; } });
+    return s;
+  };
+  const groups = []; while (n > 0) { groups.unshift(n % 10000); n = Math.floor(n / 10000); }
+  let out = '', pend = false;
+  groups.forEach((g, i) => {
+    const unit = G[groups.length - 1 - i];
+    if (g === 0) { if (out) pend = true; return; }
+    if (out && (pend || g < 1000)) out += '零';
+    out += grp(g) + unit; pend = false;
+  });
+  return '新台幣 ' + out + '元整';
+}
+function genNo(dateStr) {
+  const prefix = 'QUO-' + dateStr.replace(/-/g, '') + '-';
+  let max = 0;
+  DB.quotes.forEach(q => { if (q.no && q.no.startsWith(prefix)) max = Math.max(max, parseInt(q.no.slice(prefix.length)) || 0); });
+  return prefix + pad(max + 1, 3);
+}
+
+/* =========================================================
+   UI 共用
+   ========================================================= */
+let toastTimer;
+function toast(msg, ms = 2200) {
+  const t = $('#toast'); t.textContent = msg; t.classList.add('on');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('on'), ms);
+}
+function loading(on, text = '處理中…') { $('#loadingText').textContent = text; $('#loading').classList.toggle('on', on); }
+function openSheet(title, html) {
+  $('#bsTitle').textContent = title; $('#bsBody').innerHTML = html;
+  $('#bsBg').classList.add('on'); $('#bsBody').scrollTop = 0;
+}
+function closeSheet() { $('#bsBg').classList.remove('on'); $('#bsBody').innerHTML = ''; }
+$('#bsBg').addEventListener('click', e => { if (e.target.id === 'bsBg') closeSheet(); });
+$('.bs-head button').innerHTML = icon('x');
+const logoHTML = (cls) => DB.settings.logo ? `<div class="${cls}"><img src="${DB.settings.logo}" alt=""></div>` : `<div class="${cls}">${esc((DB.settings.company || '工')[0])}</div>`;
+
+/* =========================================================
+   Router
+   ========================================================= */
+let page = '', cur = null, step = 1;
+const listState = { q: '', f: 'all' };
+function route() {
+  const [, p = 'home', id] = (location.hash || '#/home').slice(1).split('/');
+  // 離開編輯頁時，清掉完全空白的新單
+  if (page === 'edit' && cur && !(p === 'preview' && id === cur.id) && !(p === 'edit' && id === cur.id)) {
+    if (!cur.client && cur.items.length === 0) { DB.quotes = DB.quotes.filter(x => x.id !== cur.id); save(true); }
+  }
+  page = p;
+  window.scrollTo(0, 0);
+  const nav = $('#bnav');
+  nav.style.display = ['home', 'library', 'settings'].includes(p) ? 'flex' : 'none';
+  $$('[data-nav]', nav).forEach(b => b.classList.toggle('on', b.dataset.nav === p));
+  if (p === 'edit') { const q = DB.quotes.find(x => x.id === id); if (!q) return (location.hash = '#/home'); cur = q; renderEditor(); }
+  else if (p === 'preview') { const q = DB.quotes.find(x => x.id === id); if (!q) return (location.hash = '#/home'); cur = q; renderPreview(); }
+  else if (p === 'library') renderLibrary();
+  else if (p === 'settings') renderSettings();
+  else { page = 'home'; renderHome(); }
+}
+(function initNav() {
+  const b = $$('#bnav button');
+  b[0].innerHTML = icon('list') + '報價單';
+  b[1].innerHTML = icon('tool') + '常用工料庫';
+  b[2].innerHTML = icon('gear') + '設定／備份';
+})();
+
+/* =========================================================
+   頁面 1：首頁（儀表板 + 列表）
+   ========================================================= */
+function renderHome() {
+  const s = DB.settings;
+  const ym = today().slice(0, 7);
+  const live = DB.quotes.filter(q => q.status !== 'lost');
+  const month = live.filter(q => (q.date || '').startsWith(ym));
+  const monthAmt = month.reduce((a, q) => a + calc(q).total, 0);
+  const pending = DB.quotes.filter(q => q.status === 'sent' || q.status === 'draft');
+  const pendingAmt = pending.reduce((a, q) => a + calc(q).total, 0);
+  const recv = DB.quotes.filter(q => ['signed', 'deposit', 'mid'].includes(q.status));
+  const recvAmt = recv.reduce((a, q) => a + receivable(q), 0);
+  const won = month.filter(q => ['signed', 'deposit', 'mid', 'done'].includes(q.status));
+  const wonAmt = won.reduce((a, q) => a + calc(q).total, 0);
+
+  let banner = '';
+  const lb = DB.meta.lastBackup;
+  const daysSince = lb ? Math.floor((Date.now() - new Date(lb).getTime()) / 864e5) : null;
+  if (DB.quotes.length >= 3 && (daysSince === null || daysSince >= 14)) {
+    banner = `<div class="banner">${icon('flag')}<span>${daysSince === null ? '尚未備份過資料' : `已 ${daysSince} 天沒備份`}，換手機或清除瀏覽器會遺失</span><button data-act="exportBackup">立即備份</button></div>`;
+  }
+
+  $('#view').innerHTML = `
+  <header class="topbar"><div class="wrap">
+    ${logoHTML('brand-logo')}
+    <h1>${esc(s.company || '我的工程行')}<span class="sub">工程報價單管理</span></h1>
+  </div></header>
+  <div class="wrap">
+    <button class="hero-btn" data-act="new">${icon('plus')}快速開立報價單</button>
+    ${banner}
+    <div class="kpis">
+      <button class="kpi k1" data-act="kpi" data-f="all"><div class="lab">本月報價總額</div><div class="num">${money(monthAmt)}</div><div class="cnt">${month.length} 張報價單</div></button>
+      <button class="kpi k2" data-act="kpi" data-f="pending"><div class="lab">待簽約</div><div class="num">${money(pendingAmt)}</div><div class="cnt">${pending.length} 案（含草稿）</div></button>
+      <button class="kpi k3" data-act="kpi" data-f="recv"><div class="lab">待收款</div><div class="num">${money(recvAmt)}</div><div class="cnt">${recv.length} 案收款中</div></button>
+      <button class="kpi k4" data-act="kpi" data-f="won"><div class="lab">本月成交</div><div class="num">${money(wonAmt)}</div><div class="cnt">${won.length} 案</div></button>
+    </div>
+    <div class="search">${icon('search')}<input type="search" id="qSearch" placeholder="搜尋客戶、電話、地址、單號" value="${esc(listState.q)}"></div>
+    <div class="chips" id="qChips"></div>
+    <div id="qList"></div>
+  </div>`;
+  $('#qSearch').addEventListener('input', e => { listState.q = e.target.value; renderList(); });
+  renderList();
+}
+const FILTERS = [
+  ['all', '全部'], ['draft', '草稿'], ['pending', '待簽約'], ['recv', '收款中'], ['done', '已結案'], ['lost', '未成交'],
+];
+function matchFilter(q, f) {
+  switch (f) {
+    case 'draft': return q.status === 'draft';
+    case 'pending': return q.status === 'sent' || q.status === 'draft';
+    case 'recv': return ['signed', 'deposit', 'mid'].includes(q.status);
+    case 'won': return ['signed', 'deposit', 'mid', 'done'].includes(q.status) && (q.date || '').startsWith(today().slice(0, 7));
+    case 'done': return q.status === 'done';
+    case 'lost': return q.status === 'lost';
+    default: return true;
+  }
+}
+function renderList() {
+  const chips = $('#qChips'); if (!chips) return;
+  const f = listState.f;
+  const extra = f === 'won' ? [['won', '本月成交']] : [];
+  chips.innerHTML = [...FILTERS, ...extra].map(([k, t]) => `<button class="chip ${f === k ? 'on' : ''}" data-act="filter" data-f="${k}">${t} <span style="opacity:.7">${DB.quotes.filter(q => matchFilter(q, k)).length}</span></button>`).join('');
+  $$('.kpi').forEach(k => k.classList.toggle('on', k.dataset.f === f && f !== 'all'));
+  const kw = listState.q.trim().toLowerCase();
+  const list = DB.quotes
+    .filter(q => matchFilter(q, f))
+    .filter(q => !kw || [q.client, q.phone, q.address, q.no, q.project].some(v => String(v || '').toLowerCase().includes(kw)))
+    .sort((a, b) => (b.date || '').localeCompare(a.date || '') || (b.no || '').localeCompare(a.no || ''));
+  if (!DB.quotes.length) {
+    $('#qList').innerHTML = `<div class="empty"><b>還沒有報價單</b>按上方「＋ 快速開立報價單」<br>現場 1 分鐘開出第一張！</div>`; return;
+  }
+  if (!list.length) { $('#qList').innerHTML = `<div class="empty"><b>找不到符合的報價單</b>換個關鍵字或篩選條件試試</div>`; return; }
+  $('#qList').innerHTML = list.map(q => {
+    const c = calc(q);
+    const r = receivable(q);
+    return `<div class="qcard">
+      <button class="main" data-act="go" data-to="#/preview/${q.id}">
+        <div class="qc-top">${badge(q.status)}<span class="qno">${esc(q.no)}</span></div>
+        <div class="qc-name">${esc(q.client || '（未填客戶）')}${q.project ? `<small>${esc(q.project)}</small>` : ''}</div>
+        ${q.address ? `<div class="qc-addr">${icon('pin')}<span>${esc(q.address)}</span></div>` : ''}
+        <div class="qc-bottom"><div class="qc-date">${fmtDate(q.date)}・${q.items.length} 項${r ? `<br><span style="color:var(--orange-dark);font-weight:700">待收 ${money(r)}</span>` : ''}</div><div class="qc-total">${money(c.total)}</div></div>
+      </button>
+      <div class="qc-actions">
+        <button data-act="go" data-to="#/edit/${q.id}">${icon('edit')}編輯</button>
+        <button class="pri" data-act="go" data-to="#/preview/${q.id}">${icon('eye')}預覽／傳送</button>
+        <button data-act="qMenu" data-id="${q.id}">${icon('more')}更多</button>
+      </div></div>`;
+  }).join('');
+}
+
+function newQuote() {
+  const s = DB.settings, d = today();
+  const q = {
+    id: uid(), no: genNo(d), date: d, status: 'draft',
+    client: '', phone: '', address: '', project: '',
+    items: [], discount: 0, tax: !!s.tax,
+    pay: { dep: num(s.payDep), mid: num(s.payMid), fin: num(s.payFin) },
+    warranty: s.warranty, days: s.days, validDays: s.validDays, terms: s.terms,
+    createdAt: Date.now(), updatedAt: Date.now(),
+  };
+  DB.quotes.push(q); save(true);
+  step = 1;
+  location.hash = '#/edit/' + q.id;
+}
+function duplicateQuote(id) {
+  const src = DB.quotes.find(x => x.id === id); if (!src) return;
+  const d = today();
+  const q = JSON.parse(JSON.stringify(src));
+  Object.assign(q, { id: uid(), no: genNo(d), date: d, status: 'draft', createdAt: Date.now(), updatedAt: Date.now() });
+  q.items.forEach(it => it.id = uid());
+  DB.quotes.push(q); save(true);
+  toast('已複製成新報價單'); step = 1;
+  location.hash = '#/edit/' + q.id;
+}
+function quoteMenu(id) {
+  const q = DB.quotes.find(x => x.id === id); if (!q) return;
+  openSheet(`${q.client || '報價單'}・${q.no}`, `
+    <div class="cat-h">變更狀態</div>
+    ${Object.entries(STATUS).map(([k, v]) => `<button class="menu-btn ${q.status === k ? 'cur' : ''}" data-act="setStatus" data-id="${id}" data-s="${k}"><span class="badge ${v.c}">${v.t}</span>${q.status === k ? `<span style="margin-left:auto;color:var(--orange)">${icon('check')}</span>` : ''}</button>`).join('')}
+    <div class="cat-h">其他操作</div>
+    <button class="menu-btn" data-act="dup" data-id="${id}">${icon('copy')}複製成新報價單</button>
+    ${q.phone ? `<a class="menu-btn" href="tel:${esc(q.phone.replace(/[^\d+]/g, ''))}" style="text-decoration:none;color:inherit">${icon('chat')}撥打給客戶 ${esc(q.phone)}</a>` : ''}
+    <button class="menu-btn danger" data-act="delQuote" data-id="${id}">${icon('trash')}刪除這張報價單</button>
+  `);
+}
+
+/* =========================================================
+   頁面 2：編輯頁
+   ========================================================= */
+function renderEditor() {
+  const q = cur;
+  $('#view').innerHTML = `
+  <header class="topbar"><div class="wrap">
+    <button class="tb-btn" data-act="go" data-to="#/home" aria-label="返回">${icon('back')}</button>
+    <h1>${esc(q.no)}<span class="sub" id="savedTag">自動儲存中</span></h1>
+    <button class="tb-btn ghost" data-act="qMenu" data-id="${q.id}">${icon('more')}</button>
+  </div></header>
+  <div class="steps"><div class="wrap">
+    <button class="step" data-act="step" data-n="1"><span class="n">1</span>客戶資料</button>
+    <button class="step" data-act="step" data-n="2"><span class="n">2</span>工料項目<span id="itemCnt"></span></button>
+    <button class="step" data-act="step" data-n="3"><span class="n">3</span>付款保固</button>
+  </div></div>
+  <div class="wrap">
+    <!-- STEP 1 -->
+    <section class="pane" data-pane="1">
+      <div class="card"><h3><span class="bar"></span>報價資訊</h3>
+        <div class="row2">
+          <div class="fld"><label>報價單編號</label><input class="inp" data-f="no" value="${esc(q.no)}" style="font-size:16px"></div>
+          <div class="fld"><label>報價日期</label><input class="inp" type="date" data-f="date" value="${esc(q.date)}" style="font-size:16px"></div>
+        </div>
+        <div class="hint">編號與日期已自動產生，一般不用改。</div>
+      </div>
+      <div class="card"><h3><span class="bar"></span>客戶與案場</h3>
+        <div class="fld"><label>客戶姓名／公司名稱 <span class="req">*</span></label><input class="inp" data-f="client" value="${esc(q.client)}" placeholder="例：陳小姐、宏達科技" autocomplete="off"></div>
+        <div class="fld"><label>聯絡電話</label><input class="inp" type="tel" inputmode="tel" data-f="phone" value="${esc(q.phone)}" placeholder="0912-345-678"></div>
+        <div class="fld"><label>施工地址</label><input class="inp" data-f="address" value="${esc(q.address)}" placeholder="例：板橋區文化路一段 100 號 5 樓"></div>
+        <div class="fld"><label>工程名稱（選填）</label><input class="inp" data-f="project" value="${esc(q.project)}" placeholder="例：浴室水電翻修、客廳冷氣安裝"></div>
+      </div>
+      <div class="nextbar"><button class="btn btn-dark btn-block" data-act="step" data-n="2">下一步：工料項目 ${icon('next')}</button></div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="pane" data-pane="2">
+      <div id="items"></div>
+      <div class="add-row">
+        <button class="add-big" data-act="picker">${icon('plus')}新增項目（從常用工料庫點選）</button>
+        <button class="btn btn-outline btn-block" data-act="addBlank">${icon('edit')}自訂空白項目</button>
+      </div>
+      <div class="nextbar">
+        <button class="btn btn-outline" data-act="step" data-n="1">${icon('back')}上一步</button>
+        <button class="btn btn-dark" data-act="step" data-n="3">下一步 ${icon('next')}</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="pane" data-pane="3">
+      <div class="card"><h3><span class="bar"></span>金額調整</h3>
+        <div class="row2">
+          <div class="fld"><label>優惠折讓（元）</label><input class="inp" type="number" inputmode="numeric" data-f="discount" value="${q.discount || ''}" placeholder="0"></div>
+          <div class="fld"><label>營業稅 5%</label>
+            <label class="mat" style="width:100%;justify-content:flex-start"><input type="checkbox" data-f="tax" ${q.tax ? 'checked' : ''}><span class="tg"></span><span class="on-t">外加 5% 稅</span><span class="off-t">未稅</span></label>
+          </div>
+        </div>
+        <div class="hint" id="sumHint"></div>
+      </div>
+      <div class="card"><h3><span class="bar"></span>付款條件（三期請款）</h3>
+        <div class="chips" style="padding-bottom:6px">
+          ${[[30,40,30],[30,30,40],[50,0,50],[30,0,70],[20,50,30],[100,0,0]].map(([a,b,c]) => `<button class="chip orange ${q.pay.dep===a&&q.pay.mid===b&&q.pay.fin===c?'on':''}" data-act="payPreset" data-p="${a},${b},${c}">${a}/${b}/${c}</button>`).join('')}
+        </div>
+        <div class="pay-row"><div class="pn">訂金</div><div class="pct"><input type="number" inputmode="numeric" data-f="pay.dep" value="${q.pay.dep}"><span>%</span></div><div class="pay-amt" id="amtDep"></div></div>
+        <div class="pay-row"><div class="pn">中期款</div><div class="pct"><input type="number" inputmode="numeric" data-f="pay.mid" value="${q.pay.mid}"><span>%</span></div><div class="pay-amt" id="amtMid"></div></div>
+        <div class="pay-row"><div class="pn">尾款</div><div class="pct"><input type="number" inputmode="numeric" data-f="pay.fin" value="${q.pay.fin}"><span>%</span></div><div class="pay-amt" id="amtFin"></div></div>
+        <div class="pay-sum"><span>比例合計 <span id="pctSum"></span></span><span>總金額 <span id="payTotal"></span></span></div>
+        <div id="payWarn"></div>
+      </div>
+      <div class="card"><h3><span class="bar"></span>保固與工期</h3>
+        <div class="fld"><label>保固期限</label>
+          <div class="chips" style="padding-bottom:8px">
+            ${['保固 3 個月','保固 6 個月','全室線路保固 1 年','保固 1 年','保固 2 年','無保固'].map(w => `<button class="chip orange ${q.warranty===w?'on':''}" data-act="warranty" data-w="${w}">${w}</button>`).join('')}
+          </div>
+          <input class="inp" data-f="warranty" value="${esc(q.warranty)}" placeholder="可自行輸入，例：防水保固 2 年">
+        </div>
+        <div class="row2">
+          <div class="fld"><label>預估施工天數</label>
+            <div class="stepper"><button data-act="days" data-d="-1">−</button><input type="number" inputmode="numeric" data-f="days" value="${q.days}"><button data-act="days" data-d="1">＋</button></div>
+            <div class="hint">個工作天</div>
+          </div>
+          <div class="fld"><label>報價有效天數</label>
+            <input class="inp" type="number" inputmode="numeric" data-f="validDays" value="${q.validDays}">
+            <div class="hint">到期日 <span id="validTo"></span></div>
+          </div>
+        </div>
+      </div>
+      <div class="card"><h3><span class="bar"></span>施工條款／備註</h3>
+        <textarea class="inp" data-f="terms" placeholder="一行一條">${esc(q.terms)}</textarea>
+        <div class="hint">一行一條，報價單上會自動編號。預設條款可在「設定」修改。</div>
+      </div>
+      <div class="nextbar">
+        <button class="btn btn-outline" data-act="step" data-n="2">${icon('back')}上一步</button>
+        <button class="btn btn-primary" data-act="generate">${icon('file')}生成報價單</button>
+      </div>
+    </section>
+  </div>
+  <div class="totalbar"><div class="wrap">
+    <div class="tb-total"><small>目前總金額</small><b id="barTotal">$0</b></div>
+    <button class="btn btn-primary" data-act="generate">${icon('file')}生成報價單</button>
+  </div></div>`;
+  renderItems();
+  setStep(step);
+  updateTotals();
+}
+function setStep(n) {
+  step = n;
+  $$('.step').forEach(b => b.classList.toggle('on', +b.dataset.n === n));
+  $$('.pane').forEach(p => p.classList.toggle('on', +p.dataset.pane === n));
+  window.scrollTo(0, 0);
+}
+function renderItems() {
+  const box = $('#items'); if (!box) return;
+  const q = cur;
+  if (!q.items.length) {
+    box.innerHTML = `<div class="empty" style="padding:24px 10px 16px"><b>尚未加入工料項目</b>點下方橘色按鈕，從常用工料庫一鍵帶入</div>`;
+  } else {
+    box.innerHTML = q.items.map((it, i) => `
+    <div class="item" data-row="${i}">
+      <div class="it-head">
+        <div class="it-no">${i + 1}</div>
+        <input class="inp" data-i="${i}" data-k="name" value="${esc(it.name)}" placeholder="項目名稱">
+        <button class="icon-btn del" data-act="delItem" data-i="${i}" aria-label="刪除">${icon('trash')}</button>
+      </div>
+      <div class="it-grid">
+        <div><span class="lbl">數量</span><div class="stepper"><button data-act="qty" data-i="${i}" data-d="-1">−</button><input type="number" inputmode="decimal" step="any" data-i="${i}" data-k="qty" value="${it.qty}"><button data-act="qty" data-i="${i}" data-d="1">＋</button></div></div>
+        <div><span class="lbl">單位</span><input class="inp" data-i="${i}" data-k="unit" value="${esc(it.unit)}" list="unitList"></div>
+        <div><span class="lbl">單價</span><input class="inp" type="number" inputmode="numeric" data-i="${i}" data-k="price" value="${it.price}"></div>
+      </div>
+      <div class="it-foot">
+        <label class="mat"><input type="checkbox" data-i="${i}" data-k="material" ${it.material ? 'checked' : ''}><span class="tg"></span><span class="on-t">包含材料</span><span class="off-t">純工資</span></label>
+        <div class="it-sub">小計<b data-sub="${i}">${money(num(it.qty) * num(it.price))}</b></div>
+      </div>
+      ${it.fromLib ? '' : `<button class="mini-link" data-act="saveToLib" data-i="${i}">☆ 存入常用工料庫</button>`}
+    </div>`).join('') + `<datalist id="unitList">${['台','米','坪','處','式','組','座','盞','迴','次','工','車','樘','只','片','才','尺'].map(u => `<option value="${u}">`).join('')}</datalist>`;
+  }
+  const c = $('#itemCnt'); if (c) c.textContent = q.items.length ? `(${q.items.length})` : '';
+}
+function updateTotals() {
+  const q = cur; if (!q) return;
+  const c = calc(q);
+  const set = (id, v) => { const el = $('#' + id); if (el) el.textContent = v; };
+  set('barTotal', money(c.total));
+  set('amtDep', money(c.dep)); set('amtMid', money(c.mid)); set('amtFin', money(c.fin));
+  set('pctSum', c.pctSum + '%'); set('payTotal', money(c.total));
+  set('validTo', fmtDate(addDays(q.date || today(), num(q.validDays))));
+  set('sumHint', `項目合計 ${money(c.sub)}${c.disc ? `　折讓 −${money(c.disc)}` : ''}${c.tax ? `　稅金 +${money(c.tax)}` : ''}　＝ 總金額 ${money(c.total)}`);
+  const w = $('#payWarn'); if (w) w.innerHTML = Math.abs(c.pctSum - 100) > 0.001 ? `<div class="warn">⚠ 付款比例合計為 ${c.pctSum}%，應為 100%</div>` : '';
+  q.items.forEach((it, i) => { const el = $(`[data-sub="${i}"]`); if (el) el.textContent = money(num(it.qty) * num(it.price)); });
+}
+function touch() { cur.updatedAt = Date.now(); const t = $('#savedTag'); if (t) t.textContent = '儲存中…'; updateTotals(); save(); }
+function setPath(o, path, v) { const k = path.split('.'); let x = o; while (k.length > 1) x = x[k.shift()]; x[k[0]] = v; }
+
+const NUM_FIELDS = ['discount', 'days', 'validDays', 'pay.dep', 'pay.mid', 'pay.fin'];
+document.addEventListener('input', e => {
+  const el = e.target;
+  if (page !== 'edit' || !cur) return;
+  if (el.dataset.f) {
+    const f = el.dataset.f;
+    let v = el.type === 'checkbox' ? el.checked : el.value;
+    if (NUM_FIELDS.includes(f)) v = num(v);
+    setPath(cur, f, v);
+    if (f.startsWith('pay.')) $$('[data-act="payPreset"]').forEach(b => b.classList.toggle('on', b.dataset.p === `${cur.pay.dep},${cur.pay.mid},${cur.pay.fin}`));
+    if (f === 'warranty') $$('[data-act="warranty"]').forEach(b => b.classList.toggle('on', b.dataset.w === v));
+    touch();
+  } else if (el.dataset.k && el.dataset.i !== undefined) {
+    const it = cur.items[+el.dataset.i]; if (!it) return;
+    const k = el.dataset.k;
+    it[k] = el.type === 'checkbox' ? el.checked : (k === 'qty' || k === 'price') ? num(el.value) : el.value;
+    touch();
+  }
+});
+document.addEventListener('change', e => { if (e.target.type === 'checkbox') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
+
+function openPicker(filterCat = 'all', kw = '') {
+  const cats = [...new Set(DB.library.map(x => x.cat || '其他'))];
+  const k = kw.trim().toLowerCase();
+  const list = DB.library.filter(x => (filterCat === 'all' || (x.cat || '其他') === filterCat) && (!k || x.name.toLowerCase().includes(k)));
+  const groups = {};
+  list.forEach(x => (groups[x.cat || '其他'] ||= []).push(x));
+  const body = `
+    <div class="search" style="margin-top:0">${icon('search')}<input type="search" id="pkSearch" placeholder="搜尋品項" value="${esc(kw)}"></div>
+    <div class="chips">${['all', ...cats].map(c => `<button class="chip ${filterCat === c ? 'on' : ''}" data-act="pkCat" data-c="${esc(c)}">${c === 'all' ? '全部' : esc(c)}</button>`).join('')}</div>
+    <div id="pkList">${Object.keys(groups).length ? Object.entries(groups).map(([c, arr]) => `<div class="cat-h">${esc(c)}</div>` + arr.map(x => `
+      <button class="pick" data-act="pick" data-id="${x.id}">
+        <span class="nm">${esc(x.name)}<small>${x.material ? '含料' : '純工資'}</small></span>
+        <span class="pr">${money(x.price)}<small>/ ${esc(x.unit)}</small></span>
+        <span class="plus">${icon('plus')}</span>
+      </button>`).join('')).join('') : '<div class="empty">沒有符合的品項</div>'}</div>
+    <button class="btn btn-outline btn-block" style="margin-top:8px" data-act="addBlank">${icon('edit')}找不到？新增自訂項目</button>`;
+  if ($('#bsBg').classList.contains('on') && $('#pkSearch')) {
+    $('#bsBody').innerHTML = body;
+  } else openSheet('點選常用工料', body);
+  const s = $('#pkSearch');
+  s.dataset.cat = filterCat;
+  s.addEventListener('input', () => { const pos = s.value; openPicker(filterCat, pos); const n = $('#pkSearch'); n.focus(); n.setSelectionRange(pos.length, pos.length); });
+}
+function addItem(it) {
+  cur.items.push({ id: uid(), qty: 1, ...it });
+  touch(); renderItems();
+  const i = cur.items.length - 1;
+  const row = $(`[data-row="${i}"]`);
+  if (row) {
+    row.classList.add('flash');
+    row.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    const qi = $(`[data-i="${i}"][data-k="${it.name ? 'qty' : 'name'}"]`);
+    if (qi) setTimeout(() => { qi.focus(); qi.select && qi.select(); }, 250);
+  }
+}
+
+/* =========================================================
+   頁面 3：預覽與匯出
+   ========================================================= */
+let renderCache = { key: '', canvas: null, blob: null, breaks: [], h: 0 };
+function paperHTML(q) {
+  const s = DB.settings, c = calc(q);
+  const terms = String(q.terms || '').split('\n').map(t => t.trim()).filter(Boolean);
+  const anyMat = q.items.some(it => it.material), anyLab = q.items.some(it => !it.material);
+  const valid = addDays(q.date || today(), num(q.validDays));
+  const coInfo = [
+    s.owner && `負責人：${esc(s.owner)}`,
+    s.phone && `電話：${esc(s.phone)}`,
+    s.lineId && `LINE：${esc(s.lineId)}`,
+    s.taxId && `統編：${esc(s.taxId)}`,
+  ].filter(Boolean).join('　');
+  const payRows = [['訂金', q.pay.dep, c.dep, '簽約時支付'], ['中期款', q.pay.mid, c.mid, '施工進度過半'], ['尾款', q.pay.fin, c.fin, '完工驗收後']]
+    .filter(r => num(r[1]) > 0);
+  return `<div class="paper">
+    <div class="pp-head pb">
+      <div class="pp-co">
+        ${s.logo ? `<div class="pp-logo"><img src="${s.logo}" alt=""></div>` : `<div class="pp-logo">${esc((s.company || '工')[0])}</div>`}
+        <div>
+          <div class="pp-coname">${esc(s.company || '')}</div>
+          <div class="pp-coinfo">${coInfo}${s.address ? `<br>地址：${esc(s.address)}` : ''}</div>
+        </div>
+      </div>
+      <div class="pp-title"><div class="t1">工程報價單</div><div class="t2">QUOTATION</div></div>
+    </div>
+    <div class="pp-bar"></div>
+    <div class="pp-meta pb">
+      <div class="col">
+        <div class="pp-kv"><span class="k">客　　戶</span><span class="v big">${esc(q.client || '')}</span></div>
+        <div class="pp-kv"><span class="k">聯絡電話</span><span class="v">${esc(q.phone || '')}</span></div>
+        <div class="pp-kv"><span class="k">施工地址</span><span class="v">${esc(q.address || '')}</span></div>
+        ${q.project ? `<div class="pp-kv"><span class="k">工程名稱</span><span class="v">${esc(q.project)}</span></div>` : ''}
+      </div>
+      <div class="col">
+        <div class="pp-kv"><span class="k">報價單號</span><span class="v">${esc(q.no)}</span></div>
+        <div class="pp-kv"><span class="k">報價日期</span><span class="v">${fmtDate(q.date)}</span></div>
+        <div class="pp-kv"><span class="k">有效期限</span><span class="v">${fmtDate(valid)}</span></div>
+        <div class="pp-kv"><span class="k">預估工期</span><span class="v">${num(q.days) ? `約 ${num(q.days)} 個工作天` : '另議'}</span></div>
+      </div>
+    </div>
+
+    <div class="pp-sec">
+      <div class="pp-sec-t pb">工程項目明細</div>
+      <table class="pp-tbl">
+        <thead><tr class="pb"><th style="width:42px">項次</th><th style="text-align:left">施工項目</th><th style="width:62px">數量</th><th style="width:50px">單位</th><th style="width:90px">單價</th><th style="width:70px">含料</th><th style="width:104px">小計</th></tr></thead>
+        <tbody>${q.items.length ? q.items.map((it, i) => `<tr class="pb">
+          <td class="c">${i + 1}</td>
+          <td class="nm">${esc(it.name)}</td>
+          <td class="c">${fmtQty(num(it.qty))}</td>
+          <td class="c">${esc(it.unit)}</td>
+          <td class="r">${money(it.price)}</td>
+          <td class="c">${it.material ? '<span class="tag-m">✓ 含料</span>' : '<span class="tag-l">純工資</span>'}</td>
+          <td class="r"><b>${money(num(it.qty) * num(it.price))}</b></td>
+        </tr>`).join('') : `<tr><td colspan="7" class="c" style="color:#7D8B97;padding:20px">（尚無項目）</td></tr>`}</tbody>
+      </table>
+      <div class="pp-sum pb">
+        <div class="pp-legend">
+          ${anyMat ? '<div><span class="tag-m">✓ 含料</span>　單價已包含材料費</div>' : ''}
+          ${anyLab ? `<div style="margin-top:4px"><span class="tag-l">純工資</span>　僅含施工工資，材料另計或由業主自備</div>` : ''}
+        </div>
+        <div class="pp-totals">
+          <div class="ln"><span>項目合計</span><span>${money(c.sub)}</span></div>
+          ${c.disc ? `<div class="ln"><span>優惠折讓</span><span>−${money(c.disc)}</span></div>` : ''}
+          ${q.tax ? `<div class="ln"><span>營業稅 5%</span><span>${money(c.tax)}</span></div>` : ''}
+          <div class="grand"><span style="font-weight:700">總計${q.tax ? '（含稅）' : '（未稅）'}</span><b>${money(c.total)}</b></div>
+          <div class="cn">${cnMoney(c.total)}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pp-sec pp-two pb">
+      <div>
+        <div class="pp-sec-t">付款條件</div>
+        <table class="pp-tbl pp-pay">
+          <thead><tr><th>期別</th><th>比例</th><th>金額</th><th>請款時點</th></tr></thead>
+          <tbody>${payRows.map(r => `<tr><td class="c"><b>${r[0]}</b></td><td class="c">${num(r[1])}%</td><td class="r"><b>${money(r[2])}</b></td><td class="c">${r[3]}</td></tr>`).join('')}</tbody>
+        </table>
+      </div>
+      <div>
+        <div class="pp-sec-t">保固與工期</div>
+        <div class="pp-box">
+          <div class="pp-kv"><span class="k">保固期限</span><span class="v">${esc(q.warranty || '—')}</span></div>
+          <div class="pp-kv"><span class="k">預估工期</span><span class="v">${num(q.days) ? `約 ${num(q.days)} 個工作天` : '另議'}</span></div>
+          <div class="pp-kv"><span class="k">報價效期</span><span class="v">${num(q.validDays)} 天（至 ${fmtDate(valid)}）</span></div>
+        </div>
+      </div>
+    </div>
+
+    ${terms.length ? `<div class="pp-sec pb"><div class="pp-sec-t">施工條款／備註</div><ol class="pp-terms">${terms.map(t => `<li class="pb">${esc(t.replace(/^\d+[.、)]\s*/, ''))}</li>`).join('')}</ol></div>` : ''}
+
+    ${(s.bank || s.account) ? `<div class="pp-sec pb"><div class="pp-sec-t">匯款資訊</div><div class="pp-bank">
+      ${s.bank ? `<span>銀行：<b>${esc(s.bank)}${s.bankCode ? `（${esc(s.bankCode)}）` : ''}</b></span>` : ''}
+      ${s.account ? `<span>帳號：<b>${esc(s.account)}</b></span>` : ''}
+      ${s.accountName ? `<span>戶名：<b>${esc(s.accountName)}</b></span>` : ''}
+    </div></div>` : ''}
+
+    <div class="pp-sign pb">
+      <div class="box"><div class="st">客戶確認簽名</div><div style="font-size:11.5px;color:#7D8B97">本人已確認上述報價內容與付款條件</div><div class="line"></div><div class="dt">日期：　　　年　　月　　日</div></div>
+      <div class="box"><div class="st">報價人</div><div class="who">${esc(s.company || '')}　${esc(s.owner || '')}</div><div class="line"></div><div class="dt">日期：${fmtDate(q.date)}</div></div>
+    </div>
+    <div class="pp-foot pb">感謝您的信任與支持 ・ ${esc(s.company || '')}${s.phone ? ` ・ ${esc(s.phone)}` : ''}</div>
+  </div>`;
+}
+function renderPreview() {
+  const q = cur;
+  $('#view').innerHTML = `
+  <header class="topbar"><div class="wrap">
+    <button class="tb-btn" data-act="go" data-to="#/home" aria-label="返回">${icon('back')}</button>
+    <h1>報價單預覽<span class="sub">${esc(q.no)}</span></h1>
+    <button class="tb-btn ghost" data-act="go" data-to="#/edit/${q.id}">${icon('edit')}編輯</button>
+  </div></header>
+  <div class="wrap">
+    <div class="pv-status"><span class="lbl">狀態</span><button data-act="qMenu" data-id="${q.id}">${badge(q.status)}</button><span style="margin-left:auto;font-weight:900;font-size:20px">${money(calc(q).total)}</span></div>
+    <div class="paper-wrap" id="paperWrap"><div class="paper-scale" id="paperScale">${paperHTML(q)}</div></div>
+    <div class="hint" style="text-align:center;margin-bottom:10px">此為 A4 版面預覽，可直接截圖或用下方按鈕輸出</div>
+  </div>
+  <div class="actbar"><div class="wrap">
+    <button class="btn btn-dark" data-act="saveImg">${icon('image')}儲存圖片</button>
+    <button class="btn btn-dark" data-act="savePdf">${icon('download')}匯出 PDF</button>
+    <button class="btn btn-line" data-act="shareLine">${icon('chat')}一鍵 LINE 分享</button>
+  </div></div>`;
+  fitPaper();
+  // 背景預先產生圖片，讓分享按鈕可在使用者點擊時立即叫出分享選單
+  renderCache.key = '';
+  setTimeout(() => { if (page === 'preview') getRender().catch(() => {}); }, 600);
+}
+function fitPaper() {
+  const wrap = $('#paperWrap'), sc = $('#paperScale'); if (!wrap || !sc) return;
+  const avail = Math.min(794, $('#view .wrap').clientWidth - 32);
+  const k = avail / 794;
+  sc.style.transform = `scale(${k})`;
+  wrap.style.width = avail + 'px';
+  wrap.style.height = sc.firstElementChild.offsetHeight * k + 'px';
+}
+window.addEventListener('resize', () => { if (page === 'preview') fitPaper(); });
+
+const cacheKey = q => JSON.stringify([q, DB.settings]);
+async function getRender() {
+  const q = cur, key = cacheKey(q);
+  if (renderCache.key === key && renderCache.canvas) return renderCache;
+  if (!window.html2canvas) throw new Error('nolib');
+  if (document.fonts && document.fonts.ready) await document.fonts.ready;
+  const host = document.createElement('div');
+  host.style.cssText = 'position:absolute;left:-10000px;top:0;width:794px;background:#fff;';
+  host.innerHTML = paperHTML(q);
+  document.body.appendChild(host);
+  const el = host.firstElementChild;
+  // 分頁切點：每個 .pb 元素的上緣（避免把一列切成兩半）
+  const top0 = el.getBoundingClientRect().top;
+  const breaks = $$('.pb', el).map(n => n.getBoundingClientRect().top - top0).filter(v => v > 0);
+  const h = el.offsetHeight;
+  try {
+    const canvas = await html2canvas(el, { scale: 2.5, backgroundColor: '#ffffff', useCORS: true, logging: false, windowWidth: 1000, scrollX: 0, scrollY: 0 });
+    const blob = await new Promise(r => canvas.toBlob(r, 'image/png'));
+    renderCache = { key, canvas, blob, breaks, h };
+    return renderCache;
+  } finally { host.remove(); }
+}
+const fileBase = q => `報價單_${q.no}_${(q.client || '客戶').replace(/[\\/:*?"<>|\s]/g, '')}`;
+function downloadBlob(blob, name) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+const isMobile = () => /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent));
+function shareText(q) {
+  const s = DB.settings, c = calc(q);
+  return [
+    `【${s.company} 工程報價單】`,
+    `單號：${q.no}`,
+    `客戶：${q.client || ''}`,
+    q.address ? `地址：${q.address}` : '',
+    `總金額：${money(c.total)}${q.tax ? '（含稅）' : ''}`,
+    num(q.pay.dep) ? `訂金 ${q.pay.dep}%：${money(c.dep)}` : '',
+    num(q.pay.mid) ? `中期款 ${q.pay.mid}%：${money(c.mid)}` : '',
+    num(q.pay.fin) ? `尾款 ${q.pay.fin}%：${money(c.fin)}` : '',
+    q.warranty ? `保固：${q.warranty}` : '',
+    `報價有效至 ${fmtDate(addDays(q.date, num(q.validDays)))}`,
+    `如有問題歡迎來電 ${s.phone || ''}　${s.owner || ''}`,
+  ].filter(Boolean).join('\n');
+}
+function markSent() {
+  if (cur && cur.status === 'draft') { cur.status = 'sent'; save(true); const b = $('.pv-status button'); if (b) b.innerHTML = badge('sent'); }
+}
+async function withRender(text) {
+  const ready = renderCache.key === cacheKey(cur) && renderCache.canvas;
+  if (!ready) loading(true, text);
+  try { return await getRender(); }
+  catch (e) {
+    loading(false);
+    if (e.message === 'nolib') { toast('匯出元件未載入（可能沒網路），改用列印功能'); printPaper(); }
+    else toast('產生圖片失敗：' + e.message);
+    return null;
+  } finally { loading(false); }
+}
+async function saveImage() {
+  const r = await withRender('產生高畫質圖片中…'); if (!r) return;
+  const name = fileBase(cur) + '.png';
+  const file = new File([r.blob], name, { type: 'image/png' });
+  if (isMobile() && navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file] }); return; }
+    catch (e) { if (e.name === 'AbortError') return; }
+  }
+  downloadBlob(r.blob, name); toast('圖片已下載');
+}
+async function savePdf() {
+  const r = await withRender('產生 PDF 中…'); if (!r) return;
+  if (!window.jspdf) { printPaper(); return; }
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+  const PW = 210, PH = 297, M = 12;              // mm
+  const pxPerMm = 794 / PW;                     // css px / mm
+  const k = r.canvas.width / 794;               // canvas px / css px
+  let y = 0, first = true;
+  while (y < r.h - 2) {
+    const topM = first ? 0 : M;
+    const avail = (PH - topM - M) * pxPerMm;
+    let end = y + avail;
+    if (end < r.h) {
+      const cands = r.breaks.filter(b => b > y + 80 && b <= end);
+      if (cands.length) end = Math.max(...cands);
+    } else end = r.h;
+    const slice = document.createElement('canvas');
+    slice.width = r.canvas.width; slice.height = Math.ceil((end - y) * k);
+    const ctx = slice.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, slice.width, slice.height);
+    ctx.drawImage(r.canvas, 0, Math.floor(y * k), slice.width, slice.height, 0, 0, slice.width, slice.height);
+    if (!first) pdf.addPage();
+    pdf.addImage(slice.toDataURL('image/jpeg', 0.93), 'JPEG', 0, topM, PW, (end - y) / pxPerMm);
+    y = end; first = false;
+  }
+  const name = fileBase(cur) + '.pdf';
+  const blob = pdf.output('blob');
+  const file = new File([blob], name, { type: 'application/pdf' });
+  if (isMobile() && navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file] }); return; }
+    catch (e) { if (e.name === 'AbortError') return; }
+  }
+  downloadBlob(blob, name); toast('PDF 已下載');
+}
+async function shareLine() {
+  const r = await withRender('準備分享圖片…'); if (!r) return;
+  const q = cur, text = shareText(q);
+  const file = new File([r.blob], fileBase(q) + '.png', { type: 'image/png' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file], text });
+      markSent(); toast('已送出，狀態改為「已送出・待簽約」'); return;
+    } catch (e) {
+      if (e.name === 'AbortError') return;
+      if (e.name === 'NotAllowedError') { toast('圖片已準備好，請再按一次「LINE 分享」'); return; }
+    }
+  }
+  // 電腦版或不支援分享：下載圖片 + 開啟 LINE 文字分享
+  downloadBlob(r.blob, fileBase(q) + '.png');
+  window.open('https://line.me/R/share?text=' + encodeURIComponent(text), '_blank');
+  markSent();
+  toast('圖片已下載，請在 LINE 聊天室附加圖片', 3500);
+}
+function printPaper() {
+  $('#printHost').innerHTML = paperHTML(cur);
+  setTimeout(() => { window.print(); }, 300);
+}
+
+/* =========================================================
+   頁面 4：常用工料庫
+   ========================================================= */
+let libCat = 'all';
+function renderLibrary() {
+  const cats = [...new Set(DB.library.map(x => x.cat || '其他'))];
+  if (libCat !== 'all' && !cats.includes(libCat)) libCat = 'all';
+  const list = DB.library.filter(x => libCat === 'all' || (x.cat || '其他') === libCat);
+  const groups = {}; list.forEach(x => (groups[x.cat || '其他'] ||= []).push(x));
+  $('#view').innerHTML = `
+  <header class="topbar"><div class="wrap"><h1>常用工料庫<span class="sub">預設好單價，開單時一點就帶入</span></h1></div></header>
+  <div class="wrap">
+    <button class="hero-btn" style="min-height:64px;font-size:20px" data-act="libEdit">${icon('plus')}新增常用項目</button>
+    <div class="chips" style="margin-top:12px">${['all', ...cats].map(c => `<button class="chip ${libCat === c ? 'on' : ''}" data-act="libCat" data-c="${esc(c)}">${c === 'all' ? '全部' : esc(c)} <span style="opacity:.7">${c === 'all' ? DB.library.length : DB.library.filter(x => (x.cat || '其他') === c).length}</span></button>`).join('')}</div>
+    ${Object.entries(groups).map(([c, arr]) => `<div class="sec-title">${esc(c)}</div>` + arr.map(x => `
+      <button class="lib-item" data-act="libEdit" data-id="${x.id}">
+        <span class="nm">${esc(x.name)}<small>${x.material ? '✓ 含料' : '純工資'}</small></span>
+        <span class="pr">${money(x.price)} <small>/ ${esc(x.unit)}</small></span>
+        <span style="color:var(--muted)">${icon('edit')}</span>
+      </button>`).join('')).join('') || '<div class="empty"><b>工料庫是空的</b>新增你最常報價的項目吧</div>'}
+  </div>`;
+}
+function libEditor(id) {
+  const x = id ? DB.library.find(l => l.id === id) : { cat: libCat !== 'all' ? libCat : '水電', name: '', unit: '台', price: '', material: true };
+  if (!x) return;
+  const cats = [...new Set(DB.library.map(l => l.cat || '其他'))];
+  openSheet(id ? '編輯常用項目' : '新增常用項目', `
+    <div class="fld"><label>工種分類</label><input class="inp" id="lbCat" value="${esc(x.cat)}" list="catList" placeholder="例：水電、冷氣、油漆">
+      <datalist id="catList">${cats.map(c => `<option value="${esc(c)}">`).join('')}</datalist>
+      <div class="chips" style="padding-top:8px">${cats.map(c => `<button class="chip" data-act="lbCatPick" data-c="${esc(c)}">${esc(c)}</button>`).join('')}</div></div>
+    <div class="fld"><label>項目名稱 <span class="req">*</span></label><input class="inp" id="lbName" value="${esc(x.name)}" placeholder="例：分離式冷氣安裝"></div>
+    <div class="row2">
+      <div class="fld"><label>單價 <span class="req">*</span></label><input class="inp" type="number" inputmode="numeric" id="lbPrice" value="${x.price}" placeholder="3500"></div>
+      <div class="fld"><label>單位</label><input class="inp" id="lbUnit" value="${esc(x.unit)}" list="unitList2"><datalist id="unitList2">${['台','米','坪','處','式','組','座','盞','迴','次','工','車'].map(u => `<option value="${u}">`).join('')}</datalist></div>
+    </div>
+    <div class="fld"><label>預設是否含料</label><label class="mat"><input type="checkbox" id="lbMat" ${x.material ? 'checked' : ''}><span class="tg"></span><span class="on-t">包含材料</span><span class="off-t">純工資</span></label></div>
+    <button class="btn btn-primary btn-block" data-act="libSave" data-id="${id || ''}">${icon('check')}儲存</button>
+    ${id ? `<button class="btn btn-danger btn-block" style="margin-top:10px" data-act="libDel" data-id="${id}">${icon('trash')}刪除此項目</button>` : ''}
+  `);
+}
+
+/* =========================================================
+   設定頁
+   ========================================================= */
+function renderSettings() {
+  const s = DB.settings;
+  const f = (k, label, ph = '', type = 'text', extra = '') => `<div class="fld"><label>${label}</label><input class="inp" type="${type}" data-s="${k}" value="${esc(s[k])}" placeholder="${ph}" ${extra}></div>`;
+  const lb = DB.meta.lastBackup;
+  const size = (() => { try { return Math.round((localStorage.getItem(LS_KEY) || '').length / 1024); } catch { return 0; } })();
+  $('#view').innerHTML = `
+  <header class="topbar"><div class="wrap"><h1>設定／備份<span class="sub" id="savedTag">修改後自動儲存</span></h1></div></header>
+  <div class="wrap" style="padding-top:14px">
+    <div class="card"><h3><span class="bar"></span>公司資訊（自動印在報價單表頭）</h3>
+      <div class="fld"><label>Logo</label>
+        <div class="logo-row">${logoHTML('logo-prev')}
+          <div class="btn-col"><button class="btn btn-outline btn-sm" data-act="logoPick">${icon('upload')}上傳 Logo</button>${s.logo ? `<button class="btn btn-danger btn-sm" data-act="logoClear">移除 Logo</button>` : '<div class="hint">未上傳時以公司名稱首字當標誌</div>'}</div>
+        </div>
+      </div>
+      ${f('company', '工作室／公司名稱', '勝傑水電工程行')}
+      <div class="row2">${f('owner', '負責人', '阿傑師傅')}${f('phone', '聯絡電話', '0912-345-678', 'tel')}</div>
+      <div class="row2">${f('lineId', 'LINE ID（選填）', '')}${f('taxId', '統一編號（選填）', '', 'text', 'inputmode="numeric"')}</div>
+      ${f('address', '公司地址（選填）', '')}
+    </div>
+    <div class="card"><h3><span class="bar"></span>匯款帳號（印在報價單上）</h3>
+      <div class="row2">${f('bank', '銀行名稱', '例：台灣銀行 板橋分行')}${f('bankCode', '銀行代碼', '004', 'text', 'inputmode="numeric"')}</div>
+      ${f('account', '帳號', '', 'text', 'inputmode="numeric"')}
+      ${f('accountName', '戶名', '')}
+    </div>
+    <div class="card"><h3><span class="bar"></span>開單預設值</h3>
+      <label class="lbl">預設付款比例（訂金／中期款／尾款 %）</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px">
+        <input class="inp" type="number" inputmode="numeric" data-s="payDep" value="${s.payDep}">
+        <input class="inp" type="number" inputmode="numeric" data-s="payMid" value="${s.payMid}">
+        <input class="inp" type="number" inputmode="numeric" data-s="payFin" value="${s.payFin}">
+      </div>
+      ${f('warranty', '預設保固', '全室線路保固 1 年')}
+      <div class="row2">${f('days', '預設施工天數', '3', 'number', 'inputmode="numeric"')}${f('validDays', '報價有效天數', '30', 'number', 'inputmode="numeric"')}</div>
+      <div class="fld"><label>預設是否加 5% 營業稅</label><label class="mat"><input type="checkbox" data-s="tax" ${s.tax ? 'checked' : ''}><span class="tg"></span><span class="on-t">外加 5% 稅</span><span class="off-t">未稅</span></label></div>
+      <div class="fld"><label>預設施工條款（一行一條）</label><textarea class="inp" data-s="terms">${esc(s.terms)}</textarea>
+        <button class="mini-link" data-act="resetTerms">恢復系統預設條款</button></div>
+      <div class="hint">預設值只影響「之後新開」的報價單。</div>
+    </div>
+    <div class="card"><h3><span class="bar"></span>資料備份（重要）</h3>
+      <div class="hint" style="font-size:15px;margin-bottom:12px">資料只存在這支手機的瀏覽器裡。換手機、清除瀏覽器資料前，請先「匯出備份」，再到新裝置「匯入備份」。</div>
+      <div style="display:grid;gap:10px">
+        <button class="btn btn-primary btn-block" data-act="exportBackup">${icon('download')}匯出備份檔（.json）</button>
+        <button class="btn btn-outline btn-block" data-act="importBackup">${icon('upload')}匯入備份檔</button>
+      </div>
+      <div class="stat-line">報價單 ${DB.quotes.length} 張・工料 ${DB.library.length} 項・佔用約 ${size} KB<br>上次備份：${lb ? new Date(lb).toLocaleString('zh-TW') : '從未備份'}</div>
+    </div>
+    <div class="card"><h3><span class="bar"></span>進階</h3>
+      <button class="btn btn-danger btn-block" data-act="resetAll">${icon('trash')}清除全部資料</button>
+    </div>
+  </div>`;
+}
+document.addEventListener('input', e => {
+  const el = e.target; if (page !== 'settings' || !el.dataset.s) return;
+  const k = el.dataset.s;
+  DB.settings[k] = el.type === 'checkbox' ? el.checked : (['payDep', 'payMid', 'payFin', 'days', 'validDays'].includes(k) ? num(el.value) : el.value);
+  const t = $('#savedTag'); if (t) t.textContent = '儲存中…';
+  save();
+});
+$('#fileLogo').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const rd = new FileReader();
+  rd.onload = () => {
+    const img = new Image();
+    img.onload = () => {
+      const max = 360, k = Math.min(1, max / Math.max(img.width, img.height));
+      const cv = document.createElement('canvas'); cv.width = Math.round(img.width * k); cv.height = Math.round(img.height * k);
+      cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+      DB.settings.logo = cv.toDataURL('image/png'); save(true); renderSettings(); toast('Logo 已更新');
+    };
+    img.src = rd.result;
+  };
+  rd.readAsDataURL(f); e.target.value = '';
+});
+function exportBackup() {
+  DB.meta.lastBackup = new Date().toISOString(); save(true);
+  const data = { app: 'trade-quote', version: 1, exportedAt: DB.meta.lastBackup, data: DB };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  downloadBlob(blob, `報價單備份_${today().replace(/-/g, '')}.json`);
+  toast('備份檔已下載，請存到雲端硬碟或傳給自己');
+  if (page === 'settings') renderSettings(); else if (page === 'home') renderHome();
+}
+$('#fileImport').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f) return;
+  const rd = new FileReader();
+  rd.onload = () => {
+    try {
+      const j = JSON.parse(rd.result);
+      const d = j.data || j;
+      if (!Array.isArray(d.quotes) || !d.settings) throw new Error('格式不符');
+      if (!confirm(`備份檔內含 ${d.quotes.length} 張報價單、${(d.library || []).length} 項工料。\n\n匯入後會「取代」目前這台裝置的資料（目前 ${DB.quotes.length} 張），確定匯入？`)) return;
+      const def = defaultData();
+      DB = { settings: { ...def.settings, ...d.settings }, library: d.library || def.library, quotes: d.quotes, meta: { ...def.meta, ...(d.meta || {}) } };
+      save(true); toast('匯入完成！'); route();
+    } catch (err) { alert('匯入失敗：這不是有效的備份檔（' + err.message + '）'); }
+  };
+  rd.readAsText(f); e.target.value = '';
+});
+
+/* =========================================================
+   點擊事件分派
+   ========================================================= */
+const ACT = {
+  go: a => { closeSheet(); location.hash = a.dataset.to; },
+  new: () => newQuote(),
+  kpi: a => { listState.f = listState.f === a.dataset.f ? 'all' : a.dataset.f; renderList(); $('#qChips').scrollIntoView({ behavior: 'smooth', block: 'start' }); },
+  filter: a => { listState.f = a.dataset.f; renderList(); },
+  qMenu: a => quoteMenu(a.dataset.id),
+  setStatus: a => {
+    const q = DB.quotes.find(x => x.id === a.dataset.id); if (!q) return;
+    q.status = a.dataset.s; q.updatedAt = Date.now(); save(true); closeSheet();
+    toast('狀態已改為「' + STATUS[q.status].t + '」');
+    if (page === 'home') renderHome(); else if (page === 'preview') { const b = $('.pv-status button'); if (b) b.innerHTML = badge(q.status); }
+  },
+  dup: a => { closeSheet(); duplicateQuote(a.dataset.id); },
+  delQuote: a => {
+    const q = DB.quotes.find(x => x.id === a.dataset.id); if (!q) return;
+    if (!confirm(`確定刪除「${q.client || q.no}」這張報價單？刪除後無法復原。`)) return;
+    DB.quotes = DB.quotes.filter(x => x.id !== q.id); save(true); closeSheet(); toast('已刪除');
+    if (page === 'home') renderHome(); else { cur = null; location.hash = '#/home'; }
+  },
+  bsClose: () => closeSheet(),
+  step: a => setStep(+a.dataset.n),
+  picker: () => openPicker(),
+  pkCat: a => openPicker(a.dataset.c, ($('#pkSearch') || {}).value || ''),
+  pick: a => {
+    const x = DB.library.find(l => l.id === a.dataset.id); if (!x) return;
+    closeSheet();
+    addItem({ name: x.name, unit: x.unit, price: num(x.price), material: !!x.material, fromLib: true });
+    toast(`已加入「${x.name}」，請輸入數量`);
+  },
+  addBlank: () => { closeSheet(); addItem({ name: '', unit: '式', price: 0, material: true }); },
+  delItem: a => {
+    const i = +a.dataset.i, it = cur.items[i];
+    if (it && (it.name || it.price) && !confirm(`刪除「${it.name || '此項目'}」？`)) return;
+    cur.items.splice(i, 1); touch(); renderItems();
+  },
+  qty: a => {
+    const it = cur.items[+a.dataset.i]; if (!it) return;
+    it.qty = Math.max(0, Math.round((num(it.qty) + +a.dataset.d) * 100) / 100);
+    const inp = $(`[data-i="${a.dataset.i}"][data-k="qty"]`); if (inp) inp.value = it.qty;
+    touch();
+  },
+  saveToLib: a => {
+    const it = cur.items[+a.dataset.i]; if (!it || !it.name) return toast('請先填寫項目名稱');
+    DB.library.push({ id: uid(), cat: '自訂', name: it.name, unit: it.unit || '式', price: num(it.price), material: !!it.material });
+    it.fromLib = true; touch(); renderItems(); toast('已存入常用工料庫（分類：自訂）');
+  },
+  payPreset: a => {
+    const [d, m, f] = a.dataset.p.split(',').map(Number);
+    cur.pay = { dep: d, mid: m, fin: f };
+    $('[data-f="pay.dep"]').value = d; $('[data-f="pay.mid"]').value = m; $('[data-f="pay.fin"]').value = f;
+    $$('[data-act="payPreset"]').forEach(b => b.classList.toggle('on', b === a));
+    touch();
+  },
+  warranty: a => {
+    cur.warranty = a.dataset.w; $('[data-f="warranty"]').value = a.dataset.w;
+    $$('[data-act="warranty"]').forEach(b => b.classList.toggle('on', b === a)); touch();
+  },
+  days: a => { cur.days = Math.max(0, num(cur.days) + +a.dataset.d); $('[data-f="days"]').value = cur.days; touch(); },
+  generate: () => {
+    const q = cur, c = calc(q);
+    if (!q.client.trim()) { setStep(1); toast('請先填寫客戶姓名'); setTimeout(() => $('[data-f="client"]').focus(), 200); return; }
+    if (!q.items.length) { setStep(2); toast('請至少加入一個工料項目'); return; }
+    if (Math.abs(c.pctSum - 100) > 0.001 && !confirm(`付款比例合計為 ${c.pctSum}%（不是 100%），仍要生成報價單嗎？`)) { setStep(3); return; }
+    save(true);
+    location.hash = '#/preview/' + q.id;
+  },
+  saveImg: () => saveImage(),
+  savePdf: () => savePdf(),
+  shareLine: () => shareLine(),
+  libCat: a => { libCat = a.dataset.c; renderLibrary(); },
+  libEdit: a => libEditor(a.dataset.id),
+  lbCatPick: a => { $('#lbCat').value = a.dataset.c; },
+  libSave: a => {
+    const name = $('#lbName').value.trim(), price = num($('#lbPrice').value);
+    if (!name) return toast('請填寫項目名稱');
+    const data = { cat: $('#lbCat').value.trim() || '其他', name, price, unit: $('#lbUnit').value.trim() || '式', material: $('#lbMat').checked };
+    if (a.dataset.id) Object.assign(DB.library.find(l => l.id === a.dataset.id), data);
+    else DB.library.push({ id: uid(), ...data });
+    save(true); closeSheet(); renderLibrary(); toast('已儲存');
+  },
+  libDel: a => {
+    if (!confirm('確定刪除這個常用項目？（已開立的報價單不受影響）')) return;
+    DB.library = DB.library.filter(l => l.id !== a.dataset.id); save(true); closeSheet(); renderLibrary(); toast('已刪除');
+  },
+  logoPick: () => $('#fileLogo').click(),
+  logoClear: () => { DB.settings.logo = ''; save(true); renderSettings(); },
+  resetTerms: () => { DB.settings.terms = DEFAULT_TERMS; save(true); renderSettings(); toast('已恢復預設條款'); },
+  exportBackup: () => exportBackup(),
+  importBackup: () => $('#fileImport').click(),
+  resetAll: () => {
+    if (!confirm('確定清除「全部」報價單、工料庫與設定？\n建議先匯出備份。此動作無法復原。')) return;
+    if (!confirm('再次確認：真的要清除全部資料嗎？')) return;
+    DB = defaultData(); save(true); location.hash = '#/home'; route(); toast('已清除，恢復初始狀態');
+  },
+};
+document.addEventListener('click', e => {
+  const a = e.target.closest('[data-act]'); if (!a) return;
+  const fn = ACT[a.dataset.act]; if (!fn) return;
+  e.preventDefault(); fn(a, e);
+});
+// 數字欄位點擊時全選，方便直接改數字
+document.addEventListener('focusin', e => { const el = e.target; if (el.type === 'number') setTimeout(() => el.select && el.select(), 0); });
+
+window.addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>
