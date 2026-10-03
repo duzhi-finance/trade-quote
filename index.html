@@ -122,7 +122,7 @@ svg.i{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stro
 
 /* ---------- Bottom nav ---------- */
 .bnav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;padding-bottom:env(safe-area-inset-bottom);border-top:1px solid var(--line);box-shadow:0 -4px 18px rgba(44,62,80,.06)}
-.bnav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:64px;color:var(--muted);font-size:12.5px;font-weight:600;letter-spacing:.04em;position:relative}
+.bnav button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:64px;color:var(--muted);font-size:12.5px;font-weight:600;letter-spacing:.04em;position:relative}
 .bnav button.on{color:var(--primary)}
 .bnav button.on::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--amber)}
 .bnav svg.i{width:24px;height:24px}
@@ -295,6 +295,116 @@ textarea.inp{min-height:150px;line-height:1.7;font-size:16px;resize:vertical}
 .pp-sign .dt{font-size:11px;color:#8695A3;margin-top:6px}
 .pp-foot{text-align:center;font-size:10.5px;color:#8695A3;letter-spacing:.14em;padding:12px 0 14px}
 
+/* ---------- 案件頁 ---------- */
+.case-meta{display:grid;gap:4px;margin-top:10px;color:var(--ink-2);font-size:15px}
+.case-meta .row{display:flex;align-items:center;gap:6px}
+.case-meta .row span{min-width:0}
+.case-meta svg.i{width:17px;height:17px;color:var(--muted)}
+.case-meta .mini-link{min-height:34px}
+.case-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.case-acts .btn{padding:0 10px;font-size:15.5px}
+.money3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.money3>div{background:var(--pale);border-radius:12px;padding:10px 12px;min-width:0}
+.money3 small{display:block;font-size:12.5px;color:var(--muted)}
+.money3 b{display:block;font-size:18px;font-weight:700;color:var(--primary);word-break:break-all;line-height:1.3}
+.money3 b.ok{color:var(--green)} .money3 b.due{color:var(--red)}
+.money3 em{display:block;font-style:normal;font-size:11.5px;color:var(--muted)}
+.prog{height:8px;border-radius:999px;background:var(--pale);overflow:hidden;margin-bottom:14px}
+.prog i{display:block;height:100%;background:var(--green);border-radius:999px}
+.stage{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.stage.od{border-color:#E3B5B2;background:#FDF7F6}
+.st-top{display:flex;align-items:baseline;gap:8px}
+.st-top b{font-size:17px}
+.st-top .st-amt{margin-left:auto;font-size:19px;font-weight:700;color:var(--primary)}
+.st-mid{font-size:14px;color:var(--ink-2);margin:4px 0 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.st-mid b{color:var(--red)}
+.okt{color:var(--green);font-weight:600}
+.od-tag{display:inline-block;background:var(--red);color:#fff;border-radius:999px;padding:0 9px;font-size:12px;font-weight:600;line-height:20px}
+.st-bot{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.st-bot .btn{flex:1 1 0}
+.due{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);flex:1 1 100%}
+.inp-sm{min-height:42px;border-radius:10px;border:1.5px solid var(--line-2);padding:4px 10px;font-size:16px;background:#fff;color:var(--ink);flex:1;min-width:0;font-family:inherit}
+.inp-sm:focus{outline:none;border-color:var(--amber)}
+.rec{display:flex;align-items:center;gap:8px;padding:10px 0;border-top:1px dashed var(--line)}
+.rec .t{flex:1;min-width:0}
+.rec .t b{font-size:17px;color:var(--primary)}
+.rec .t span{font-size:13.5px;color:var(--ink-2);margin-left:6px}
+.rec .t small{display:block;font-size:12.5px;color:var(--muted)}
+.rec .icon-btn{width:42px;height:42px}
+.vrow{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+.vrow .top{display:flex;gap:10px;align-items:flex-start}
+.vrow .top .t{flex:1;min-width:0}
+.vrow .top small{display:block;color:var(--muted);font-size:12.5px}
+.vrow .top .r{text-align:right}
+.vrow .top .r b{display:block;font-size:18px;color:var(--primary)}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btn-row .btn{flex:1 1 auto;padding:0 10px}
+.kv{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);font-size:15.5px;gap:10px}
+.kv b{font-weight:600;color:var(--primary)}
+.kv.big{border-bottom:0}
+.kv.big b{font-size:24px;font-weight:700}
+.kv .inp-sm{max-width:140px;text-align:right;flex:none}
+.it-cost{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:13px;color:var(--muted);flex-wrap:wrap}
+.it-cost input{width:110px;min-height:40px;border-radius:10px;border:1.5px solid var(--line-2);padding:4px 10px;font-size:16px;color:var(--ink);font-family:inherit}
+.it-cost input:focus{outline:none;border-color:var(--amber)}
+.sug{display:grid;gap:6px;margin-top:6px}
+.sug:empty{display:none}
+.sug button{display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:var(--cream-2);border:1px solid var(--amber);border-radius:12px;padding:8px 12px;font-size:16px;font-weight:600}
+.sug button small{color:var(--muted);font-size:12.5px;font-weight:400}
+
+/* ---------- 排程 ---------- */
+.day-h{display:flex;align-items:center;gap:8px;margin:18px 0 8px;font-weight:700;color:var(--ink-2);font-size:15px}
+.day-h .today{background:var(--primary);color:#fff;border-radius:999px;padding:0 10px;font-size:12.5px;line-height:22px}
+.day-h .today.tm{background:var(--pale);color:var(--ink-2)}
+.day-h button{margin-left:auto;display:inline-flex;align-items:center;gap:4px;font-size:13.5px;color:var(--ink-2);font-weight:600;min-height:36px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:#fff}
+.day-h button svg.i{width:16px;height:16px}
+.job{display:flex;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 10px 10px 14px;margin-bottom:8px;box-shadow:var(--shadow);align-items:center}
+.job.done{opacity:.55}
+.job .bd{flex:1;min-width:0;text-align:left;display:flex;gap:12px;align-items:flex-start;padding:2px 0}
+.job .tm{font-size:17px;font-weight:700;color:var(--primary);min-width:48px}
+.job .tx{flex:1;min-width:0}
+.job .tx b{display:block;font-size:16.5px;line-height:1.35}
+.job .tx small{display:block;font-size:13.5px;color:var(--ink-2)}
+.crew{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.crew span{background:var(--cream);color:var(--primary-2);border-radius:999px;padding:0 9px;font-size:12.5px;font-weight:600;line-height:22px}
+.chk{width:44px;height:44px;border-radius:12px;border:1.5px solid var(--line-2);display:flex;align-items:center;justify-content:center;color:var(--line-2);flex:none;background:#fff}
+.chk.on{background:var(--green);border-color:var(--green);color:#fff}
+.today-strip{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:12px 16px;margin-top:12px;box-shadow:var(--shadow)}
+.today-strip .h{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:15px;color:var(--ink-2);margin-bottom:4px}
+.today-strip .h span{display:inline-flex;align-items:center;gap:6px}
+.today-strip .h svg.i{width:18px;height:18px}
+.today-strip .l{font-size:14.5px;color:var(--ink);padding:2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.today-strip .l.dn{color:var(--muted);text-decoration:line-through}
+.banner.red{background:var(--red-pale);border-color:#E3B5B2;color:var(--red)}
+.banner.red button{color:var(--red)}
+
+/* ---------- 叫料 ---------- */
+.mrow{display:grid;grid-template-columns:76px 70px 1fr auto;gap:6px 8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.mrow .mname{grid-column:1/-1;font-weight:600}
+.mrow input{min-height:44px;border-radius:10px;border:1.5px solid var(--line-2);padding:4px 10px;font-size:16px;min-width:0;width:100%;color:var(--ink);font-family:inherit;background:#fff}
+.mrow input:focus{outline:none;border-color:var(--amber)}
+.mrow .mst{justify-self:end}
+.mst{min-height:40px;padding:0 12px;border-radius:999px;font-size:13.5px;font-weight:600;white-space:nowrap;border:1px solid var(--line-2);background:#fff;color:var(--ink-2)}
+.mst.ordered{background:var(--blue-pale);color:var(--blue);border-color:transparent}
+.mst.arrived{background:var(--green-pale);color:var(--green);border-color:transparent}
+.arow{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.arow:last-child{border-bottom:0}
+.arow .t{flex:1;min-width:0;font-size:15px;font-weight:600}
+.arow .t small{color:var(--muted);display:block;font-size:12.5px;font-weight:400}
+
+/* ---------- 單據 A4 ---------- */
+.pp-due{display:flex;justify-content:space-between;align-items:center;gap:20px;background:#F7F2E8;border-top:2px solid #C8A46E;padding:16px 20px}
+.pp-due .k{font-size:12.5px;font-weight:600;letter-spacing:.08em;color:#2C3E50}
+.pp-due .cn{font-size:11.5px;color:#6B7C8D;margin-top:4px;letter-spacing:.06em}
+.pp-due b{font-size:30px;font-weight:700;color:#2C3E50;white-space:nowrap}
+.pp-note{font-size:11.5px;color:#6B7C8D;margin-top:8px}
+.pp-sumtbl td{padding:9px 8px}
+.pp-sumtbl tr.tot td{font-weight:700;color:#2C3E50;border-top:1.5px solid #2C3E50;border-bottom:0}
+.pp-rcpt{font-size:15px;line-height:2.1;color:#2C3E50;padding:2px 0 12px}
+.pp-rcpt b{font-size:19px;border-bottom:1px solid #2C3E50;padding:0 10px}
+.pp-st{display:inline-block;padding:1px 9px;border-radius:999px;font-size:10.5px;font-weight:600}
+.pp-st.ok{background:#E8F3EE;color:#3E8E6A} .pp-st.now{background:#F5EEDF;color:#2C3E50} .pp-st.wait{background:#EEF1F4;color:#6B7C8D}
+
 /* ---------- Bottom sheet ---------- */
 .bs-bg{position:fixed;inset:0;background:rgba(34,49,63,.5);z-index:100;display:none;align-items:flex-end;justify-content:center}
 .bs-bg.on{display:flex}
@@ -356,6 +466,8 @@ a.btn{text-decoration:none}
   <div id="view"></div>
   <nav class="bnav" id="bnav">
     <button data-act="go" data-to="#/home" data-nav="home"></button>
+    <button data-act="go" data-to="#/schedule" data-nav="schedule"></button>
+    <button data-act="go" data-to="#/clients" data-nav="clients"></button>
     <button data-act="go" data-to="#/library" data-nav="library"></button>
     <button data-act="go" data-to="#/settings" data-nav="settings"></button>
   </nav>
@@ -408,6 +520,13 @@ const I = {
   star:'<polygon points="12 2 15.1 8.3 22 9.3 17 14.1 18.2 21 12 17.8 5.8 21 7 14.1 2 9.3 8.9 8.3 12 2"/>',
   flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/>',
   check:'<polyline points="20 6 9 17 4 12"/>',
+  calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  dollar:'<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+  box:'<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>',
+  receipt:'<path d="M4 2v20l3-2 3 2 3-2 3 2 3-2 2 1V2l-2 1-3-2-3 2-3-2-3 2-3-2z"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/>',
+  alert:'<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
+  phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/>',
 };
 const icon = n => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${I[n] || ''}</svg>`;
 
@@ -461,7 +580,7 @@ function defaultLibrary() {
     ['雜項','廢料清運',3500,'車',false],
     ['雜項','假日／夜間加班',2000,'工',false],
   ];
-  return L.map(([cat, name, price, unit, material]) => ({ id: uid(), cat, name, price, unit, material }));
+  return L.map(([cat, name, price, unit, material]) => ({ id: uid(), cat, name, price, unit, material, cost: Math.round(price * (material ? 0.6 : 0.4) / 10) * 10 }));
 }
 
 function defaultData() {
@@ -472,9 +591,11 @@ function defaultData() {
       bank:'', bankCode:'', account:'', accountName:'',
       payDep:30, payMid:40, payFin:30,
       warranty:'全室線路保固 1 年', days:3, validDays:30, terms: DEFAULT_TERMS, tax:false,
+      crew:['阿傑', '阿明', '小陳'],
     },
     library: defaultLibrary(),
     quotes: [],
+    jobs: [],
     meta: { lastBackup: null, created: today() },
   };
 }
@@ -485,7 +606,7 @@ function load() {
     if (raw) {
       const d = JSON.parse(raw);
       const def = defaultData();
-      return { settings: { ...def.settings, ...(d.settings || {}) }, library: d.library || def.library, quotes: d.quotes || [], meta: { ...def.meta, ...(d.meta || {}) } };
+      return { settings: { ...def.settings, ...(d.settings || {}) }, library: d.library || def.library, quotes: (d.quotes || []).map(normQ), jobs: d.jobs || [], meta: { ...def.meta, ...(d.meta || {}) } };
     }
   } catch (e) { console.warn(e); }
   return defaultData();
@@ -520,13 +641,6 @@ function calc(q) {
   const fin = Math.abs(pctSum - 100) < 0.001 ? total - dep - mid : Math.round(total * pf / 100);
   return { sub, disc, tax, total, dep, mid, fin, pctSum };
 }
-function receivable(q) {
-  const c = calc(q);
-  if (q.status === 'signed') return c.total;
-  if (q.status === 'deposit') return c.total - c.dep;
-  if (q.status === 'mid') return c.fin;
-  return 0;
-}
 function cnMoney(n) {
   n = Math.round(n);
   if (n <= 0) return '新台幣 零元整';
@@ -552,6 +666,100 @@ function genNo(dateStr) {
   let max = 0;
   DB.quotes.forEach(q => { if (q.no && q.no.startsWith(prefix)) max = Math.max(max, parseInt(q.no.slice(prefix.length)) || 0); });
   return prefix + pad(max + 1, 3);
+}
+
+/* =========================================================
+   收款、追加、成本、客戶 計算
+   ========================================================= */
+const RANK = { draft: 0, sent: 1, signed: 2, deposit: 3, mid: 4, done: 5 };
+const ACTIVE = ['signed', 'deposit', 'mid'];
+const STAGE_NAME = { dep: '訂金', mid: '中期款', fin: '尾款', other: '其他款項' };
+const PAY_METHODS = ['匯款', '現金', 'LINE Pay', '支票', '其他'];
+const WD = '日一二三四五六';
+const fmtDay = ds => { const d = new Date(ds + 'T00:00:00'); return `${d.getMonth() + 1}/${d.getDate()}（${WD[d.getDay()]}）`; };
+function normQ(q) {
+  q.items = q.items || []; q.payments = q.payments || []; q.variations = q.variations || [];
+  q.mats = q.mats || []; q.due = q.due || {};
+  q.pay = q.pay || { dep: 30, mid: 40, fin: 30 }; q.otherCost = num(q.otherCost);
+  return q;
+}
+const approvedVars = q => (q.variations || []).filter(v => v.status === 'approved');
+function varCalc(q, v) {
+  const sub = (v.items || []).reduce((s, it) => s + num(it.qty) * num(it.price), 0);
+  const tax = q.tax ? Math.round(sub * 0.05) : 0;
+  return { sub, tax, total: Math.round(sub + tax) };
+}
+function fin(q) {
+  const c = calc(q);
+  const add = approvedVars(q).reduce((s, v) => s + varCalc(q, v).total, 0);
+  const contract = c.total + add;
+  const pays = q.payments || [];
+  const paid = pays.reduce((s, p) => s + num(p.amount), 0);
+  const stages = [
+    { key: 'dep', pct: num(q.pay.dep), amt: c.dep, add: 0 },
+    { key: 'mid', pct: num(q.pay.mid), amt: c.mid, add: 0 },
+    { key: 'fin', pct: num(q.pay.fin), amt: c.fin + add, add },
+  ].filter(s => s.amt > 0);
+  const t = today();
+  stages.forEach(s => {
+    s.name = STAGE_NAME[s.key];
+    s.paid = pays.filter(p => p.stage === s.key).reduce((a, p) => a + num(p.amount), 0);
+    s.left = Math.max(0, s.amt - s.paid);
+    s.due = (q.due || {})[s.key] || '';
+    s.overdue = ACTIVE.includes(q.status) && s.left > 0 && !!s.due && s.due < t;
+  });
+  return { c, add, contract, paid, left: Math.max(0, contract - paid), stages };
+}
+function receivable(q) { return ACTIVE.includes(q.status) ? fin(q).left : 0; }
+function overdueList() {
+  const out = [];
+  DB.quotes.forEach(q => fin(q).stages.forEach(s => { if (s.overdue) out.push({ q, s }); }));
+  return out;
+}
+function costInfo(q) {
+  const vars = approvedVars(q);
+  const items = [...q.items, ...vars.flatMap(v => v.items || [])];
+  const itemCost = items.reduce((s, it) => s + num(it.qty) * num(it.cost), 0);
+  const f = fin(q);
+  const tax = f.c.tax + vars.reduce((s, v) => s + varCalc(q, v).tax, 0);
+  const revenue = f.contract - tax;
+  const cost = itemCost + num(q.otherCost);
+  const profit = revenue - cost;
+  return { revenue, itemCost, other: num(q.otherCost), cost, profit, margin: revenue ? profit / revenue : 0, missing: items.filter(it => it.name && !num(it.cost)).length };
+}
+function autoStatus(q) {
+  if (!(q.status in RANK)) return null;
+  const f = fin(q), st = k => f.stages.find(s => s.key === k);
+  let next = q.status;
+  if (f.contract > 0 && f.paid >= f.contract) next = 'done';
+  else if (st('mid') && st('dep') && f.paid >= st('dep').amt + st('mid').amt) next = 'mid';
+  else if (f.paid > 0) next = 'deposit';
+  if (RANK[next] > RANK[q.status]) { q.status = next; return next; }
+  return null;
+}
+function genSerial(prefix, list) {
+  const pre = prefix + '-' + today().replace(/-/g, '') + '-';
+  let max = 0;
+  list.forEach(n => { if (n && n.startsWith(pre)) max = Math.max(max, parseInt(n.slice(pre.length)) || 0); });
+  return pre + pad(max + 1, 3);
+}
+const allReceiptNos = () => DB.quotes.flatMap(q => (q.payments || []).map(p => p.no));
+function clientKey(q) { const d = String(q.phone || '').replace(/\D/g, ''); return d ? 'p' + d : 'n' + String(q.client || '').trim(); }
+function clientList(skipId) {
+  const m = new Map();
+  DB.quotes.forEach(q => {
+    if (q.id === skipId || !String(q.client || '').trim()) return;
+    const k = clientKey(q);
+    const c = m.get(k) || { key: k, name: q.client, phone: q.phone, address: q.address, quotes: [], last: '' };
+    c.quotes.push(q);
+    if ((q.date || '') >= c.last) { c.last = q.date || ''; c.name = q.client; c.phone = q.phone || c.phone; c.address = q.address || c.address; }
+    m.set(k, c);
+  });
+  return [...m.values()].map(c => ({
+    ...c,
+    total: c.quotes.filter(q => RANK[q.status] >= 2).reduce((s, q) => s + fin(q).contract, 0),
+    left: c.quotes.reduce((s, q) => s + receivable(q), 0),
+  })).sort((a, b) => b.last.localeCompare(a.last));
 }
 
 /* =========================================================
@@ -599,8 +807,9 @@ async function cloudInit() {
     const base = 'data/users/' + uid;
     Cloud.sRef = db.collection(base).doc('settings');
     Cloud.lRef = db.collection(base).doc('library');
+    Cloud.jRef = db.collection(base).doc('jobs');
     Cloud.qCol = db.doc(base + '/quotes').collection('items');
-    const [sd, ld, qs] = await Promise.all([Cloud.sRef.get(), Cloud.lRef.get(), Cloud.qCol.get()]);
+    const [sd, ld, jd, qs] = await Promise.all([Cloud.sRef.get(), Cloud.lRef.get(), Cloud.jRef.get(), Cloud.qCol.get()]);
     let changed = false;
     if (sd.exists) {
       const d = sd.data(); Cloud.snap.s = JSON.stringify(d.settings || {});
@@ -609,6 +818,10 @@ async function cloudInit() {
     if (ld.exists) {
       const d = ld.data(); Cloud.snap.l = JSON.stringify(d.library || []);
       if ((d.updatedAt || 0) > (DB.meta.libraryAt || 0) && Array.isArray(d.library)) { DB.library = JSON.parse(JSON.stringify(d.library)); DB.meta.libraryAt = d.updatedAt; changed = true; }
+    }
+    if (jd.exists) {
+      const d = jd.data(); Cloud.snap.j = JSON.stringify(d.jobs || []);
+      if ((d.updatedAt || 0) > (DB.meta.jobsAt || 0) && Array.isArray(d.jobs)) { DB.jobs = JSON.parse(JSON.stringify(d.jobs)); DB.meta.jobsAt = d.updatedAt; changed = true; }
     }
     const local = new Map(DB.quotes.map(q => [q.id, q]));
     qs.docs.forEach(doc => {
@@ -622,13 +835,13 @@ async function cloudInit() {
       if (!d.q) return;
       Cloud.snap['q:' + id] = JSON.stringify(d.q);
       const l = local.get(id);
-      if (!l || (d.q.updatedAt || 0) > (l.updatedAt || 0)) { local.set(id, JSON.parse(JSON.stringify(d.q))); changed = true; }
+      if (!l || (d.q.updatedAt || 0) > (l.updatedAt || 0)) { local.set(id, normQ(JSON.parse(JSON.stringify(d.q)))); changed = true; }
     });
     if (changed) {
       DB.quotes = [...local.values()];
       if (cur) cur = DB.quotes.find(q => q.id === cur.id) || null;
       try { localStorage.setItem(LS_KEY, JSON.stringify(DB)); } catch (e) {}
-      if (page === 'edit' || page === 'preview') { if (!cur) nav('#/home'); } else route();
+      if (['edit', 'var', 'doc', 'mats'].includes(page)) { if (!cur) nav('#/home'); } else route();
     }
     Cloud.ready = true;
     if (page === 'settings') renderSettings();
@@ -649,6 +862,8 @@ async function cloudFlush() {
     if (sj !== Cloud.snap.s) { await Cloud.sRef.set({ settings: JSON.parse(sj), updatedAt: now }); Cloud.snap.s = sj; DB.meta.settingsAt = now; }
     const lj = JSON.stringify(DB.library);
     if (lj !== Cloud.snap.l) { await Cloud.lRef.set({ library: JSON.parse(lj), updatedAt: now }); Cloud.snap.l = lj; DB.meta.libraryAt = now; }
+    const jj = JSON.stringify(DB.jobs);
+    if (jj !== Cloud.snap.j) { await Cloud.jRef.set({ jobs: JSON.parse(jj), updatedAt: now }); Cloud.snap.j = jj; DB.meta.jobsAt = now; }
     const ids = new Set();
     for (const q of DB.quotes) {
       ids.add(q.id);
@@ -674,34 +889,58 @@ async function cloudFlush() {
    Router
    ========================================================= */
 let page = '', cur = null, step = 1, curPath = '#/home';
+let curItems = null, curVar = null, docState = { kind: 'quote', ref: '' };
 function nav(path) { curPath = path; route(); }
 const listState = { q: '', f: 'all' };
+const NAV_PAGES = ['home', 'schedule', 'clients', 'library', 'settings'];
 function route() {
-  const [, p = 'home', id] = (curPath || '#/home').slice(1).split('/');
-  // 離開編輯頁時，清掉完全空白的新單
-  if (page === 'edit' && cur && !(p === 'preview' && id === cur.id) && !(p === 'edit' && id === cur.id)) {
-    if (!cur.client && cur.items.length === 0) { DB.quotes = DB.quotes.filter(x => x.id !== cur.id); save(true); }
+  const [, p = 'home', id, a, b] = (curPath || '#/home').slice(1).split('/');
+  // 離開編輯頁時，清掉完全空白的新單／追加單
+  if (page === 'edit' && cur && p !== 'edit' && !cur.client && cur.items.length === 0) {
+    DB.quotes = DB.quotes.filter(x => x.id !== cur.id); save(true);
+  }
+  if (page === 'var' && cur && curVar && p !== 'var' && !curVar.title && !curVar.items.length) {
+    cur.variations = cur.variations.filter(v => v !== curVar); save(true);
   }
   page = p;
   window.scrollTo(0, 0);
-  const nav = $('#bnav');
-  nav.style.display = ['home', 'library', 'settings'].includes(p) ? 'flex' : 'none';
-  $$('[data-nav]', nav).forEach(b => b.classList.toggle('on', b.dataset.nav === p));
-  if (p === 'edit') { const q = DB.quotes.find(x => x.id === id); if (!q) return nav('#/home'); cur = q; renderEditor(); }
-  else if (p === 'preview') { const q = DB.quotes.find(x => x.id === id); if (!q) return nav('#/home'); cur = q; renderPreview(); }
-  else if (p === 'library') renderLibrary();
-  else if (p === 'settings') renderSettings();
-  else { page = 'home'; renderHome(); }
+  const bn = $('#bnav');
+  bn.style.display = NAV_PAGES.includes(p) ? 'flex' : 'none';
+  $$('[data-nav]', bn).forEach(x => x.classList.toggle('on', x.dataset.nav === p));
+  const q = id ? DB.quotes.find(x => x.id === id) : null;
+  if (['case', 'edit', 'var', 'doc', 'preview', 'mats'].includes(p)) {
+    if (!q) return nav('#/home');
+    cur = normQ(q);
+  }
+  switch (p) {
+    case 'case': return renderCase();
+    case 'edit': curVar = null; curItems = q.items; return renderEditor();
+    case 'var': {
+      const v = q.variations.find(x => x.id === a);
+      if (!v) return nav('#/case/' + q.id);
+      curVar = v; curItems = v.items; return renderVarEditor();
+    }
+    case 'preview': docState = { kind: 'quote', ref: '' }; return renderDoc();
+    case 'doc': docState = { kind: a || 'quote', ref: b || '' }; return renderDoc();
+    case 'mats': return renderMats();
+    case 'schedule': return renderSchedule();
+    case 'clients': return renderClients();
+    case 'library': return renderLibrary();
+    case 'settings': return renderSettings();
+    default: page = 'home'; return renderHome();
+  }
 }
 (function initNav() {
   const b = $$('#bnav button');
   b[0].innerHTML = icon('list') + '報價單';
-  b[1].innerHTML = icon('tool') + '常用工料庫';
-  b[2].innerHTML = icon('gear') + '設定／備份';
+  b[1].innerHTML = icon('calendar') + '排程';
+  b[2].innerHTML = icon('users') + '客戶';
+  b[3].innerHTML = icon('tool') + '工料庫';
+  b[4].innerHTML = icon('gear') + '設定';
 })();
 
 /* =========================================================
-   頁面 1：首頁（儀表板 + 列表）
+   首頁（儀表板 + 列表）
    ========================================================= */
 function renderHome() {
   const s = DB.settings;
@@ -711,31 +950,41 @@ function renderHome() {
   const monthAmt = month.reduce((a, q) => a + calc(q).total, 0);
   const pending = DB.quotes.filter(q => q.status === 'sent' || q.status === 'draft');
   const pendingAmt = pending.reduce((a, q) => a + calc(q).total, 0);
-  const recv = DB.quotes.filter(q => ['signed', 'deposit', 'mid'].includes(q.status));
+  const recv = DB.quotes.filter(q => ACTIVE.includes(q.status));
   const recvAmt = recv.reduce((a, q) => a + receivable(q), 0);
-  const won = month.filter(q => ['signed', 'deposit', 'mid', 'done'].includes(q.status));
-  const wonAmt = won.reduce((a, q) => a + calc(q).total, 0);
+  const won = month.filter(q => RANK[q.status] >= 2);
+  const wonAmt = won.reduce((a, q) => a + fin(q).contract, 0);
+  const wonProfit = won.reduce((a, q) => a + costInfo(q).profit, 0);
 
   let banner = '';
+  const od = overdueList();
+  if (od.length) {
+    banner += `<div class="banner red">${icon('alert')}<span>${od.length} 筆款項已逾期未收，共 ${money(od.reduce((a, x) => a + x.s.left, 0))}</span><button data-act="filter" data-f="overdue">查看</button></div>`;
+  }
   const lb = DB.meta.lastBackup;
   const daysSince = lb ? Math.floor((Date.now() - new Date(lb).getTime()) / 864e5) : null;
-  if (DB.quotes.length >= 3 && (daysSince === null || daysSince >= 14)) {
-    banner = `<div class="banner">${icon('flag')}<span>${daysSince === null ? '尚未備份過資料' : `已 ${daysSince} 天沒備份`}，換手機或清除瀏覽器會遺失</span><button data-act="exportBackup">立即備份</button></div>`;
+  if (!Cloud.ready && DB.quotes.length >= 3 && (daysSince === null || daysSince >= 14)) {
+    banner += `<div class="banner">${icon('flag')}<span>${daysSince === null ? '尚未備份過資料' : `已 ${daysSince} 天沒備份`}，換手機或清除瀏覽器會遺失</span><button data-act="exportBackup">立即備份</button></div>`;
   }
+  const tj = DB.jobs.filter(j => j.date === today()).sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+  const todayStrip = tj.length ? `<button class="today-strip" data-act="go" data-to="#/schedule">
+      <div class="h"><span>${icon('calendar')} 今天的工作 ${tj.length} 件</span><span style="color:var(--muted);font-weight:500">看排程 ›</span></div>
+      ${tj.slice(0, 3).map(j => { const q = DB.quotes.find(x => x.id === j.qid); return `<div class="l ${j.done ? 'dn' : ''}"><b>${esc(j.time || '')}</b>　${esc(q ? q.client : '（案件已刪除）')}${j.crew && j.crew.length ? `・${esc(j.crew.join('、'))}` : ''}${j.note ? `・${esc(j.note)}` : ''}</div>`; }).join('')}
+    </button>` : '';
 
   $('#view').innerHTML = `
   <header class="topbar"><div class="wrap">
     ${logoHTML('brand-logo')}
-    <h1>${esc(s.company || '我的工程行')}<span class="sub">工程報價單管理</span></h1>
+    <h1>${esc(s.company || '我的工程行')}<span class="sub">報價・請款・排程</span></h1>
   </div></header>
   <div class="wrap">
     <button class="hero-btn" data-act="new">${icon('plus')}快速開立報價單</button>
-    ${banner}
+    ${banner}${todayStrip}
     <div class="kpis">
       <button class="kpi k1" data-act="kpi" data-f="all"><div class="lab">本月報價總額</div><div class="num">${money(monthAmt)}</div><div class="cnt">${month.length} 張報價單</div></button>
       <button class="kpi k2" data-act="kpi" data-f="pending"><div class="lab">待簽約</div><div class="num">${money(pendingAmt)}</div><div class="cnt">${pending.length} 案（含草稿）</div></button>
-      <button class="kpi k3" data-act="kpi" data-f="recv"><div class="lab">待收款</div><div class="num">${money(recvAmt)}</div><div class="cnt">${recv.length} 案收款中</div></button>
-      <button class="kpi k4" data-act="kpi" data-f="won"><div class="lab">本月成交</div><div class="num">${money(wonAmt)}</div><div class="cnt">${won.length} 案</div></button>
+      <button class="kpi k3" data-act="kpi" data-f="recv"><div class="lab">待收款</div><div class="num">${money(recvAmt)}</div><div class="cnt">${recv.length} 案收款中${od.length ? `・${od.length} 筆逾期` : ''}</div></button>
+      <button class="kpi k4" data-act="kpi" data-f="won"><div class="lab">本月成交</div><div class="num">${money(wonAmt)}</div><div class="cnt">${won.length} 案・預估毛利 ${money(wonProfit)}</div></button>
     </div>
     <div class="search">${icon('search')}<input type="search" id="qSearch" placeholder="搜尋客戶、電話、地址、單號" value="${esc(listState.q)}"></div>
     <div class="chips" id="qChips"></div>
@@ -745,14 +994,15 @@ function renderHome() {
   renderList();
 }
 const FILTERS = [
-  ['all', '全部'], ['draft', '草稿'], ['pending', '待簽約'], ['recv', '收款中'], ['done', '已結案'], ['lost', '未成交'],
+  ['all', '全部'], ['draft', '草稿'], ['pending', '待簽約'], ['recv', '收款中'], ['overdue', '逾期'], ['done', '已結案'], ['lost', '未成交'],
 ];
 function matchFilter(q, f) {
   switch (f) {
     case 'draft': return q.status === 'draft';
     case 'pending': return q.status === 'sent' || q.status === 'draft';
-    case 'recv': return ['signed', 'deposit', 'mid'].includes(q.status);
-    case 'won': return ['signed', 'deposit', 'mid', 'done'].includes(q.status) && (q.date || '').startsWith(today().slice(0, 7));
+    case 'recv': return ACTIVE.includes(q.status);
+    case 'overdue': return fin(q).stages.some(s => s.overdue);
+    case 'won': return RANK[q.status] >= 2 && (q.date || '').startsWith(today().slice(0, 7));
     case 'done': return q.status === 'done';
     case 'lost': return q.status === 'lost';
     default: return true;
@@ -762,7 +1012,11 @@ function renderList() {
   const chips = $('#qChips'); if (!chips) return;
   const f = listState.f;
   const extra = f === 'won' ? [['won', '本月成交']] : [];
-  chips.innerHTML = [...FILTERS, ...extra].map(([k, t]) => `<button class="chip ${f === k ? 'on' : ''}" data-act="filter" data-f="${k}">${t} <span style="opacity:.7">${DB.quotes.filter(q => matchFilter(q, k)).length}</span></button>`).join('');
+  chips.innerHTML = [...FILTERS, ...extra].map(([k, t]) => {
+    const n = DB.quotes.filter(q => matchFilter(q, k)).length;
+    if (k === 'overdue' && !n && f !== 'overdue') return '';
+    return `<button class="chip ${f === k ? 'on' : ''}" data-act="filter" data-f="${k}">${t} <span style="opacity:.7">${n}</span></button>`;
+  }).join('');
   $$('.kpi').forEach(k => k.classList.toggle('on', k.dataset.f === f && f !== 'all'));
   const kw = listState.q.trim().toLowerCase();
   const list = DB.quotes
@@ -774,42 +1028,41 @@ function renderList() {
   }
   if (!list.length) { $('#qList').innerHTML = `<div class="empty"><b>找不到符合的報價單</b>換個關鍵字或篩選條件試試</div>`; return; }
   $('#qList').innerHTML = list.map(q => {
-    const c = calc(q);
-    const r = receivable(q);
+    const fi = fin(q), r = receivable(q), od = fi.stages.some(s => s.overdue);
     return `<div class="qcard">
-      <button class="main" data-act="go" data-to="#/preview/${q.id}">
+      <button class="main" data-act="go" data-to="#/case/${q.id}">
         <div class="qc-top">${badge(q.status)}<span class="qno">${esc(q.no)}</span></div>
         <div class="qc-name">${esc(q.client || '（未填客戶）')}${q.project ? `<small>${esc(q.project)}</small>` : ''}</div>
         ${q.address ? `<div class="qc-addr">${icon('pin')}<span>${esc(q.address)}</span></div>` : ''}
-        <div class="qc-bottom"><div class="qc-date">${fmtDate(q.date)}・${q.items.length} 項${r ? `<br><span class="recv">待收 ${money(r)}</span>` : ''}</div><div class="qc-total">${money(c.total)}</div></div>
+        <div class="qc-bottom"><div class="qc-date">${fmtDate(q.date)}・${q.items.length} 項${fi.add ? `・含追加` : ''}${r ? `<br><span class="recv">待收 ${money(r)}</span>${od ? ' <span class="od-tag">逾期</span>' : ''}` : ''}</div><div class="qc-total">${money(fi.contract)}</div></div>
       </button>
       <div class="qc-actions">
         <button data-act="go" data-to="#/edit/${q.id}">${icon('edit')}編輯</button>
-        <button class="pri" data-act="go" data-to="#/preview/${q.id}">${icon('eye')}預覽／傳送</button>
-        <button data-act="qMenu" data-id="${q.id}">${icon('more')}更多</button>
+        <button class="pri" data-act="go" data-to="#/doc/${q.id}/quote">${icon('eye')}報價單</button>
+        <button data-act="go" data-to="#/case/${q.id}">${icon('dollar')}收款／案件</button>
       </div></div>`;
   }).join('');
 }
 
-function newQuote() {
+function newQuote(pre = {}) {
   const s = DB.settings, d = today();
-  const q = {
+  const q = normQ({
     id: uid(), no: genNo(d), date: d, status: 'draft',
-    client: '', phone: '', address: '', project: '',
+    client: pre.client || '', phone: pre.phone || '', address: pre.address || '', project: '',
     items: [], discount: 0, tax: !!s.tax,
     pay: { dep: num(s.payDep), mid: num(s.payMid), fin: num(s.payFin) },
     warranty: s.warranty, days: s.days, validDays: s.validDays, terms: s.terms,
     createdAt: Date.now(), updatedAt: Date.now(),
-  };
+  });
   DB.quotes.push(q); save(true);
-  step = 1;
+  step = pre.client ? 2 : 1;
   nav('#/edit/' + q.id);
 }
 function duplicateQuote(id) {
   const src = DB.quotes.find(x => x.id === id); if (!src) return;
   const d = today();
   const q = JSON.parse(JSON.stringify(src));
-  Object.assign(q, { id: uid(), no: genNo(d), date: d, status: 'draft', createdAt: Date.now(), updatedAt: Date.now() });
+  Object.assign(q, { id: uid(), no: genNo(d), date: d, status: 'draft', payments: [], variations: [], mats: [], due: {}, createdAt: Date.now(), updatedAt: Date.now() });
   q.items.forEach(it => it.id = uid());
   DB.quotes.push(q); save(true);
   toast('已複製成新報價單'); step = 1;
@@ -828,13 +1081,319 @@ function quoteMenu(id) {
 }
 
 /* =========================================================
+   案件頁：收款、請款、追加、叫料、成本、排程
+   ========================================================= */
+function renderCase() {
+  const q = cur, f = fin(q), ci = costInfo(q);
+  const pct = f.contract ? Math.min(100, Math.round(f.paid / f.contract * 100)) : 0;
+  const jobs = DB.jobs.filter(j => j.qid === q.id).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+  const pays = [...q.payments].sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  const matDone = q.mats.filter(m => m.state === 'arrived').length;
+  const matItems = [...q.items, ...approvedVars(q).flatMap(v => v.items)].filter(it => it.material && it.name).length;
+  $('#view').innerHTML = `
+  <header class="topbar"><div class="wrap">
+    <button class="tb-btn" data-act="go" data-to="#/home" aria-label="返回">${icon('back')}</button>
+    <h1>${esc(q.client || '（未填客戶）')}<span class="sub">${esc(q.no)}${q.project ? '・' + esc(q.project) : ''}</span></h1>
+    <button class="tb-btn ghost" data-act="qMenu" data-id="${q.id}">${icon('more')}</button>
+  </div></header>
+  <div class="wrap" style="padding-top:14px">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><button data-act="qMenu" data-id="${q.id}">${badge(q.status)}</button><span class="hint" style="margin:0">報價日 ${fmtDate(q.date)}</span></div>
+      <div class="case-meta">
+        ${q.address ? `<div class="row">${icon('pin')}<span>${esc(q.address)}</span></div>` : ''}
+        ${q.phone ? `<div class="row">${icon('phone')}<span>${esc(q.phone)}</span><button class="mini-link" data-act="copy" data-t="${esc(q.phone)}">複製</button></div>` : ''}
+      </div>
+      <div class="case-acts">
+        <button class="btn btn-outline" data-act="go" data-to="#/edit/${q.id}">${icon('edit')}編輯報價</button>
+        <button class="btn btn-primary" data-act="go" data-to="#/doc/${q.id}/quote">${icon('file')}報價單／傳送</button>
+      </div>
+    </div>
+
+    <div class="card"><h3><span class="bar"></span>收款與請款</h3>
+      <div class="money3">
+        <div><small>合約總額</small><b>${money(f.contract)}</b>${f.add ? `<em>含追加 ${money(f.add)}</em>` : ''}</div>
+        <div><small>已收</small><b class="ok">${money(f.paid)}</b><em>${pct}%</em></div>
+        <div><small>未收</small><b class="${f.left ? 'due' : ''}">${money(f.left)}</b></div>
+      </div>
+      <div class="prog"><i style="width:${pct}%"></i></div>
+      ${f.stages.map(s => `
+      <div class="stage ${s.overdue ? 'od' : ''}">
+        <div class="st-top"><b>${s.name}</b><span class="hint" style="margin:0">${s.pct}%${s.add ? '＋追加' : ''}</span><span class="st-amt">${money(s.amt)}</span></div>
+        <div class="st-mid">${!s.left ? '<span class="okt">✓ 已收齊</span>' : s.paid ? `已收 ${money(s.paid)}・尚欠 <b>${money(s.left)}</b>` : '尚未收款'}${s.overdue ? '<span class="od-tag">已逾期</span>' : ''}</div>
+        <div class="st-bot">
+          <label class="due">應收日<input type="date" class="inp-sm" data-due="${s.key}" value="${esc(s.due)}"></label>
+          <button class="btn btn-sm btn-outline" data-act="go" data-to="#/doc/${q.id}/invoice/${s.key}">${icon('file')}請款單</button>
+          ${s.left ? `<button class="btn btn-sm btn-primary" data-act="payAdd" data-s="${s.key}">${icon('dollar')}記收款</button>` : ''}
+        </div>
+      </div>`).join('')}
+      <div class="lbl" style="margin-top:14px">收款紀錄</div>
+      ${pays.length ? pays.map(p => `
+        <div class="rec">
+          <div class="t"><b>${money(p.amount)}</b><span>${STAGE_NAME[p.stage] || ''}・${esc(p.method || '')}</span><small>${fmtDate(p.date)}${p.note ? '・' + esc(p.note) : ''}</small></div>
+          <button class="btn btn-sm btn-outline" data-act="go" data-to="#/doc/${q.id}/receipt/${p.id}">${icon('receipt')}收據</button>
+          <button class="icon-btn del" data-act="payDel" data-pid="${p.id}" aria-label="刪除收款">${icon('trash')}</button>
+        </div>`).join('') : '<div class="hint" style="margin-bottom:10px">還沒有收款紀錄。收到錢時按「記收款」，可以馬上開收據給客戶。</div>'}
+      <button class="btn btn-outline btn-block" style="margin-top:8px" data-act="payAdd" data-s="">${icon('plus')}記錄一筆收款</button>
+    </div>
+
+    <div class="card"><h3><span class="bar"></span>追加工程</h3>
+      ${q.variations.length ? q.variations.map(v => { const vc = varCalc(q, v); return `
+        <div class="vrow">
+          <div class="top"><div class="t"><b>${esc(v.title || '追加工程')}</b><small>${esc(v.no)}・${fmtDate(v.date)}・${v.items.length} 項</small></div>
+            <div class="r"><b>${money(vc.total)}</b>${v.status === 'approved' ? '<span class="badge s-done">客戶已確認</span>' : '<span class="badge s-sent">待客戶確認</span>'}</div></div>
+          <div class="btn-row">
+            <button class="btn btn-sm btn-outline" data-act="go" data-to="#/var/${q.id}/${v.id}">${icon('edit')}編輯</button>
+            <button class="btn btn-sm btn-outline" data-act="go" data-to="#/doc/${q.id}/var/${v.id}">${icon('file')}追加單</button>
+            <button class="btn btn-sm ${v.status === 'approved' ? 'btn-outline' : 'btn-primary'}" data-act="varApprove" data-v="${v.id}">${v.status === 'approved' ? '取消確認' : icon('check') + '客戶已確認'}</button>
+          </div>
+        </div>`; }).join('') : '<div class="hint" style="margin-bottom:10px">施工中客戶臨時加做的項目，開追加單給客戶確認；確認後金額自動併入尾款。</div>'}
+      <button class="btn btn-outline btn-block" data-act="varNew">${icon('plus')}新增追加工程</button>
+    </div>
+
+    <div class="card"><h3><span class="bar"></span>叫料清單</h3>
+      <div class="hint" style="font-size:14.5px;margin:0 0 10px">含料項目 ${matItems} 項・叫料明細 ${q.mats.length} 項${q.mats.length ? `・已到貨 ${matDone}/${q.mats.length}` : ''}${q.supplier ? `・材料行：${esc(q.supplier)}` : ''}</div>
+      <button class="btn btn-dark btn-block" data-act="go" data-to="#/mats/${q.id}">${icon('box')}開啟叫料清單</button>
+    </div>
+
+    <div class="card"><h3><span class="bar"></span>成本與利潤<span class="hint" style="margin:0 0 0 auto;font-weight:400">只有你看得到</span></h3>
+      <div class="kv"><span>收入（未稅）</span><b>${money(ci.revenue)}</b></div>
+      <div class="kv"><span>工料成本</span><b>${money(ci.itemCost)}</b></div>
+      <div class="kv"><span>其他成本<small class="hint" style="display:block;margin:0">師傅工資、交通、雜支</small></span><input class="inp-sm" type="number" inputmode="numeric" data-oc="1" value="${ci.other || ''}" placeholder="0"></div>
+      <div class="kv big"><span>預估毛利</span><b style="color:${ci.profit < 0 ? 'var(--red)' : 'var(--green)'}">${money(ci.profit)}</b></div>
+      <div class="hint">毛利率 ${Math.round(ci.margin * 100)}%${ci.missing ? `・有 ${ci.missing} 個項目還沒填成本單價（在「編輯報價」的每個項目下方填寫）` : ''}</div>
+    </div>
+
+    <div class="card"><h3><span class="bar"></span>施工排程</h3>
+      ${jobs.length ? jobs.map(j => jobCard(j, false)).join('') : '<div class="hint" style="margin-bottom:10px">還沒排施工日。</div>'}
+      <button class="btn btn-outline btn-block" data-act="jobNew" data-q="${q.id}">${icon('calendar')}排定施工日</button>
+    </div>
+  </div>`;
+}
+function payEditor(stage) {
+  const q = cur, f = fin(q);
+  const st = f.stages.find(s => s.key === stage) || f.stages.find(s => s.left > 0);
+  const key = st ? st.key : 'other';
+  const leftOf = k => (f.stages.find(s => s.key === k) || { left: 0 }).left;
+  openSheet('記錄收款', `
+    <div class="fld"><label>款項</label><div class="chips">${[...f.stages.map(s => s.key), 'other'].map(k => `<button class="chip accent ${k === key ? 'on' : ''}" data-act="payStagePick" data-k="${k}" data-left="${leftOf(k)}">${STAGE_NAME[k]}${leftOf(k) ? `・欠 ${money(leftOf(k))}` : ''}</button>`).join('')}</div></div>
+    <div class="fld"><label>收款金額</label><input class="inp" type="number" inputmode="numeric" id="pyAmt" value="${st ? st.left : ''}" placeholder="0"></div>
+    <div class="row2">
+      <div class="fld"><label>收款日期</label><input class="inp" type="date" id="pyDate" value="${today()}" style="font-size:16px"></div>
+      <div class="fld"><label>付款方式</label><select class="inp" id="pyMethod">${PAY_METHODS.map(m => `<option>${m}</option>`).join('')}</select></div>
+    </div>
+    <div class="fld"><label>備註（選填）</label><input class="inp" id="pyNote" placeholder="例：匯款帳號末五碼 12345"></div>
+    <input type="hidden" id="pyStage" value="${key}">
+    <button class="btn btn-primary btn-block" data-act="paySave">${icon('check')}儲存收款</button>`);
+}
+
+/* =========================================================
+   追加工程編輯
+   ========================================================= */
+function renderVarEditor() {
+  const q = cur, v = curVar;
+  $('#view').innerHTML = `
+  <header class="topbar"><div class="wrap">
+    <button class="tb-btn" data-act="go" data-to="#/case/${q.id}" aria-label="返回">${icon('back')}</button>
+    <h1>追加工程<span class="sub" id="savedTag">${esc(v.no)}・${esc(q.client)}</span></h1>
+  </div></header>
+  <div class="wrap" style="padding-top:14px">
+    <div class="card"><h3><span class="bar"></span>追加內容</h3>
+      <div class="fld"><label>追加項目說明 <span class="req">*</span></label><input class="inp" data-vf="title" value="${esc(v.title)}" placeholder="例：客廳加裝插座 2 處"></div>
+      <div class="fld"><label>日期</label><input class="inp" type="date" data-vf="date" value="${esc(v.date)}" style="font-size:16px"></div>
+    </div>
+    <div id="items"></div>
+    <div class="add-row">
+      <button class="add-big" data-act="picker">${icon('plus')}新增項目（從常用工料庫點選）</button>
+      <button class="btn btn-outline btn-block" data-act="addBlank">${icon('edit')}自訂空白項目</button>
+    </div>
+    <div class="card"><h3><span class="bar"></span>備註</h3>
+      <textarea class="inp" data-vf="note" style="min-height:90px" placeholder="例：客戶現場要求加做，材料另計">${esc(v.note)}</textarea>
+      <div class="hint">追加單上會自動加註「經客戶確認後併入尾款請款」。</div>
+    </div>
+    <button class="btn btn-danger btn-block" style="margin-bottom:20px" data-act="varDel">${icon('trash')}刪除這筆追加工程</button>
+  </div>
+  <div class="totalbar"><div class="wrap">
+    <div class="tb-total"><small>追加金額</small><b id="barTotal">$0</b></div>
+    <button class="btn btn-primary" data-act="varDone">${icon('file')}產生追加單</button>
+  </div></div>`;
+  renderItems(); updateTotals();
+}
+
+/* =========================================================
+   叫料清單
+   ========================================================= */
+const MST = { '': '未叫料', ordered: '已叫料', arrived: '已到貨' };
+function renderMats() {
+  const q = cur;
+  const src = [...q.items.map(it => ({ it, from: '報價' })), ...approvedVars(q).flatMap(v => v.items.map(it => ({ it, from: '追加' })))]
+    .filter(x => x.it.material && x.it.name);
+  const added = new Set(q.mats.map(m => m.from).filter(Boolean));
+  $('#view').innerHTML = `
+  <header class="topbar"><div class="wrap">
+    <button class="tb-btn" data-act="go" data-to="#/case/${q.id}" aria-label="返回">${icon('back')}</button>
+    <h1>叫料清單<span class="sub">${esc(q.client)}・${esc(q.address || '')}</span></h1>
+  </div></header>
+  <div class="wrap" style="padding-top:14px">
+    <div class="card"><h3><span class="bar"></span>材料行</h3>
+      <input class="inp" data-mf="supplier" value="${esc(q.supplier || '')}" placeholder="例：大成水電材料行">
+    </div>
+    <div class="card"><h3><span class="bar"></span>叫料明細</h3>
+      ${q.mats.length ? q.mats.map((m, i) => `
+        <div class="mrow">
+          <input class="mname" data-mi="${i}" data-mk="name" value="${esc(m.name)}" placeholder="材料名稱／規格">
+          <input type="number" inputmode="decimal" step="any" data-mi="${i}" data-mk="qty" value="${m.qty}" aria-label="數量">
+          <input data-mi="${i}" data-mk="unit" value="${esc(m.unit)}" placeholder="單位" aria-label="單位">
+          <button class="mst ${m.state || ''}" data-act="matState" data-i="${i}">${MST[m.state || '']}</button>
+          <button class="icon-btn del" data-act="matDel" data-i="${i}" aria-label="刪除">${icon('trash')}</button>
+        </div>`).join('') : '<div class="hint" style="margin-bottom:10px">從下方「報價中的含料項目」一鍵加入，或自己新增材料。</div>'}
+      <button class="btn btn-outline btn-block" style="margin-top:10px" data-act="matAdd">${icon('plus')}新增材料</button>
+      <div class="hint">點狀態可切換：未叫料 → 已叫料 → 已到貨</div>
+    </div>
+    <div class="card"><h3><span class="bar"></span>報價中的含料項目</h3>
+      ${src.length ? src.map(({ it, from }) => `
+        <div class="arow"><div class="t">${esc(it.name)}<small>${from}・${fmtQty(num(it.qty))} ${esc(it.unit)}（施工數量）</small></div>
+        ${added.has(it.id) ? '<span class="hint" style="margin:0">已加入</span>' : `<button class="btn btn-sm btn-outline" data-act="matFrom" data-id="${it.id}">${icon('plus')}加入</button>`}</div>`).join('') : '<div class="hint">這張報價沒有標示「含料」的項目。</div>'}
+    </div>
+    <div class="share-steps" style="margin-bottom:20px">
+      <button class="btn btn-dark btn-block" data-act="matCopy">${icon('copy')}複製叫料清單</button>
+      <a class="btn btn-line btn-block" href="https://line.me/R/share?text=${encodeURIComponent(matText(q))}" target="_blank" rel="noopener">${icon('chat')}用 LINE 傳給材料行</a>
+    </div>
+  </div>`;
+}
+function matText(q) {
+  const s = DB.settings;
+  const rows = q.mats.filter(m => m.name && m.state !== 'arrived');
+  return [
+    `【叫料】${s.company}${s.owner ? ' ' + s.owner : ''}`,
+    q.supplier ? `材料行：${q.supplier}` : '',
+    ...rows.map((m, i) => `${i + 1}. ${m.name}　${fmtQty(num(m.qty))} ${m.unit || ''}`),
+    rows.length ? '' : '（尚無待叫材料）',
+    q.address ? `送貨地址：${q.address}` : '',
+    s.phone ? `聯絡電話：${s.phone}` : '',
+  ].filter(x => x !== '').join('\n');
+}
+
+/* =========================================================
+   施工排程
+   ========================================================= */
+let schedCrew = 'all', schedPast = false;
+function jobCard(j, showCase = true) {
+  const q = DB.quotes.find(x => x.id === j.qid);
+  return `<div class="job ${j.done ? 'done' : ''}">
+    <button class="bd" data-act="jobEdit" data-id="${j.id}">
+      <span class="tm">${esc(j.time || '—')}</span>
+      <span class="tx">${showCase ? `<b>${esc(q ? q.client : '（案件已刪除）')}${q && q.project ? `<small style="display:inline;margin-left:6px">${esc(q.project)}</small>` : ''}</b>${q && q.address ? `<small>${esc(q.address)}</small>` : ''}` : `<b>${fmtDay(j.date)}</b>`}
+        ${j.note ? `<small>${esc(j.note)}</small>` : ''}
+        ${j.crew && j.crew.length ? `<span class="crew">${j.crew.map(c => `<span>${esc(c)}</span>`).join('')}</span>` : ''}</span>
+    </button>
+    <button class="chk ${j.done ? 'on' : ''}" data-act="jobDone" data-id="${j.id}" aria-label="完成">${icon('check')}</button>
+  </div>`;
+}
+function renderSchedule() {
+  const crew = DB.settings.crew || [];
+  const t = today(), tm = addDays(t, 1);
+  const list = DB.jobs.filter(j => schedCrew === 'all' || (j.crew || []).includes(schedCrew))
+    .sort((a, b) => (a.date + (a.time || '')).localeCompare(b.date + (b.time || '')));
+  const late = list.filter(j => j.date < t && !j.done);
+  const past = list.filter(j => j.date < t && j.done && j.date >= addDays(t, -30)).reverse();
+  const upcoming = list.filter(j => j.date >= t);
+  const days = {}; upcoming.forEach(j => (days[j.date] ||= []).push(j));
+  const dayH = d => `<div class="day-h">${fmtDay(d)}${d === t ? '<span class="today">今天</span>' : d === tm ? '<span class="today tm">明天</span>' : ''}<button data-act="dayCopy" data-d="${d}">${icon('copy')}複製派工</button></div>`;
+  $('#view').innerHTML = `
+  <header class="topbar"><div class="wrap"><h1>施工排程<span class="sub">安排案場與師傅</span></h1></div></header>
+  <div class="wrap">
+    <button class="hero-btn" style="min-height:64px;font-size:19px" data-act="jobNew" data-q="">${icon('plus')}排定施工</button>
+    ${crew.length ? `<div class="chips" style="margin-top:12px">${['all', ...crew].map(c => `<button class="chip ${schedCrew === c ? 'on' : ''}" data-act="schedCrew" data-c="${esc(c)}">${c === 'all' ? '全部師傅' : esc(c)}</button>`).join('')}</div>` : ''}
+    ${late.length ? `<div class="day-h" style="color:var(--red)">${icon('alert')} 過期未完成 ${late.length} 件</div>${late.map(j => jobCard(j)).join('')}` : ''}
+    ${Object.keys(days).length ? Object.entries(days).map(([d, js]) => dayH(d) + js.map(j => jobCard(j)).join('')).join('') : `<div class="empty"><b>接下來沒有排程</b>按上方「＋ 排定施工」安排第一個工作</div>`}
+    ${past.length ? `<button class="btn btn-outline btn-block" style="margin-top:16px" data-act="schedPast">${schedPast ? '收起' : '顯示'}最近 30 天已完成（${past.length}）</button>${schedPast ? past.map(j => `<div class="hint" style="margin:10px 0 4px">${fmtDay(j.date)}</div>` + jobCard(j)).join('') : ''}` : ''}
+  </div>`;
+}
+function jobEditor(id, qid) {
+  const j = id ? DB.jobs.find(x => x.id === id) : { date: today(), time: '08:30', crew: [], note: '', qid: qid || '' };
+  if (!j) return;
+  const qs = DB.quotes.filter(q => q.client && (q.status !== 'lost' || q.id === j.qid))
+    .sort((a, b) => (RANK[a.status] >= 2 ? 0 : 1) - (RANK[b.status] >= 2 ? 0 : 1) || (b.date || '').localeCompare(a.date || ''));
+  const crew = DB.settings.crew || [];
+  openSheet(id ? '編輯排程' : '排定施工', `
+    <div class="fld"><label>案件 <span class="req">*</span></label>
+      <select class="inp" id="jbQ" style="font-size:16px"><option value="">請選擇案件</option>${qs.map(q => `<option value="${q.id}" ${q.id === j.qid ? 'selected' : ''}>${esc(q.client)}${q.address ? '・' + esc(q.address.slice(0, 14)) : ''}（${STATUS[q.status].t}）</option>`).join('')}</select></div>
+    <div class="row2">
+      <div class="fld"><label>日期</label><input class="inp" type="date" id="jbDate" value="${esc(j.date)}" style="font-size:16px"></div>
+      <div class="fld"><label>時間</label><input class="inp" type="time" id="jbTime" value="${esc(j.time || '')}" style="font-size:16px"></div>
+    </div>
+    <div class="fld"><label>出工師傅</label>
+      ${crew.length ? `<div class="chips" id="jbCrew">${crew.map(c => `<button class="chip accent ${(j.crew || []).includes(c) ? 'on' : ''}" data-act="jobCrew" data-c="${esc(c)}">${esc(c)}</button>`).join('')}</div>` : '<div class="hint">到「設定」填寫師傅名單後，這裡就能點選。</div>'}
+    </div>
+    <div class="fld"><label>工作內容</label><input class="inp" id="jbNote" value="${esc(j.note || '')}" placeholder="例：配管、冷氣安裝、驗收"></div>
+    <button class="btn btn-primary btn-block" data-act="jobSave" data-id="${id || ''}">${icon('check')}儲存</button>
+    ${id ? `<button class="btn btn-danger btn-block" style="margin-top:10px" data-act="jobDel" data-id="${id}">${icon('trash')}刪除這個排程</button>` : ''}
+  `);
+}
+function dayText(d) {
+  const js = DB.jobs.filter(j => j.date === d).sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+  return [`【${fmtDay(d)} 派工】`, ...js.map(j => {
+    const q = DB.quotes.find(x => x.id === j.qid);
+    return `${j.time || ''} ${q ? q.client : ''}｜${q && q.address ? q.address : ''}${j.crew && j.crew.length ? '｜' + j.crew.join('、') : ''}${j.note ? '｜' + j.note : ''}`;
+  })].join('\n');
+}
+
+/* =========================================================
+   客戶名單
+   ========================================================= */
+let clientKw = '';
+function renderClients() {
+  $('#view').innerHTML = `
+  <header class="topbar"><div class="wrap"><h1>客戶名單<span class="sub">從報價單自動整理</span></h1></div></header>
+  <div class="wrap" style="padding-top:14px">
+    <div class="search">${icon('search')}<input type="search" id="clSearch" placeholder="搜尋姓名、電話、地址" value="${esc(clientKw)}"></div>
+    <div id="clList"></div>
+  </div>`;
+  $('#clSearch').addEventListener('input', e => { clientKw = e.target.value; renderClientList(); });
+  renderClientList();
+}
+function renderClientList() {
+  const kw = clientKw.trim().toLowerCase();
+  const list = clientList().filter(c => !kw || [c.name, c.phone, c.address].some(v => String(v || '').toLowerCase().includes(kw)));
+  $('#clList').innerHTML = list.length ? list.map(c => `
+    <button class="lib-item" data-act="clientOpen" data-k="${esc(c.key)}">
+      <span class="nm">${esc(c.name)}<small style="display:block;color:var(--muted);font-weight:400">${esc(c.phone || '無電話')}${c.address ? '・' + esc(c.address) : ''}</small>
+        <small style="display:block;color:var(--muted);font-weight:400">${c.quotes.length} 張報價・最近 ${fmtDate(c.last)}</small></span>
+      <span class="pr" style="text-align:right">${money(c.total)}<small style="display:block">${c.left ? `<span class="recv">待收 ${money(c.left)}</span>` : '成交累計'}</small></span>
+    </button>`).join('') : `<div class="empty"><b>${DB.quotes.length ? '找不到符合的客戶' : '還沒有客戶'}</b>開過報價單的客戶會自動出現在這裡</div>`;
+}
+function clientSheet(key) {
+  const c = clientList().find(x => x.key === key); if (!c) return;
+  openSheet(c.name, `
+    <div class="case-meta" style="margin:0 0 12px">
+      ${c.phone ? `<div class="row">${icon('phone')}<span>${esc(c.phone)}</span><button class="mini-link" data-act="copy" data-t="${esc(c.phone)}">複製</button></div>` : ''}
+      ${c.address ? `<div class="row">${icon('pin')}<span>${esc(c.address)}</span></div>` : ''}
+    </div>
+    <button class="btn btn-primary btn-block" data-act="clientNew" data-k="${esc(c.key)}">${icon('plus')}幫這位客戶開新報價</button>
+    <div class="cat-h">歷史報價（${c.quotes.length}）</div>
+    ${c.quotes.sort((a, b) => (b.date || '').localeCompare(a.date || '')).map(q => `
+      <button class="menu-btn" data-act="go" data-to="#/case/${q.id}" style="min-height:64px">
+        <span style="flex:1;min-width:0">${esc(q.project || q.items.map(i => i.name).filter(Boolean).slice(0, 2).join('、') || q.no)}<small style="display:block;color:var(--muted);font-weight:400;font-size:13px">${fmtDate(q.date)}・${esc(q.no)}</small></span>
+        <span style="text-align:right">${money(fin(q).contract)}<br>${badge(q.status)}</span>
+      </button>`).join('')}
+  `);
+}
+function renderClientSug(v) {
+  const box = $('#clientSug'); if (!box) return;
+  const kw = String(v || '').trim().toLowerCase();
+  if (!kw) { box.innerHTML = ''; return; }
+  const list = clientList(cur.id).filter(c => String(c.name).toLowerCase().includes(kw) && c.name !== v).slice(0, 4);
+  box.innerHTML = list.map(c => `<button data-act="sugPick" data-k="${esc(c.key)}">${esc(c.name)}<small>${esc(c.phone || '')}${c.address ? '・' + esc(c.address) : ''}・帶入舊客戶資料</small></button>`).join('');
+}
+
+/* =========================================================
    頁面 2：編輯頁
    ========================================================= */
 function renderEditor() {
   const q = cur;
   $('#view').innerHTML = `
   <header class="topbar"><div class="wrap">
-    <button class="tb-btn" data-act="go" data-to="#/home" aria-label="返回">${icon('back')}</button>
+    <button class="tb-btn" data-act="go" data-to="#/case/${q.id}" aria-label="返回">${icon('back')}</button>
     <h1>${esc(q.no)}<span class="sub" id="savedTag">自動儲存中</span></h1>
     <button class="tb-btn ghost" data-act="qMenu" data-id="${q.id}">${icon('more')}</button>
   </div></header>
@@ -854,7 +1413,7 @@ function renderEditor() {
         <div class="hint">編號與日期已自動產生，一般不用改。</div>
       </div>
       <div class="card"><h3><span class="bar"></span>客戶與案場</h3>
-        <div class="fld"><label>客戶姓名／公司名稱 <span class="req">*</span></label><input class="inp" data-f="client" value="${esc(q.client)}" placeholder="例：陳小姐、宏達科技" autocomplete="off"></div>
+        <div class="fld"><label>客戶姓名／公司名稱 <span class="req">*</span></label><input class="inp" data-f="client" value="${esc(q.client)}" placeholder="例：陳小姐、宏達科技" autocomplete="off"><div class="sug" id="clientSug"></div></div>
         <div class="fld"><label>聯絡電話</label><input class="inp" type="tel" inputmode="tel" data-f="phone" value="${esc(q.phone)}" placeholder="0912-345-678"></div>
         <div class="fld"><label>施工地址</label><input class="inp" data-f="address" value="${esc(q.address)}" placeholder="例：板橋區文化路一段 100 號 5 樓"></div>
         <div class="fld"><label>工程名稱（選填）</label><input class="inp" data-f="project" value="${esc(q.project)}" placeholder="例：浴室水電翻修、客廳冷氣安裝"></div>
@@ -940,11 +1499,11 @@ function setStep(n) {
 }
 function renderItems() {
   const box = $('#items'); if (!box) return;
-  const q = cur;
-  if (!q.items.length) {
-    box.innerHTML = `<div class="empty" style="padding:24px 10px 16px"><b>尚未加入工料項目</b>點下方橘色按鈕，從常用工料庫一鍵帶入</div>`;
+  const items = curItems || [];
+  if (!items.length) {
+    box.innerHTML = `<div class="empty" style="padding:24px 10px 16px"><b>尚未加入工料項目</b>點下方按鈕，從常用工料庫一鍵帶入</div>`;
   } else {
-    box.innerHTML = q.items.map((it, i) => `
+    box.innerHTML = items.map((it, i) => `
     <div class="item" data-row="${i}">
       <div class="it-head">
         <div class="it-no">${i + 1}</div>
@@ -960,22 +1519,24 @@ function renderItems() {
         <label class="mat"><input type="checkbox" data-i="${i}" data-k="material" ${it.material ? 'checked' : ''}><span class="tg"></span><span class="on-t">包含材料</span><span class="off-t">純工資</span></label>
         <div class="it-sub">小計<b data-sub="${i}">${money(num(it.qty) * num(it.price))}</b></div>
       </div>
+      <div class="it-cost">成本單價<input type="number" inputmode="numeric" data-i="${i}" data-k="cost" value="${it.cost || ''}" placeholder="0" aria-label="成本單價"><span>/ ${esc(it.unit || '單位')}・只有你看得到</span></div>
       ${it.fromLib ? '' : `<button class="mini-link" data-act="saveToLib" data-i="${i}">☆ 存入常用工料庫</button>`}
     </div>`).join('') + `<datalist id="unitList">${['台','米','坪','處','式','組','座','盞','迴','次','工','車','樘','只','片','才','尺'].map(u => `<option value="${u}">`).join('')}</datalist>`;
   }
-  const c = $('#itemCnt'); if (c) c.textContent = q.items.length ? q.items.length : '';
+  const c = $('#itemCnt'); if (c) c.textContent = items.length ? items.length : '';
 }
 function updateTotals() {
   const q = cur; if (!q) return;
-  const c = calc(q);
   const set = (id, v) => { const el = $('#' + id); if (el) el.textContent = v; };
+  (curItems || []).forEach((it, i) => { const el = $(`[data-sub="${i}"]`); if (el) el.textContent = money(num(it.qty) * num(it.price)); });
+  if (page === 'var' && curVar) { set('barTotal', money(varCalc(q, curVar).total)); return; }
+  const c = calc(q);
   set('barTotal', money(c.total));
   set('amtDep', money(c.dep)); set('amtMid', money(c.mid)); set('amtFin', money(c.fin));
   set('pctSum', c.pctSum + '%'); set('payTotal', money(c.total));
   set('validTo', fmtDate(addDays(q.date || today(), num(q.validDays))));
   set('sumHint', `項目合計 ${money(c.sub)}${c.disc ? `　折讓 −${money(c.disc)}` : ''}${c.tax ? `　稅金 +${money(c.tax)}` : ''}　＝ 總金額 ${money(c.total)}`);
   const w = $('#payWarn'); if (w) w.innerHTML = Math.abs(c.pctSum - 100) > 0.001 ? `<div class="warn">⚠ 付款比例合計為 ${c.pctSum}%，應為 100%</div>` : '';
-  q.items.forEach((it, i) => { const el = $(`[data-sub="${i}"]`); if (el) el.textContent = money(num(it.qty) * num(it.price)); });
 }
 function touch() { cur.updatedAt = Date.now(); const t = $('#savedTag'); if (t) t.textContent = '儲存中…'; updateTotals(); save(); }
 function setPath(o, path, v) { const k = path.split('.'); let x = o; while (k.length > 1) x = x[k.shift()]; x[k[0]] = v; }
@@ -983,23 +1544,50 @@ function setPath(o, path, v) { const k = path.split('.'); let x = o; while (k.le
 const NUM_FIELDS = ['discount', 'days', 'validDays', 'pay.dep', 'pay.mid', 'pay.fin'];
 document.addEventListener('input', e => {
   const el = e.target;
-  if (page !== 'edit' || !cur) return;
-  if (el.dataset.f) {
+  if (!['edit', 'var'].includes(page) || !cur) return;
+  if (el.dataset.f && page === 'edit') {
     const f = el.dataset.f;
     let v = el.type === 'checkbox' ? el.checked : el.value;
     if (NUM_FIELDS.includes(f)) v = num(v);
     setPath(cur, f, v);
     if (f.startsWith('pay.')) $$('[data-act="payPreset"]').forEach(b => b.classList.toggle('on', b.dataset.p === `${cur.pay.dep},${cur.pay.mid},${cur.pay.fin}`));
     if (f === 'warranty') $$('[data-act="warranty"]').forEach(b => b.classList.toggle('on', b.dataset.w === v));
+    if (f === 'client') renderClientSug(v);
     touch();
-  } else if (el.dataset.k && el.dataset.i !== undefined) {
-    const it = cur.items[+el.dataset.i]; if (!it) return;
+  } else if (el.dataset.vf && page === 'var' && curVar) {
+    curVar[el.dataset.vf] = el.value; touch();
+  } else if (el.dataset.k && el.dataset.i !== undefined && curItems) {
+    const it = curItems[+el.dataset.i]; if (!it) return;
     const k = el.dataset.k;
-    it[k] = el.type === 'checkbox' ? el.checked : (k === 'qty' || k === 'price') ? num(el.value) : el.value;
+    it[k] = el.type === 'checkbox' ? el.checked : ['qty', 'price', 'cost'].includes(k) ? num(el.value) : el.value;
     touch();
   }
 });
 document.addEventListener('change', e => { if (e.target.type === 'checkbox') e.target.dispatchEvent(new Event('input', { bubbles: true })); });
+// 案件頁：應收日、其他成本
+document.addEventListener('change', e => {
+  const el = e.target;
+  if (page !== 'case' || !cur) return;
+  if (el.dataset.due) { cur.due[el.dataset.due] = el.value; }
+  else if (el.dataset.oc) { cur.otherCost = num(el.value); }
+  else return;
+  cur.updatedAt = Date.now(); save(true); renderCase();
+});
+// 叫料頁
+document.addEventListener('input', e => {
+  const el = e.target;
+  if (page !== 'mats' || !cur) return;
+  if (el.dataset.mf) cur[el.dataset.mf] = el.value;
+  else if (el.dataset.mk) { const m = cur.mats[+el.dataset.mi]; if (!m) return; m[el.dataset.mk] = el.dataset.mk === 'qty' ? num(el.value) : el.value; }
+  else return;
+  cur.updatedAt = Date.now(); save();
+  const a = $('a.btn-line'); if (a) a.href = 'https://line.me/R/share?text=' + encodeURIComponent(matText(cur));
+});
+function refreshJobs() {
+  if (page === 'schedule') renderSchedule();
+  else if (page === 'case') renderCase();
+  else if (page === 'home') renderHome();
+}
 
 function openPicker(filterCat = 'all', kw = '') {
   const cats = [...new Set(DB.library.map(x => x.cat || '其他'))];
@@ -1025,9 +1613,9 @@ function openPicker(filterCat = 'all', kw = '') {
   s.addEventListener('input', () => { const pos = s.value; openPicker(filterCat, pos); const n = $('#pkSearch'); n.focus(); n.setSelectionRange(pos.length, pos.length); });
 }
 function addItem(it) {
-  cur.items.push({ id: uid(), qty: 1, ...it });
+  curItems.push({ id: uid(), qty: 1, ...it });
   touch(); renderItems();
-  const i = cur.items.length - 1;
+  const i = curItems.length - 1;
   const row = $(`[data-row="${i}"]`);
   if (row) {
     row.classList.add('flash');
@@ -1141,17 +1729,213 @@ function paperHTML(q) {
     <div class="pp-foot">THANK YOU　·　感謝您的信任與支持　·　${esc(s.company || '')}${s.phone ? `　·　${esc(s.phone)}` : ''}</div>
   </div>`;
 }
-function renderPreview() {
-  const q = cur;
+/* =========================================================
+   請款單／收據／追加單 A4 樣式
+   ========================================================= */
+const ppSecT = (zh, en) => `<div class="pp-sec-t pb"><span class="zh">${zh}</span><span class="en">${en}</span></div>`;
+function ppHead(titleZh, titleEn, no) {
+  const s = DB.settings;
+  const coInfo = [s.owner && `負責人 ${esc(s.owner)}`, s.phone && `電話 ${esc(s.phone)}`, s.lineId && `LINE ${esc(s.lineId)}`, s.taxId && `統編 ${esc(s.taxId)}`].filter(Boolean).join('　·　');
+  return `<div class="pp-lines"><i></i><b></b></div>
+    <div class="pp-head pb">
+      <div class="pp-co">
+        ${s.logo ? `<div class="pp-logo"><img src="${s.logo}" alt=""></div>` : `<div class="pp-logo">${esc((s.company || '工')[0])}</div>`}
+        <div><div class="pp-coname">${esc(s.company || '')}</div><div class="pp-coinfo">${coInfo}${s.address ? `<br>${esc(s.address)}` : ''}</div></div>
+      </div>
+      <div class="pp-title"><div class="t2">${titleEn}</div><div class="t1">${titleZh}</div><div class="t3">No. ${esc(no)}</div></div>
+    </div>`;
+}
+function ppClient(q, right) {
+  return `<div class="pp-meta pb">
+    <div class="col">
+      <div class="pp-lab">CLIENT　客戶資訊</div>
+      <div class="pp-client">${esc(q.client || '')}</div>
+      <div class="pp-kv"><span class="k">聯絡電話</span><span class="v">${esc(q.phone || '—')}</span></div>
+      <div class="pp-kv"><span class="k">施工地址</span><span class="v">${esc(q.address || '—')}</span></div>
+      ${q.project ? `<div class="pp-kv"><span class="k">工程名稱</span><span class="v">${esc(q.project)}</span></div>` : ''}
+    </div>
+    <div class="col">
+      <div class="pp-lab">DETAILS　單據資訊</div>
+      ${right.map(([k, v]) => `<div class="pp-kv"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('')}
+    </div>
+  </div>`;
+}
+function ppBank(note) {
+  const s = DB.settings;
+  if (!s.bank && !s.account) return '';
+  return `<div class="pp-sec pb">${ppSecT('匯款資訊', 'BANK TRANSFER')}<div class="pp-bank">
+    ${s.bank ? `<span>銀行　<b>${esc(s.bank)}${s.bankCode ? `（${esc(s.bankCode)}）` : ''}</b></span>` : ''}
+    ${s.account ? `<span>帳號　<b>${esc(s.account)}</b></span>` : ''}
+    ${s.accountName ? `<span>戶名　<b>${esc(s.accountName)}</b></span>` : ''}
+  </div>${note ? `<div class="pp-note">${note}</div>` : ''}</div>`;
+}
+function ppSign(left, right) {
+  return `<div class="pp-sign pb">
+    <div><div class="st">${left[0]}</div><div class="sub">${left[1]}</div><div class="area">${left[2] || ''}</div><div class="dt">${left[3]}</div></div>
+    <div><div class="st">${right[0]}</div><div class="sub">${right[1]}</div><div class="area">${right[2] || ''}</div><div class="dt">${right[3]}</div></div>
+  </div>`;
+}
+function ppEnd() {
+  const s = DB.settings;
+  return `<div class="pp-lines end pb"><b></b><i></i></div>
+    <div class="pp-foot">THANK YOU　·　感謝您的信任與支持　·　${esc(s.company || '')}${s.phone ? `　·　${esc(s.phone)}` : ''}</div>`;
+}
+const invoiceNo = (q, key) => 'INV-' + String(q.no).replace(/^QUO-/, '') + '-' + ({ dep: 1, mid: 2, fin: 3 }[key] || 9);
+
+function invoiceHTML(q, key) {
+  const f = fin(q), s = f.stages.find(x => x.key === key) || f.stages[0];
+  if (!s) return '<div class="paper"></div>';
+  const vars = approvedVars(q);
+  const stRow = x => {
+    const tag = !x.left ? '<span class="pp-st ok">已收齊</span>' : x.key === s.key ? '<span class="pp-st now">本期請款</span>' : x.paid ? '<span class="pp-st now">部分已收</span>' : '<span class="pp-st wait">未到期</span>';
+    return `<tr class="pb"><td class="c"><b>${x.name}</b></td><td class="c">${x.pct}%${x.add ? '＋追加' : ''}</td><td class="r">${money(x.amt)}</td><td class="r">${money(x.paid)}</td><td class="c">${tag}</td></tr>`;
+  };
+  return `<div class="paper">
+    ${ppHead('工程請款單', 'INVOICE', invoiceNo(q, s.key))}
+    ${ppClient(q, [['請款單號', esc(invoiceNo(q, s.key))], ['請款日期', fmtDate(today())], ['原報價單號', esc(q.no)], ['付款期限', s.due ? fmtDate(s.due) : '收到後 3 日內']])}
+    <div class="pp-sec pb">
+      ${ppSecT('本期請款', 'AMOUNT DUE')}
+      <div class="pp-due"><div><div class="k">${s.name}（${s.pct}%${s.add ? '＋追加工程' : ''}）</div><div class="cn">${cnMoney(s.left)}</div></div><b>${money(s.left)}</b></div>
+      ${s.paid ? `<div class="pp-note">本期款項 ${money(s.amt)}，已收 ${money(s.paid)}，以上為尚欠金額。</div>` : ''}
+    </div>
+    <div class="pp-sec">
+      ${ppSecT('合約款項總覽', 'CONTRACT SUMMARY')}
+      <table class="pp-tbl pp-sumtbl">
+        <tbody>
+          <tr class="pb"><td>原報價金額（${esc(q.no)}）</td><td class="r">${money(f.c.total)}</td></tr>
+          ${vars.map(v => `<tr class="pb"><td>追加工程（${esc(v.no)}）${esc(v.title || '')}</td><td class="r">${money(varCalc(q, v).total)}</td></tr>`).join('')}
+          <tr class="pb tot"><td>合約總額</td><td class="r">${money(f.contract)}</td></tr>
+        </tbody>
+      </table>
+      <table class="pp-tbl" style="margin-top:16px">
+        <thead><tr class="pb"><th>期別</th><th>比例</th><th style="text-align:right">金額</th><th style="text-align:right">已收</th><th>狀態</th></tr></thead>
+        <tbody>${f.stages.map(stRow).join('')}</tbody>
+      </table>
+      <div class="pp-sum pb"><div></div><div class="pp-totals">
+        <div class="ln"><span>累計已收</span><span>${money(f.paid)}</span></div>
+        <div class="ln"><span>本期請款</span><span>${money(s.left)}</span></div>
+        <div class="ln"><span>本期付清後尚餘</span><span>${money(Math.max(0, f.left - s.left))}</span></div>
+      </div></div>
+    </div>
+    ${ppBank('匯款後請告知帳號末五碼，方便對帳；收到款項後將開立收據。')}
+    ${ppSign(['CLIENT　客戶確認', '已確認本期請款金額', '', '簽署日期　　　　年　　　月　　　日'], ['ISSUED BY　請款人', esc(DB.settings.company || ''), esc(DB.settings.owner || ''), '請款日期　' + fmtDate(today())])}
+    ${ppEnd()}
+  </div>`;
+}
+function receiptHTML(q, pid) {
+  const idx = q.payments.findIndex(x => x.id === pid), p = q.payments[idx];
+  if (!p) return '<div class="paper"></div>';
+  const f = fin(q);
+  const upto = q.payments.filter((x, i) => (x.date || '') < (p.date || '') || ((x.date || '') === (p.date || '') && i <= idx)).reduce((a, x) => a + num(x.amount), 0);
+  return `<div class="paper">
+    ${ppHead('收款收據', 'RECEIPT', p.no)}
+    ${ppClient(q, [['收據編號', esc(p.no)], ['收款日期', fmtDate(p.date)], ['報價單號', esc(q.no)], ['付款方式', esc(p.method || '')]])}
+    <div class="pp-sec pb">
+      ${ppSecT('收款內容', 'PAYMENT RECEIVED')}
+      <div class="pp-rcpt">茲收到　<b>${esc(q.client || '')}</b>　支付「${esc(q.project || q.no + ' 報價')}」工程${STAGE_NAME[p.stage] || ''}款項</div>
+      <div class="pp-due"><div><div class="k">本次收款金額</div><div class="cn">${cnMoney(num(p.amount))}</div></div><b>${money(p.amount)}</b></div>
+      ${p.note ? `<div class="pp-note">備註：${esc(p.note)}</div>` : ''}
+    </div>
+    <div class="pp-sec pb">
+      ${ppSecT('款項狀況', 'BALANCE')}
+      <table class="pp-tbl pp-sumtbl"><tbody>
+        <tr class="pb"><td>合約總額${f.add ? '（含追加工程）' : ''}</td><td class="r">${money(f.contract)}</td></tr>
+        <tr class="pb"><td>本次收款</td><td class="r">${money(p.amount)}</td></tr>
+        <tr class="pb"><td>累計已收（含本次）</td><td class="r">${money(upto)}</td></tr>
+        <tr class="pb tot"><td>尚餘未收</td><td class="r">${money(Math.max(0, f.contract - upto))}</td></tr>
+      </tbody></table>
+    </div>
+    ${ppSign(['NOTE　說明', '本收據為收款證明，請妥善保存', '', ''], ['RECEIVED BY　收款人', esc(DB.settings.company || ''), esc(DB.settings.owner || ''), '收款日期　' + fmtDate(p.date)])}
+    ${ppEnd()}
+  </div>`;
+}
+function varHTML(q, vid) {
+  const v = q.variations.find(x => x.id === vid);
+  if (!v) return '<div class="paper"></div>';
+  const vc = varCalc(q, v), f = fin(q);
+  const before = f.contract - (v.status === 'approved' ? vc.total : 0);
+  const notes = String(v.note || '').split('\n').map(t => t.trim()).filter(Boolean);
+  const anyMat = v.items.some(it => it.material), anyLab = v.items.some(it => !it.material);
+  return `<div class="paper">
+    ${ppHead('追加工程單', 'VARIATION ORDER', v.no)}
+    ${ppClient(q, [['追加單號', esc(v.no)], ['日期', fmtDate(v.date)], ['原報價單號', esc(q.no)], ['追加項目', esc(v.title || '—')]])}
+    <div class="pp-sec">
+      ${ppSecT('追加項目明細', 'ADDITIONAL WORK')}
+      <table class="pp-tbl">
+        <thead><tr class="pb"><th style="width:40px">NO.</th><th style="text-align:left">施工項目</th><th style="width:60px">數量</th><th style="width:48px">單位</th><th style="width:86px;text-align:right">單價</th><th style="width:74px">含料</th><th style="width:100px;text-align:right">小計</th></tr></thead>
+        <tbody>${v.items.map((it, i) => `<tr class="pb">
+          <td class="c idx">${pad(i + 1)}</td><td class="nm">${esc(it.name)}</td><td class="c">${fmtQty(num(it.qty))}</td><td class="c">${esc(it.unit)}</td>
+          <td class="r">${money(it.price)}</td><td class="c">${it.material ? '<span class="tag-m">✓ 含料</span>' : '<span class="tag-l">純工資</span>'}</td>
+          <td class="r" style="font-weight:600;color:#2C3E50">${money(num(it.qty) * num(it.price))}</td></tr>`).join('')}</tbody>
+      </table>
+      <div class="pp-sum pb">
+        <div class="pp-legend">
+          ${anyMat ? '<div><span class="tag-m">✓ 含料</span>　單價已包含材料費</div>' : ''}
+          ${anyLab ? '<div><span class="tag-l">純工資</span>　僅含施工工資，材料另計或由業主自備</div>' : ''}
+        </div>
+        <div class="pp-totals">
+          <div class="ln"><span>追加小計</span><span>${money(vc.sub)}</span></div>
+          ${vc.tax ? `<div class="ln"><span>營業稅 5%</span><span>${money(vc.tax)}</span></div>` : ''}
+          <div class="grand"><span>追加金額${q.tax ? '（含稅）' : '（未稅）'}</span><b>${money(vc.total)}</b></div>
+          <div class="cn">${cnMoney(vc.total)}</div>
+        </div>
+      </div>
+    </div>
+    <div class="pp-sec pb">
+      ${ppSecT('合約金額變更', 'CONTRACT CHANGE')}
+      <div class="pp-facts" style="margin-top:0">
+        <div><div class="k">變更前合約總額</div><div class="v">${money(before)}</div></div>
+        <div><div class="k">本次追加</div><div class="v">＋ ${money(vc.total)}</div></div>
+        <div><div class="k">變更後合約總額</div><div class="v">${money(before + vc.total)}</div></div>
+      </div>
+    </div>
+    <div class="pp-sec pb">${ppSecT('說明', 'NOTES')}<ol class="pp-terms">
+      ${notes.map(t => `<li class="pb">${esc(t)}</li>`).join('')}
+      <li class="pb">本追加工程經客戶簽名確認後施作，追加金額併入尾款一併請款。</li>
+      <li class="pb">原報價單之付款條件、保固與條款，同樣適用於本追加工程。</li>
+    </ol></div>
+    ${ppSign(['CLIENT SIGNATURE　客戶確認', '本人同意上述追加項目與金額', '', '簽署日期　　　　年　　　月　　　日'], ['ISSUED BY　報價人', esc(DB.settings.company || ''), esc(DB.settings.owner || ''), '日期　' + fmtDate(v.date)])}
+    ${ppEnd()}
+  </div>`;
+}
+
+/* =========================================================
+   單據預覽頁（報價單／請款單／收據／追加單）
+   ========================================================= */
+const DOC_NAME = { quote: '報價單', invoice: '請款單', receipt: '收據', var: '追加工程單' };
+function docHTML() {
+  const q = cur, { kind, ref } = docState;
+  if (kind === 'invoice') return invoiceHTML(q, ref);
+  if (kind === 'receipt') return receiptHTML(q, ref);
+  if (kind === 'var') return varHTML(q, ref);
+  return paperHTML(q);
+}
+function docNo() {
+  const q = cur, { kind, ref } = docState;
+  if (kind === 'invoice') return invoiceNo(q, ref);
+  if (kind === 'receipt') return (q.payments.find(p => p.id === ref) || {}).no || '';
+  if (kind === 'var') return (q.variations.find(v => v.id === ref) || {}).no || '';
+  return q.no;
+}
+function docAmount() {
+  const q = cur, { kind, ref } = docState, f = fin(q);
+  if (kind === 'invoice') return (f.stages.find(s => s.key === ref) || { left: 0 }).left;
+  if (kind === 'receipt') return num((q.payments.find(p => p.id === ref) || {}).amount);
+  if (kind === 'var') { const v = q.variations.find(x => x.id === ref); return v ? varCalc(q, v).total : 0; }
+  return calc(q).total;
+}
+function renderDoc() {
+  const q = cur, { kind, ref } = docState;
+  const editTo = kind === 'quote' ? `#/edit/${q.id}` : kind === 'var' ? `#/var/${q.id}/${ref}` : '';
   $('#view').innerHTML = `
   <header class="topbar"><div class="wrap">
-    <button class="tb-btn" data-act="go" data-to="#/home" aria-label="返回">${icon('back')}</button>
-    <h1>報價單預覽<span class="sub">${esc(q.no)}</span></h1>
-    <button class="tb-btn ghost" data-act="go" data-to="#/edit/${q.id}">${icon('edit')}編輯</button>
+    <button class="tb-btn" data-act="go" data-to="#/case/${q.id}" aria-label="返回">${icon('back')}</button>
+    <h1>${DOC_NAME[kind]}預覽<span class="sub">${esc(docNo())}</span></h1>
+    ${editTo ? `<button class="tb-btn ghost" data-act="go" data-to="${editTo}">${icon('edit')}編輯</button>` : ''}
   </div></header>
   <div class="wrap">
-    <div class="pv-status"><span class="lbl">狀態</span><button data-act="qMenu" data-id="${q.id}">${badge(q.status)}</button><span class="pv-total">${money(calc(q).total)}</span></div>
-    <div class="paper-wrap" id="paperWrap"><div class="paper-scale" id="paperScale">${paperHTML(q)}</div></div>
+    <div class="pv-status">${kind === 'quote' ? `<span class="lbl">狀態</span><button data-act="qMenu" data-id="${q.id}">${badge(q.status)}</button>` : `<span class="lbl">${esc(q.client)}・${DOC_NAME[kind]}</span>`}<span class="pv-total">${money(docAmount())}</span></div>
+    <div class="paper-wrap" id="paperWrap"><div class="paper-scale" id="paperScale">${docHTML()}</div></div>
     <div class="hint" style="text-align:center;margin-bottom:10px">此為 A4 版面預覽，可直接截圖或用下方按鈕輸出</div>
   </div>
   <div class="actbar"><div class="wrap">
@@ -1160,10 +1944,10 @@ function renderPreview() {
     <button class="btn btn-line" data-act="shareLine">${icon('chat')}一鍵 LINE 分享</button>
   </div></div>`;
   fitPaper();
-  // 背景預先產生圖片，讓分享按鈕可在使用者點擊時立即叫出分享選單
   renderCache.key = '';
-  setTimeout(() => { if (page === 'preview') getRender().catch(() => {}); }, 600);
+  setTimeout(() => { if (page === 'doc' || page === 'preview') getRender().catch(() => {}); }, 600);
 }
+
 function fitPaper() {
   const wrap = $('#paperWrap'), sc = $('#paperScale'); if (!wrap || !sc) return;
   const avail = Math.min(794, $('#view .wrap').clientWidth - 32);
@@ -1174,15 +1958,15 @@ function fitPaper() {
 }
 window.addEventListener('resize', () => { if (page === 'preview') fitPaper(); });
 
-const cacheKey = q => JSON.stringify([q, DB.settings]);
+const cacheKey = () => JSON.stringify([docState, cur, DB.settings]);
 async function getRender() {
-  const q = cur, key = cacheKey(q);
+  const key = cacheKey();
   if (renderCache.key === key && renderCache.canvas) return renderCache;
   if (!window.html2canvas) throw new Error('nolib');
   if (document.fonts && document.fonts.ready) await document.fonts.ready;
   const host = document.createElement('div');
   host.style.cssText = 'position:absolute;left:-10000px;top:0;width:794px;background:#fff;';
-  host.innerHTML = paperHTML(q);
+  host.innerHTML = docHTML();
   document.body.appendChild(host);
   const el = host.firstElementChild;
   // 分頁切點：每個 .pb 元素的上緣（避免把一列切成兩半）
@@ -1196,7 +1980,7 @@ async function getRender() {
     return renderCache;
   } finally { host.remove(); }
 }
-const fileBase = q => `報價單_${q.no}_${(q.client || '客戶').replace(/[\\/:*?"<>|\s]/g, '')}`;
+const fileBase = () => `${DOC_NAME[docState.kind]}_${docNo()}_${(cur.client || '客戶').replace(/[\\/:*?"<>|\s]/g, '')}`;
 function downloadBlob(blob, name) {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob); a.download = name;
@@ -1223,8 +2007,22 @@ async function copyText(t) {
   try { await navigator.clipboard.writeText(t); toast('已複製'); return true; }
   catch (e) { toast('無法自動複製，請長按文字手動複製'); return false; }
 }
-function shareText(q) {
-  const s = DB.settings, c = calc(q);
+function shareText() {
+  const s = DB.settings, q = cur, c = calc(q), f = fin(q), { kind, ref } = docState;
+  const tail = `如有問題歡迎來電 ${s.phone || ''}　${s.owner || ''}`;
+  const bank = s.account ? `匯款帳號：${s.bank || ''}${s.bankCode ? `（${s.bankCode}）` : ''} ${s.account}${s.accountName ? ` 戶名 ${s.accountName}` : ''}` : '';
+  if (kind === 'invoice') {
+    const st = f.stages.find(x => x.key === ref) || f.stages[0] || { name: '', left: 0 };
+    return [`【${s.company} 請款通知】`, `${q.client || ''} 您好，「${q.project || '工程'}」${st.name}請款金額 ${money(st.left)}`, `請款單號：${invoiceNo(q, ref)}`, st.due ? `付款期限：${fmtDate(st.due)}` : '', bank, '匯款後請告知帳號末五碼，謝謝！', tail].filter(Boolean).join('\n');
+  }
+  if (kind === 'receipt') {
+    const p = q.payments.find(x => x.id === ref) || {};
+    return [`【${s.company} 收款收據】`, `已收到 ${q.client || ''} 支付${STAGE_NAME[p.stage] || ''}款項 ${money(p.amount)}`, `收款日期：${fmtDate(p.date)}`, `收據編號：${p.no || ''}`, f.left ? `尚餘未收：${money(f.left)}` : '款項已全部付清，感謝您！', tail].filter(Boolean).join('\n');
+  }
+  if (kind === 'var') {
+    const v = q.variations.find(x => x.id === ref) || { items: [] };
+    return [`【${s.company} 追加工程單】`, `${q.client || ''} 您好，追加項目：${v.title || ''}`, `追加金額：${money(varCalc(q, v).total)}`, `單號：${v.no || ''}`, '確認後追加金額將併入尾款請款，麻煩回覆確認，謝謝！', tail].filter(Boolean).join('\n');
+  }
   return [
     `【${s.company} 工程報價單】`,
     `單號：${q.no}`,
@@ -1236,14 +2034,16 @@ function shareText(q) {
     num(q.pay.fin) ? `尾款 ${q.pay.fin}%：${money(c.fin)}` : '',
     q.warranty ? `保固：${q.warranty}` : '',
     `報價有效至 ${fmtDate(addDays(q.date, num(q.validDays)))}`,
-    `如有問題歡迎來電 ${s.phone || ''}　${s.owner || ''}`,
+    tail,
   ].filter(Boolean).join('\n');
 }
 function markSent() {
-  if (cur && cur.status === 'draft') { cur.status = 'sent'; save(true); const b = $('.pv-status button'); if (b) b.innerHTML = badge('sent'); }
+  if (docState.kind !== 'quote' || !cur || cur.status !== 'draft') return false;
+  cur.status = 'sent'; save(true); const b = $('.pv-status button'); if (b) b.innerHTML = badge('sent');
+  return true;
 }
 async function withRender(text) {
-  const ready = renderCache.key === cacheKey(cur) && renderCache.canvas;
+  const ready = renderCache.key === cacheKey() && renderCache.canvas;
   if (!ready) loading(true, text);
   try { return await getRender(); }
   catch (e) {
@@ -1255,11 +2055,11 @@ async function withRender(text) {
 function showImageSheet(r, note) {
   if (r.url) URL.revokeObjectURL(r.url);
   r.url = URL.createObjectURL(r.blob);
-  openSheet('報價單圖片', `<div class="hint" style="font-size:15px;margin:0 0 10px">${note}</div><img class="share-img" src="${r.url}" alt="報價單圖片">`);
+  openSheet('單據圖片', `<div class="hint" style="font-size:15px;margin:0 0 10px">${note}</div><img class="share-img" src="${r.url}" alt="報價單圖片">`);
 }
 async function saveImage() {
   const r = await withRender('產生高畫質圖片中…'); if (!r) return;
-  const res = await saveFile(r.blob, fileBase(cur) + '.png');
+  const res = await saveFile(r.blob, fileBase() + '.png');
   if (res === 'saved') toast('圖片已儲存');
   else if (res === 'unavailable') showImageSheet(r, '這裡無法直接下載，請長按下方圖片選「儲存圖片」或「分享」。');
 }
@@ -1289,18 +2089,18 @@ async function savePdf() {
     pdf.addImage(slice.toDataURL('image/jpeg', 0.93), 'JPEG', 0, topM, PW, (end - y) / pxPerMm);
     y = end; first = false;
   }
-  const res = await saveFile(pdf.output('blob'), fileBase(cur) + '.pdf');
+  const res = await saveFile(pdf.output('blob'), fileBase() + '.pdf');
   if (res === 'saved') toast('PDF 已儲存');
   else if (res === 'unavailable') toast('這裡無法下載 PDF，請改用「儲存圖片」', 3500);
 }
 async function shareLine() {
   const r = await withRender('準備分享圖片…'); if (!r) return;
-  const q = cur, text = shareText(q);
+  const q = cur, text = shareText(), dn = DOC_NAME[docState.kind];
   // 單獨開檔的手機瀏覽器：直接叫出系統分享選單
   if (!inViewer() && navigator.canShare) {
-    const file = new File([r.blob], fileBase(q) + '.png', { type: 'image/png' });
+    const file = new File([r.blob], fileBase() + '.png', { type: 'image/png' });
     if (navigator.canShare({ files: [file] })) {
-      try { await navigator.share({ files: [file], text }); markSent(); toast('已送出，狀態改為「已送出・待簽約」'); return; }
+      try { await navigator.share({ files: [file], text }); if (markSent()) toast('已送出，狀態改為「已送出・待簽約」'); return; }
       catch (e) { if (e.name === 'AbortError') return; }
     }
   }
@@ -1308,11 +2108,11 @@ async function shareLine() {
   r.url = URL.createObjectURL(r.blob);
   openSheet('傳送給客戶', `
     <div class="share-steps">
-      <button class="btn btn-dark btn-block" data-act="saveImg">${icon('image')}① 先存下報價單圖片</button>
+      <button class="btn btn-dark btn-block" data-act="saveImg">${icon('image')}① 先存下${dn}圖片</button>
       <a class="btn btn-line btn-block" data-act="lineOpen" href="https://line.me/R/share?text=${encodeURIComponent(text)}" target="_blank" rel="noopener">${icon('chat')}② 開啟 LINE 選擇聊天室</a>
-      <button class="btn btn-outline btn-block" data-act="copy" data-t="${esc(text)}">${icon('copy')}複製報價摘要文字</button>
+      <button class="btn btn-outline btn-block" data-act="copy" data-t="${esc(text)}">${icon('copy')}複製摘要文字</button>
     </div>
-    <div class="hint" style="font-size:14.5px;margin-top:12px;line-height:1.7">在 LINE 送出摘要文字後，於同一個聊天室按「＋」→ 選剛存好的報價單圖片即可。手機上也可以直接長按下方圖片分享。</div>
+    <div class="hint" style="font-size:14.5px;margin-top:12px;line-height:1.7">在 LINE 送出摘要文字後，於同一個聊天室按「＋」→ 選剛存好的${dn}圖片即可。手機上也可以直接長按下方圖片分享。</div>
     <img class="share-img" style="margin-top:14px" src="${r.url}" alt="報價單圖片">`);
 }
 
@@ -1333,7 +2133,7 @@ function renderLibrary() {
     ${Object.entries(groups).map(([c, arr]) => `<div class="sec-title">${esc(c)}</div>` + arr.map(x => `
       <button class="lib-item" data-act="libEdit" data-id="${x.id}">
         <span class="nm">${esc(x.name)}<small class="ltag ${x.material ? 'm' : 'l'}">${x.material ? '✓ 含料' : '純工資'}</small></span>
-        <span class="pr">${money(x.price)} <small>/ ${esc(x.unit)}</small></span>
+        <span class="pr" style="text-align:right">${money(x.price)} <small>/ ${esc(x.unit)}</small>${num(x.cost) ? `<small style="display:block">成本 ${money(x.cost)}</small>` : ''}</span>
         <span style="color:var(--muted)">${icon('edit')}</span>
       </button>`).join('')).join('') || '<div class="empty"><b>工料庫是空的</b>新增你最常報價的項目吧</div>'}
   </div>`;
@@ -1351,6 +2151,7 @@ function libEditor(id) {
       <div class="fld"><label>單價 <span class="req">*</span></label><input class="inp" type="number" inputmode="numeric" id="lbPrice" value="${x.price}" placeholder="3500"></div>
       <div class="fld"><label>單位</label><input class="inp" id="lbUnit" value="${esc(x.unit)}" list="unitList2"><datalist id="unitList2">${['台','米','坪','處','式','組','座','盞','迴','次','工','車'].map(u => `<option value="${u}">`).join('')}</datalist></div>
     </div>
+    <div class="fld"><label>成本單價（自己看，不會印出）</label><input class="inp" type="number" inputmode="numeric" id="lbCost" value="${x.cost || ''}" placeholder="例：材料費＋工資成本"></div>
     <div class="fld"><label>預設是否含料</label><label class="mat"><input type="checkbox" id="lbMat" ${x.material ? 'checked' : ''}><span class="tg"></span><span class="on-t">包含材料</span><span class="off-t">純工資</span></label></div>
     <button class="btn btn-primary btn-block" data-act="libSave" data-id="${id || ''}">${icon('check')}儲存</button>
     ${id ? `<button class="btn btn-danger btn-block" style="margin-top:10px" data-act="libDel" data-id="${id}">${icon('trash')}刪除此項目</button>` : ''}
@@ -1379,6 +2180,10 @@ function renderSettings() {
       <div class="row2">${f('lineId', 'LINE ID（選填）', '')}${f('taxId', '統一編號（選填）', '', 'text', 'inputmode="numeric"')}</div>
       ${f('address', '公司地址（選填）', '')}
     </div>
+    <div class="card"><h3><span class="bar"></span>師傅名單（排程用）</h3>
+      <input class="inp" data-s="crew" value="${esc((s.crew || []).join('、'))}" placeholder="例：阿傑、阿明、小陳">
+      <div class="hint">用頓號或逗號分隔，排程時可以點選出工的師傅。</div>
+    </div>
     <div class="card"><h3><span class="bar"></span>匯款帳號（印在報價單上）</h3>
       <div class="row2">${f('bank', '銀行名稱', '例：台灣銀行 板橋分行')}${f('bankCode', '銀行代碼', '004', 'text', 'inputmode="numeric"')}</div>
       ${f('account', '帳號', '', 'text', 'inputmode="numeric"')}
@@ -1405,7 +2210,7 @@ function renderSettings() {
         <button class="btn btn-outline btn-block" data-act="importBackup">${icon('upload')}匯入備份檔</button>
       </div>
       <div class="sync ${Cloud.ready ? 'on' : ''}">${Cloud.ready ? '✓ 已連結你的帳號：資料會自動存到雲端，換手機或電腦用同一個帳號登入就能看到。' : '目前資料只存在這台裝置的瀏覽器。登入 Claude 帳號開啟時，會自動同步到雲端。'}</div>
-      <div class="stat-line">報價單 ${DB.quotes.length} 張・工料 ${DB.library.length} 項・佔用約 ${size} KB<br>上次備份：${lb ? new Date(lb).toLocaleString('zh-TW') : '從未備份'}</div>
+      <div class="stat-line">報價單 ${DB.quotes.length} 張・排程 ${DB.jobs.length} 筆・工料 ${DB.library.length} 項・佔用約 ${size} KB<br>上次備份：${lb ? new Date(lb).toLocaleString('zh-TW') : '從未備份'}</div>
     </div>
     <div class="card"><h3><span class="bar"></span>進階</h3>
       <button class="btn btn-danger btn-block" data-act="resetAll">${icon('trash')}清除全部資料</button>
@@ -1415,7 +2220,7 @@ function renderSettings() {
 document.addEventListener('input', e => {
   const el = e.target; if (page !== 'settings' || !el.dataset.s) return;
   const k = el.dataset.s;
-  DB.settings[k] = el.type === 'checkbox' ? el.checked : (['payDep', 'payMid', 'payFin', 'days', 'validDays'].includes(k) ? num(el.value) : el.value);
+  DB.settings[k] = el.type === 'checkbox' ? el.checked : k === 'crew' ? el.value.split(/[,，、\s]+/).map(x => x.trim()).filter(Boolean) : (['payDep', 'payMid', 'payFin', 'days', 'validDays'].includes(k) ? num(el.value) : el.value);
   const t = $('#savedTag'); if (t) t.textContent = '儲存中…';
   save();
 });
@@ -1455,8 +2260,8 @@ $('#fileImport').addEventListener('change', e => {
       if (!Array.isArray(d.quotes) || !d.settings) throw new Error('格式不符');
       if (!await ask(`備份檔內含 ${d.quotes.length} 張報價單、${(d.library || []).length} 項工料。\n\n匯入後會「取代」目前的資料（目前 ${DB.quotes.length} 張），確定匯入？`, { yes: '匯入' })) return;
       const def = defaultData();
-      DB = { settings: { ...def.settings, ...d.settings }, library: d.library || def.library, quotes: d.quotes, meta: { ...def.meta, ...(d.meta || {}) } };
-      DB.meta.settingsAt = DB.meta.libraryAt = Date.now(); save(true); toast('匯入完成！'); route();
+      DB = { settings: { ...def.settings, ...d.settings }, library: d.library || def.library, quotes: d.quotes.map(normQ), jobs: d.jobs || [], meta: { ...def.meta, ...(d.meta || {}) } };
+      DB.meta.settingsAt = DB.meta.libraryAt = DB.meta.jobsAt = Date.now(); save(true); toast('匯入完成！'); route();
     } catch (err) { toast('匯入失敗：這不是有效的備份檔', 3500); }
   };
   rd.readAsText(f); e.target.value = '';
@@ -1475,42 +2280,133 @@ const ACT = {
     const q = DB.quotes.find(x => x.id === a.dataset.id); if (!q) return;
     q.status = a.dataset.s; q.updatedAt = Date.now(); save(true); closeSheet();
     toast('狀態已改為「' + STATUS[q.status].t + '」');
-    if (page === 'home') renderHome(); else if (page === 'preview') { const b = $('.pv-status button'); if (b) b.innerHTML = badge(q.status); }
+    if (page === 'home') renderHome(); else if (page === 'case') renderCase(); else if (page === 'doc') { const b = $('.pv-status button'); if (b) b.innerHTML = badge(q.status); }
   },
   dup: a => { closeSheet(); duplicateQuote(a.dataset.id); },
   delQuote: async a => {
     const q = DB.quotes.find(x => x.id === a.dataset.id); if (!q) return;
     if (!await ask(`確定刪除「${q.client || q.no}」這張報價單？\n刪除後無法復原。`, { yes: '刪除', danger: true })) return;
-    DB.quotes = DB.quotes.filter(x => x.id !== q.id); save(true); closeSheet(); toast('已刪除');
+    DB.quotes = DB.quotes.filter(x => x.id !== q.id); DB.jobs = DB.jobs.filter(j => j.qid !== q.id); save(true); closeSheet(); toast('已刪除');
     if (page === 'home') renderHome(); else { cur = null; nav('#/home'); }
   },
   bsClose: () => closeSheet(),
   copy: a => copyText(a.dataset.t),
-  lineOpen: () => { markSent(); toast('已將狀態改為「已送出・待簽約」'); },
+  lineOpen: () => { if (markSent()) toast('已將狀態改為「已送出・待簽約」'); },
+  payAdd: a => payEditor(a.dataset.s),
+  payStagePick: a => {
+    $$('[data-act="payStagePick"]').forEach(b => b.classList.toggle('on', b === a));
+    $('#pyStage').value = a.dataset.k;
+    if (num(a.dataset.left)) $('#pyAmt').value = a.dataset.left;
+  },
+  paySave: async () => {
+    const amt = num($('#pyAmt').value); if (amt <= 0) return toast('請輸入收款金額');
+    const q = cur;
+    const p = { id: uid(), no: genSerial('RCP', allReceiptNos()), stage: $('#pyStage').value, amount: amt, date: $('#pyDate').value || today(), method: $('#pyMethod').value, note: $('#pyNote').value.trim() };
+    q.payments.push(p);
+    const ns = autoStatus(q);
+    q.updatedAt = Date.now(); save(true); closeSheet(); renderCase();
+    if (await ask(`已記錄收款 ${money(amt)}${ns ? `\n狀態已改為「${STATUS[ns].t}」` : ''}\n\n要開立收據給客戶嗎？`, { yes: '開收據' })) nav(`#/doc/${q.id}/receipt/${p.id}`);
+  },
+  payDel: async a => {
+    if (!await ask('刪除這筆收款紀錄？\n對應的收據也會一起消失。', { yes: '刪除', danger: true })) return;
+    cur.payments = cur.payments.filter(p => p.id !== a.dataset.pid); cur.updatedAt = Date.now(); save(true); renderCase(); toast('已刪除收款紀錄');
+  },
+  varNew: () => {
+    const q = cur;
+    const n = Math.max(0, ...q.variations.map(v => parseInt(String(v.no).split('-A').pop()) || 0)) + 1;
+    const v = { id: uid(), no: `${q.no}-A${n}`, date: today(), title: '', items: [], note: '', status: 'pending' };
+    q.variations.push(v); q.updatedAt = Date.now(); save(true);
+    nav(`#/var/${q.id}/${v.id}`);
+  },
+  varApprove: a => {
+    const v = cur.variations.find(x => x.id === a.dataset.v); if (!v) return;
+    v.status = v.status === 'approved' ? 'pending' : 'approved';
+    cur.updatedAt = Date.now(); save(true); renderCase();
+    toast(v.status === 'approved' ? `已確認，追加 ${money(varCalc(cur, v).total)} 併入尾款` : '已取消確認');
+  },
+  varDone: () => {
+    const v = curVar;
+    if (!String(v.title || '').trim()) { toast('請填寫追加項目說明'); const t = $('[data-vf="title"]'); if (t) t.focus(); return; }
+    if (!v.items.length) return toast('請至少加入一個項目');
+    save(true); nav(`#/doc/${cur.id}/var/${v.id}`);
+  },
+  varDel: async () => {
+    if (!await ask('刪除這筆追加工程？', { yes: '刪除', danger: true })) return;
+    const v = curVar; curVar = null;
+    cur.variations = cur.variations.filter(x => x !== v); cur.updatedAt = Date.now(); save(true);
+    nav('#/case/' + cur.id); toast('已刪除追加工程');
+  },
+  matAdd: () => {
+    cur.mats.push({ id: uid(), name: '', qty: 1, unit: '', state: '' }); cur.updatedAt = Date.now(); save(true); renderMats();
+    const ins = $$('.mname'); if (ins.length) ins[ins.length - 1].focus();
+  },
+  matFrom: a => {
+    const it = [...cur.items, ...approvedVars(cur).flatMap(v => v.items)].find(x => x.id === a.dataset.id); if (!it) return;
+    cur.mats.push({ id: uid(), from: it.id, name: it.name, qty: num(it.qty), unit: it.unit, state: '' });
+    cur.updatedAt = Date.now(); save(true); renderMats(); toast('已加入，可改成實際的材料規格與數量');
+  },
+  matState: a => {
+    const m = cur.mats[+a.dataset.i]; if (!m) return;
+    m.state = !m.state ? 'ordered' : m.state === 'ordered' ? 'arrived' : '';
+    cur.updatedAt = Date.now(); save(true);
+    a.className = 'mst ' + m.state; a.textContent = MST[m.state];
+  },
+  matDel: a => { cur.mats.splice(+a.dataset.i, 1); cur.updatedAt = Date.now(); save(true); renderMats(); },
+  matCopy: () => copyText(matText(cur)),
+  jobNew: a => jobEditor(null, a.dataset.q || (page === 'case' && cur ? cur.id : '')),
+  jobEdit: a => jobEditor(a.dataset.id),
+  jobCrew: a => a.classList.toggle('on'),
+  jobSave: a => {
+    const qid = $('#jbQ').value; if (!qid) return toast('請選擇案件');
+    const data = { qid, date: $('#jbDate').value || today(), time: $('#jbTime').value, note: $('#jbNote').value.trim(), crew: $$('#jbCrew .chip.on').map(b => b.dataset.c) };
+    if (a.dataset.id) Object.assign(DB.jobs.find(j => j.id === a.dataset.id), data);
+    else DB.jobs.push({ id: uid(), done: false, ...data });
+    save(true); closeSheet(); refreshJobs(); toast('排程已儲存');
+  },
+  jobDel: async a => {
+    if (!await ask('刪除這個排程？', { yes: '刪除', danger: true })) return;
+    DB.jobs = DB.jobs.filter(j => j.id !== a.dataset.id); save(true); closeSheet(); refreshJobs();
+  },
+  jobDone: a => { const j = DB.jobs.find(x => x.id === a.dataset.id); if (!j) return; j.done = !j.done; save(true); refreshJobs(); },
+  dayCopy: a => copyText(dayText(a.dataset.d)),
+  schedCrew: a => { schedCrew = a.dataset.c; renderSchedule(); },
+  schedPast: () => { schedPast = !schedPast; renderSchedule(); },
+  clientOpen: a => clientSheet(a.dataset.k),
+  clientNew: a => {
+    const c = clientList().find(x => x.key === a.dataset.k); closeSheet();
+    newQuote(c ? { client: c.name, phone: c.phone, address: c.address } : {});
+  },
+  sugPick: a => {
+    const c = clientList(cur.id).find(x => x.key === a.dataset.k); if (!c) return;
+    Object.assign(cur, { client: c.name, phone: c.phone || '', address: c.address || '' });
+    ['client', 'phone', 'address'].forEach(k => { const el = $(`[data-f="${k}"]`); if (el) el.value = cur[k]; });
+    $('#clientSug').innerHTML = ''; touch(); toast('已帶入舊客戶資料');
+  },
+
   step: a => setStep(+a.dataset.n),
   picker: () => openPicker(),
   pkCat: a => openPicker(a.dataset.c, ($('#pkSearch') || {}).value || ''),
   pick: a => {
     const x = DB.library.find(l => l.id === a.dataset.id); if (!x) return;
     closeSheet();
-    addItem({ name: x.name, unit: x.unit, price: num(x.price), material: !!x.material, fromLib: true });
+    addItem({ name: x.name, unit: x.unit, price: num(x.price), cost: num(x.cost), material: !!x.material, fromLib: true });
     toast(`已加入「${x.name}」，請輸入數量`);
   },
   addBlank: () => { closeSheet(); addItem({ name: '', unit: '式', price: 0, material: true }); },
   delItem: async a => {
-    const i = +a.dataset.i, it = cur.items[i];
+    const i = +a.dataset.i, it = curItems[i];
     if (it && (it.name || it.price) && !await ask(`刪除「${it.name || '此項目'}」？`, { yes: '刪除', danger: true })) return;
-    cur.items.splice(i, 1); touch(); renderItems();
+    curItems.splice(i, 1); touch(); renderItems();
   },
   qty: a => {
-    const it = cur.items[+a.dataset.i]; if (!it) return;
+    const it = curItems[+a.dataset.i]; if (!it) return;
     it.qty = Math.max(0, Math.round((num(it.qty) + +a.dataset.d) * 100) / 100);
     const inp = $(`[data-i="${a.dataset.i}"][data-k="qty"]`); if (inp) inp.value = it.qty;
     touch();
   },
   saveToLib: a => {
-    const it = cur.items[+a.dataset.i]; if (!it || !it.name) return toast('請先填寫項目名稱');
-    DB.library.push({ id: uid(), cat: '自訂', name: it.name, unit: it.unit || '式', price: num(it.price), material: !!it.material });
+    const it = curItems[+a.dataset.i]; if (!it || !it.name) return toast('請先填寫項目名稱');
+    DB.library.push({ id: uid(), cat: '自訂', name: it.name, unit: it.unit || '式', price: num(it.price), cost: num(it.cost), material: !!it.material });
     it.fromLib = true; touch(); renderItems(); toast('已存入常用工料庫（分類：自訂）');
   },
   payPreset: a => {
@@ -1531,7 +2427,7 @@ const ACT = {
     if (!q.items.length) { setStep(2); toast('請至少加入一個工料項目'); return; }
     if (Math.abs(c.pctSum - 100) > 0.001 && !await ask(`付款比例合計為 ${c.pctSum}%（不是 100%），仍要生成報價單嗎？`, { yes: '仍要生成' })) { setStep(3); return; }
     save(true);
-    nav('#/preview/' + q.id);
+    nav('#/doc/' + q.id + '/quote');
   },
   saveImg: () => saveImage(),
   savePdf: () => savePdf(),
@@ -1542,7 +2438,7 @@ const ACT = {
   libSave: a => {
     const name = $('#lbName').value.trim(), price = num($('#lbPrice').value);
     if (!name) return toast('請填寫項目名稱');
-    const data = { cat: $('#lbCat').value.trim() || '其他', name, price, unit: $('#lbUnit').value.trim() || '式', material: $('#lbMat').checked };
+    const data = { cat: $('#lbCat').value.trim() || '其他', name, price, unit: $('#lbUnit').value.trim() || '式', material: $('#lbMat').checked, cost: num($('#lbCost').value) };
     if (a.dataset.id) Object.assign(DB.library.find(l => l.id === a.dataset.id), data);
     else DB.library.push({ id: uid(), ...data });
     save(true); closeSheet(); renderLibrary(); toast('已儲存');
